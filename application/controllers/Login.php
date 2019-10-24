@@ -82,8 +82,12 @@ class Login extends CI_Controller
                 }
             }
 
-            $_POST['username'] = $_POST['email'];
-            $_POST['email'] = $_POST['username'];
+            if(!empty($_POST['email'])){
+                $_POST['username'] = $_POST['email'];
+            } else{
+                $_POST['email'] = $_POST['username'];
+            }
+
             if ($this->{$module}->validate($member_id, false)) {
 
                 if (!$edit && $member_id = $this->{$module}->insert(['user_type_id' => $this->user_type_id])) {
