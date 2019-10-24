@@ -1,0 +1,14 @@
+[14-Jun-2019 04:22:44 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function ereg() in /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php:434
+Stack trace:
+#0 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php(398): Moxiecode_BasicFileFilter->_fnmatch('*background-2.j...', '1.png')
+#1 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php(59): Moxiecode_BasicFileFilter->accept(Object(Moxiecode_LocalFileImpl))
+#2 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/LocalFileImpl.php(431): Moxiecode_CombinedFileFilter->accept(Object(Moxiecode_LocalFileImpl))
+#3 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/CorePlugin.php(613): Moxiecode_LocalFileImpl->listFilesFiltered(Object(Moxiecode_CombinedFileFilter))
+#4 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/CorePlugin.php(699): Moxiecode_CorePlugin-> in /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php on line 434
+[14-Jun-2019 04:23:56 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined function ereg() in /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php:434
+Stack trace:
+#0 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php(398): Moxiecode_BasicFileFilter->_fnmatch('*background-2.j...', '1.png')
+#1 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php(59): Moxiecode_BasicFileFilter->accept(Object(Moxiecode_LocalFileImpl))
+#2 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/LocalFileImpl.php(431): Moxiecode_CombinedFileFilter->accept(Object(Moxiecode_LocalFileImpl))
+#3 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/CorePlugin.php(613): Moxiecode_LocalFileImpl->listFilesFiltered(Object(Moxiecode_CombinedFileFilter))
+#4 /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/CorePlugin.php(699): Moxiecode_CorePlugin-> in /home/sjaidad/public_html/assets/admin/tiny_mce/plugins/imagemanager/classes/FileSystems/FileFilter.php on line 434

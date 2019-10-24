@@ -1,0 +1,64 @@
+/* Portrait and Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 480px) {
+    .prostyle_mob {
+        text-align:     center;
+        background:     #92C800;
+        padding:        30px 20px;
+        color:          #FFFFFF;
+        font-size:      16px;
+        outline:        1px solid #FFFFFF;
+        outline-offset: -5px;
+    }
+    .prostyle_mob h3 {
+        font-weight: 500;
+        margin-top:  10px;
+    }
+    .prostyle_mob .price {
+        font-weight: 500;
+        margin-top:  10px;
+        font-size:   18px;
+    }
+    .project-properties-list {
+        padding: 20px;
+    }
+    .mrgnb {
+        margin: 8px 0;
+    }
+    .vertical .content, .vertical .actions {
+        width:   100% !important;
+        display: table !important;
+    }
+    ul.header-btn {
+        text-align: left !important;
+    }
+    .submit-property {
+        width: 180px;
+    }
+    .dropdown option-box img {
+        display: none !important;
+    }
+    .page-title h4 {
+        font-size:  30px !important;
+        text-align: center !important;
+    }
+    section.page-title.page-title-large.page-title-background {
+        padding: 30px 0 !important;
+    }
+    img.thumb {
+        display: none;
+    }
+    .property-block .property-info li {
+        width: 100% !important;
+    }
+    .property-block .expire-date {
+        width: 100% !important;
+    }
+
+
+
+
+
+
+}

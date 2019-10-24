@@ -1,0 +1,38 @@
+[
+    {
+        "name": "phenx/php-font-lib",
+        "version": "0.3.1",
+        "version_normalized": "0.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PhenX/php-font-lib.git",
+            "reference": "d13682b7e27d14a6323c441426f3dde1cd86c751"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PhenX/php-font-lib/zipball/d13682b7e27d14a6323c441426f3dde1cd86c751",
+            "reference": "d13682b7e27d14a6323c441426f3dde1cd86c751",
+            "shasum": ""
+        },
+        "time": "2014-03-19 17:15:11",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "FontLib\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Ménager",
+                "email": "fabien.menager@gmail.com"
+            }
+        ],
+        "description": "A library to read, parse, export and make subsets of different types of font files.",
+        "homepage": "https://github.com/PhenX/php-font-lib"
+    }
+]
