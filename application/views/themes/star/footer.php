@@ -415,9 +415,15 @@
                                     </label>
                                 </div>
                             </div>
+
+                            <div>
+                                <a href="<?php echo site_url('member/become_agent'); ?>">Become An Agent</a>
+                            </div>
+
                             <button type="submit" data-redirect-url=""
                                     class="ere-register-button btn btn-primary btn-block">Register
                             </button>
+
                         </form>
                     </div>
                 </div>
