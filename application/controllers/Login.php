@@ -90,33 +90,27 @@ class Login extends CI_Controller
 
             if ($this->{$module}->validate($member_id, false)) {
 
-                if (!$edit) {
-                    if($become_agent){
-                        $this->user_type_id = get_option('agent_type_id');
-                    }
-                    $member_id = $this->{$module}->insert(['user_type_id' => $this->user_type_id]);
-                    if($member_id){
-                        $JSON['success'] = $JSON['status'] = true;
-                        $JSON['message'] = 'Member has been registered' . "\n";
-                        set_notification(__($JSON['message']), 'success');
+                if (!$edit && $member_id = $this->{$module}->insert(['user_type_id' => $this->user_type_id])) {
+                    $JSON['success'] = $JSON['status'] = true;
+                    $JSON['message'] = 'Member has been registered' . "\n";
+                    set_notification(__($JSON['message']), 'success');
 
-                        activity_log('Registration', 'users', $member_id, $member_id);
-                        # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                        # registration_email
-                        $member = $this->m_users->row($member_id);
-                        $member->password = getVar('password');
-                        $msg = get_email_template($member, 'New Account');
-                        if ($msg->status == 'Active') {
-                            $emaildata = array(
-                                'to' => $member->email,
-                                'subject' => $msg->subject,
-                                'message' => $msg->message
-                            );
-                            if (!send_mail($emaildata)) {
-                                set_notification('Email sending failed.', 'danger');
-                            } else {
-                                set_notification('Please check your email for username & password!','success');
-                            }
+                    activity_log('Registration', 'users', $member_id, $member_id);
+                    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    # registration_email
+                    $member = $this->m_users->row($member_id);
+                    $member->password = getVar('password');
+                    $msg = get_email_template($member, 'New Account');
+                    if ($msg->status == 'Active') {
+                        $emaildata = array(
+                            'to' => $member->email,
+                            'subject' => $msg->subject,
+                            'message' => $msg->message
+                        );
+                        if (!send_mail($emaildata)) {
+                            set_notification('Email sending failed.', 'danger');
+                        } else {
+                            set_notification('Please check your email for username & password!','success');
                         }
                     }
 

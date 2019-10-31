@@ -31,6 +31,11 @@ class Member extends CI_Controller
 
     function become_agent()
     {
+        $user_id = _session(FRONT_SESSION_ID);
+        if ($user_id == 0) {
+            redirect('login');
+        }
+
         /*$row = $this->m_users->row($user_id);
         $data = json_decode($row->data);
         $data->become_agent = true;
@@ -38,9 +43,10 @@ class Member extends CI_Controller
 
         //if ($edit == 'edit')
         {
+            $data['row'] = $data['member'] = $this->m_users->info("", FRONT_SESSION_ID);
             $data['edit'] = true;
             $data['become_agent'] = true;
-            $this->template->load('member/become_an_agent', $data);
+            $this->template->load('member/edit_profile', $data);
         }
 
         /*save('users', ['become_agent' => 1], "id='{$user_id}'");
@@ -54,6 +60,7 @@ class Member extends CI_Controller
      */
     function account()
     {
+
         $user_id = _session(FRONT_SESSION_ID);
         if ($user_id == 0) {
             redirect('login');
