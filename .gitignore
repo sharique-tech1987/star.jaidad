@@ -1,5 +1,9 @@
+# Directories
 .idea/
 assets/cache/
 node_modules/
+assets/front/
+
+# Files
 package.json
 package-lock.json
