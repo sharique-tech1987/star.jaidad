@@ -11,7 +11,7 @@ if(!empty($row->city)){
 </style>
     <div class="clearfix"></div>
     <div class="dashboard">
-        <div class="container-fluid">
+        <div class="container">
             <div class="content-area">
                 <div class="dashboard-content">
                     <div class="dashboard-header clearfix">
