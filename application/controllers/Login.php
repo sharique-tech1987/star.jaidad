@@ -58,10 +58,15 @@ class Login extends CI_Controller
 
     function registration()
     {
-
         $module = 'm_users';
         $checkout = getVar('checkout');
         $edit = getVar('edit');
+        if(isset($_POST['become_agent']) && $_POST['become_agent'] == 'on'){
+            $_POST['become_agent'] = 1;
+        }
+        if(isset($_POST['newsletter']) && $_POST['newsletter'] == 'on'){
+            $_POST['newsletter'] = 1;
+        }
         $become_agent = getVar('become_agent', true, false);
         if($become_agent){
             $module = 'm_agents';

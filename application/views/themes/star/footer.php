@@ -415,6 +415,46 @@
                                     </label>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6 form-group control-become-agent">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="become_agent" id="become_agent" type="checkbox">
+                                        <span>Become An Agent</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 form-group control-newsletter">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="newsletter" id="newsletter" type="checkbox">
+                                        <span>Subscribe To Our Newsletter</span>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12 sj-hide-el">
+                                <label class="control-label required"><?php echo __('City');?></label><br>
+                                <select name="city" id="reg_agent_city" class="form-control control-password m-select2" load-select="#reg_agent_area_ids">
+                                    <option value="">- Select -</option>
+                                    <?php echo selectBox("SELECT id, city AS _city FROM cities")?>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-12 sj-hide-el">
+                                <?php
+                                $area_ids = array();
+                                ?>
+                                <label class="control-label required"><?php echo __("Deals in Area's");?></label><br>
+                                <select name="area_ids[]" id="reg_agent_area_ids" class="form-control control-password m_select2-tags" multiple load-url="<?php echo site_url('property/ajax/city_area');?>">
+                                    <option value="">- Select -</option>
+                                </select>
+                            </div>
+
+
+
                             <button type="submit" data-redirect-url=""
                                     class="ere-register-button btn btn-primary btn-block">Register
                             </button>
@@ -575,6 +615,7 @@ if ($total_logedin > 0) {
     <script>
         $(document).ready(function () {
             $(document).on('click', '.agent-yes', function (e) {
+
                 e.preventDefault();
                 $('.agent-popup').html('<h4>Please wait for contact and any agent...?</h4>');
                 $.ajax({
@@ -818,6 +859,21 @@ if ($member->user_type_id == $agent_type_id) {
                 $('#popup-modal').modal('hide');
             }, 6000);
         }
+
+        // tagging support
+        $('.m_select2-tags').select2({
+            placeholder: "Add a tag",
+            tags: true
+        });
+
+        $('#become_agent').change(function() {
+            if (this.checked) {
+                $('.sj-hide-el').show();
+            }
+            else{
+                $('.sj-hide-el').hide();
+            }
+        });
 
     });
 

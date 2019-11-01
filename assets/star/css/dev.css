@@ -5934,3 +5934,7 @@ body.sm-pageAnimated > :not(.sm-wrapper) {
 .newscolor{
 	color: #fff;
 }
+
+.sj-hide-el {
+    display: none;
+}
