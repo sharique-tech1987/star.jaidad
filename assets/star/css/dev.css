@@ -2545,6 +2545,7 @@ form-group input {
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple {
     border: solid #dddddd 1px;
+    border-radius: 20px !important;
 }
 
 /*.benaa-class .ere-property .property-status-price .property-price span {
@@ -5945,4 +5946,26 @@ body.sm-pageAnimated > :not(.sm-wrapper) {
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
     height: 300px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    background-color: white;
+    border: 1px solid #eee !important;
+    border-radius: 4px;
+    cursor: text;
+}
+span.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
+input[type="checkbox"] {
+    width: auto;
+}
+.select2-container.select2-container--default.select2-container--open{
+    z-index: 22222000 !important;
+}
+span.select2-selection.select2-selection--multiple {
+    border-radius: 20px;
+}
+.ere-register-wrap .checkbox{
+    margin: 0px !important;
 }

@@ -416,7 +416,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 form-group control-become-agent">
+                            <div class="form-group control-become-agent">
                                 <div class="checkbox">
                                     <label>
                                         <input name="become_agent" id="become_agent" type="checkbox">
@@ -425,7 +425,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 form-group control-newsletter">
+                            <div class="form-group control-newsletter">
                                 <div class="checkbox">
                                     <label>
                                         <input name="newsletter" id="newsletter" type="checkbox">
@@ -435,7 +435,7 @@
                             </div>
 
 
-                            <div class="col-lg-12 sj-hide-el">
+                            <div class="sj-hide-el">
                                 <label class="control-label required"><?php echo __('City');?></label><br>
                                 <select name="city" id="reg_agent_city" class="form-control control-password m-select2" load-select="#reg_agent_area_ids">
                                     <option value="">- Select -</option>
@@ -443,7 +443,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-lg-12 sj-hide-el">
+                            <div class="sj-hide-el">
                                 <?php
                                 $area_ids = array();
                                 ?>
