@@ -5938,3 +5938,11 @@ body.sm-pageAnimated > :not(.sm-wrapper) {
 .sj-hide-el {
     display: none;
 }
+
+.slider-main.sj-ads {
+    margin-bottom: 30px;
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    height: 300px;
+}
