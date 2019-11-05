@@ -215,6 +215,7 @@ class M_agents extends CI_Model
         }
 
         $this->db_data['password'] = encryptPassword($this->db_data['password']);
+        $this->db_data['status'] = 'Active';
         $this->db_data['created'] = date('Y-m-d H:i:s');
         $this->db_data['modified'] = date('Y-m-d H:i:s');
         $this->db_data['created_by'] = user_info('id');
