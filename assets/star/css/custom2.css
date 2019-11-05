@@ -39,7 +39,7 @@
 .benaa-class.single-property .property-info-action .property-info > div{margin-right:50px;padding-bottom:4px;}
 .benaa-class.single-property .property-info-action .property-info > div:last-child{margin-right:0;}
 .benaa-class.single-property .property-info-action .property-info > div .content-property-info{padding-left:10px;}
-.benaa-class.single-property .property-info-action .property-info > div > span{font-size:21px;width:54px;height:54px;border:solid 2px #92C800;background-color:#FFFFFF;text-align:center;padding-right:0;-webkit-border-radius:50%;-webkit-background-clip:padding-box;-moz-border-radius:50%;-moz-background-clip:padding;border-radius:50%;background-clip:padding-box;}
+.benaa-class.single-property .property-info-action .property-info > div > span{font-size:21px;border:solid 2px #92C800;background-color:#FFFFFF;text-align:center;padding:15px;-webkit-border-radius:50%;-webkit-background-clip:padding-box;-moz-border-radius:50%;-moz-background-clip:padding;border-radius:50%;background-clip:padding-box;}
 .benaa-class.single-property .property-info-action .property-info > div .property-info-value{font-weight:600;font-size:21px;color:#222222;margin-bottom:5px;}
 .benaa-class.single-property .property-info-action .property-info > div .property-info-title{font-weight:400;font-size:12px;color:#727272;text-transform:uppercase;}
 .benaa-class.single-property .property-info-action .property-action{float:initial;text-align:right;}
