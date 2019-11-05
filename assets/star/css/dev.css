@@ -5944,10 +5944,6 @@ body.sm-pageAnimated > :not(.sm-wrapper) {
     margin-bottom: 30px;
 }
 
-.carousel-inner > .item > img, .carousel-inner > .item > a > img {
-    height: 300px;
-}
-
 .select2-container--default .select2-selection--multiple {
     background-color: white;
     border: 1px solid #eee !important;
@@ -5968,4 +5964,9 @@ span.select2-selection.select2-selection--multiple {
 }
 .ere-register-wrap .checkbox{
     margin: 0px !important;
+}
+
+.carousel-inner .item > img.sj-no-animation{
+    animation: none;
+    -webkit-animation: none;
 }

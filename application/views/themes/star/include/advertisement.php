@@ -34,7 +34,8 @@ $rows = $ci->M_banner_management->rows($where, $limit, $offset, $order);
                         echo '<a href="' . $row->link . '">';
                     }
                     ?>
-                    <img alt="<?php echo htmlentities($row->title);?>" src="<?php echo _img(asset_url('front/banner_management/' . $row->image), 1680) ?>" class="img-fluid">
+                    <img alt="<?php echo htmlentities($row->title);?>" src="<?php echo _img(asset_url('front/banner_management/' . $row->image), 1680) ?>"
+                         class="img-fluid sj-no-animation">
                     <?php
                     if (!empty($row->link)) {
                         echo '</a>';
