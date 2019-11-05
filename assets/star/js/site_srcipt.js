@@ -20079,12 +20079,6 @@ var APP_XMENU = APP_XMENU || {};
                 errorElement: "span",
                 rules: {
                     first_name: {required: !0, minlength: 3},
-                    'city': {
-                        required: "#become_agent:checked"
-                    },
-                    'area_ids[]': {
-                        required: "#become_agent:checked"
-                    },
                     phone: {
                         required: !0,
                         pattern: /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/,

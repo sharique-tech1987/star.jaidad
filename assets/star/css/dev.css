@@ -5942,6 +5942,11 @@ body.sm-pageAnimated > :not(.sm-wrapper) {
 .sj-hide-el {
     display: none;
 }
+
+.slider-main.sj-ads {
+    margin-bottom: 30px;
+}
+
 .select2-container--default .select2-selection--multiple {
     background-color: white;
     border: 1px solid #eee !important;
@@ -5963,6 +5968,7 @@ span.select2-selection.select2-selection--multiple {
 .ere-register-wrap .checkbox{
     margin: 0px !important;
 }
+
 p.newscolor {
     margin: 0px !important;
 }
@@ -5976,4 +5982,11 @@ p.newscolor {
     .submit-btn-main {
         padding: 0px !important;
     }
+}
+/*Banner slider sharique*/
+
+.carousel-inner .item > img.sj-no-animation{
+    animation: none;
+    -webkit-animation: none;
+
 }

@@ -11,7 +11,11 @@
                         <div class="entry-content clearfix">
                             <div class="entry-content-inner clearfix">
                                 <?php echo $this->cms->get_block('index-ad-1');?>
-                                <div class="trnd_proj"> <?php include('include/hot_projects.php');?></div>
+
+                                <div class="trnd_proj">
+                                    <?php include('include/hot_projects.php');?>
+                                    <div class="slider-main sj-ads"><?php include('include/advertisement.php');?></div>
+                                </div>
                                 <?php //include('include/buy_sell.php');?>
                                 <div class="-hot_proj"> <?php include('include/recent_properties.php');?></div>
                                 <div class="brnd_logo"><?php include('include/brand_logos.php');?></div>

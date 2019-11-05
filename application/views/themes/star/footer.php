@@ -416,20 +416,20 @@
                                 </div>
                             </div>
 
-                            <div class="form-group control-become-agent">
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="become_agent" id="become_agent" type="checkbox">
-                                        <span>Become An Agent</span>
-                                    </label>
-                                </div>
-                            </div>
-
                             <div class="form-group control-newsletter">
                                 <div class="checkbox">
                                     <label>
                                         <input name="newsletter" id="newsletter" type="checkbox">
                                         <span>Subscribe To Our Newsletter</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group control-become-agent">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="become_agent" id="become_agent" type="checkbox">
+                                        <span>Become An Agent</span>
                                     </label>
                                 </div>
                             </div>
@@ -864,6 +864,21 @@ if ($member->user_type_id == $agent_type_id) {
         $('.m_select2-tags').select2({
             placeholder: "Add a tag",
             tags: true
+        });
+
+        $('.m-select2').on('select2:select', function (e) {
+            var data = e.params.data;
+            if(data.id != ""){
+                $('#reg_agent_city-error').hide();
+            }
+        });
+
+        $('.m_select2-tags').on('select2:select', function (e) {
+            var data = e.params.data;
+            var selected_collection = $('.m_select2-tags').select2('data')
+            if(selected_collection.length > 0){
+                $('#reg_agent_area_ids-error').hide();
+            }
         });
 
         $('#become_agent').change(function() {
