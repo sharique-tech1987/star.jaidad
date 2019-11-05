@@ -47,26 +47,4 @@ $rows = $ci->M_banner_management->rows($where, $limit, $offset, $order);
         }
         ?>
     </div>
-    <!-- kj moble banner -->
-    <div class="mobile-banner">
-
-        <div class="submit-btn-main">
-            <div class="submit-property-btn">
-                <a href="#" id="mbl-srch1" data-toggle="modal" data-target="#mobile_search" title="Buy/Rent"><i class="icon-search"></i> Buy/Rent</a>
-            </div>
-            <div class="submit-property-btn">
-                <?php
-                $member_id = _session(FRONT_SESSION_ID);
-
-                if ($member_id > 0) {
-                    $_href = ' href="' . site_url('property/add') . '"';
-                } else
-                    $_href = 'href="#" data-toggle="modal" data-target="#ere_signin_modal"';
-                ?>
-
-                <a <?php echo $_href; ?> title="Submit Property"><i class="icon-office2"></i> Submit Property</a>
-            </div>
-        </div>
-
-    </div>
 </div>
