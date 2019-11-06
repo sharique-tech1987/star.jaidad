@@ -18,6 +18,10 @@ var uglify = require('gulp-uglify');
  * npm install gulp-clean-css --save-dev
  */
 let cleanCSS = require('gulp-clean-css');
+/*
+* npm install --save-dev gulp-jsbeautifier
+ */
+let beautify = require('gulp-jsbeautifier');
 
 
 /**‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
@@ -32,6 +36,18 @@ gulp.task('minify-js', function () {
     return gulp.src('./assets/star/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('./assets/star/'));
+});
+
+gulp.task('footer-minify', function () {
+    return gulp.src('./assets/dist/footer.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('./assets/star/footer-minify'));
+});
+
+gulp.task('beautify-js', function() {
+    return gulp.src('./assets/star/js/footer.min.js')
+        .pipe(beautify())
+        .pipe(gulp.dest('./assets/dist'))
 });
 
 /*
