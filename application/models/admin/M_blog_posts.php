@@ -61,11 +61,15 @@ class M_blog_posts extends CI_Model
     function rows($where = '', $limit = 0, $offset = 0, $order_by = '', $heaving = '')
     {
 
-        $SQL = "SELECT SQL_CALC_FOUND_ROWS {$this->table}.*
-                -- , blog_categories.parent_id
-FROM {$this->table}
-        -- LEFT JOIN blog_categories ON(blog_categories.id = blog_categories.parent_id)
-WHERE 1 {$where}";
+        $SQL = "SELECT SQL_CALC_FOUND_ROWS blog_posts.*,
+			blog_categories.type, blog_categories.image, blog_categories.status, blog_categories.ordering
+			-- ,blog_tags_rel.tag_id, blog_tags.type
+               
+FROM blog_posts
+       LEFT JOIN blog_categories ON(blog_categories.id = blog_posts.category_id)
+	   -- LEFT JOIN blog_tags_rel ON(blog_posts.id = blog_tags_rel.blog_id)
+	   -- LEFT JOIN blog_tags ON(blog_tags.id = blog_tags_rel.tag_id)
+WHERE 1{$where}";
 
         if(!empty($order_by)){
             $SQL .= " ORDER BY {$order_by}";

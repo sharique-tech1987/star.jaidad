@@ -1,42 +1,78 @@
+<?php
+$ci =& get_instance();
+$ci->load->model(ADMIN_DIR . 'm_blog_posts');
+
+if(empty($_COOKIE['area_unit'])){
+    $_COOKIE['area_unit'] = 'Marla';
+}
+
+$where = " AND blog_posts.status='Published' ";
+/**------------------------------------------------------
+ *  Searching
+ *-----------------------------------------------------*/
+
+
+/**---------------------------------------------------------*/
+
+
+/**------------------ End Searching ------------------------*/
+$_is_order = '';
+$order = 'blog_posts.id DESC';
+
+$limit = 18;
+$offset = 0;
+if (getVar('limit') > 0) {
+    $limit = intval(getVar('limit'));
+}
+if (getVar('per_page') > 0) {
+    $offset = intval(getVar('per_page'));
+}
+$rows = $ci->m_blog_posts->rows($where, $limit, $offset, $order);
+$num_rows = $ci->m_blog_posts->num_rows;
+$total_rows = $ci->m_blog_posts->total_rows;
+
+?>
 <div id="primary-content" class="pd-top-100 pd-bottom-100 archive-wrap archive-large-image">
     <div class="container clearfix">
         <div class="row">
             <div class="col-md-9 archive-inner">
                 <div class="blog-wrap clearfix">
-                    <article id="post-3523" class="post-large-image clearfix post-3523 post type-post status-publish format-standard has-post-thumbnail hentry category-apartment category-real-estates tag-apartment tag-villa">
-                        <div class="entry-content-wrap clearfix">
-                            <div class="entry-thumb-wrap">
-                                <div class="entry-thumbnail">
-                                    <a href="#" title="We are Offering the Best Real Estate Deals" class="entry-thumbnail-overlay">
-                                        <img src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" alt="We are Offering the Best Real Estate Deals" class="img-responsive"> </a>
-                                    <a data-thumb-src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1-340x340.jpg" data-gallery-id="1701687358" data-rel="lightGallery" href="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" class="zoomGallery">
-                                        <i class="fa fa-expand"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="entry-post-meta">
-                                <div class="entry-meta-author">
-                                    <span>By </span><a href="#">admin</a>
-                                </div>
-                                <div class="entry-meta-date">
-                                    <a href="#">January 16, 2018</a>
-                                </div>
-                            </div>
-                            <div class="entry-content-inner">
-                                <div class="entry-info-post clearfix">
-                                    <h4 class="entry-post-title">
-                                        <a title="We are Offering the Best Real Estate Deals" href="#">We are Offering the Best Real Estate Deals</a></h4>
-                                    <div class="entry-excerpt"> Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo [...]
-                                    </div>
-                                </div>
-                            </div>
+                    <?php
+                    if (count($rows) > 0) {
+                    foreach ($rows as $row) {
+                        include('include/blogs_listing.php');
+                    ?>
+                    <?php }
+                    ?>
+                        <div class="clearfix"></div>
+
+                        <!--============== pagination ==============-->
+                        <?php
+
+                        $config['base_url'] = generate_url('per_page');
+                        $config['total_rows'] = $total_rows;
+                        $config['per_page'] = $limit;
+                        $config['page_query_string'] = TRUE;
+                        $choice = $config["total_rows"] / $config["per_page"];
+                        $config["total_links"] = ceil($choice);
+                        $config["num_links"] = 6;
+
+                        $config['attributes'] = array('class' => 'page-numbers');
+                        $config['cur_tag_open'] = '<span class="page-numbers current">';
+                        $config['cur_tag_close'] = '</span>';
+
+                        $this->pagination->initialize($config);
+                        $pagination = $this->pagination->create_links();
+                        ?>
+                        <div class="paging-navigation clearfix">
+                            <?php echo $pagination; ?>
                         </div>
-                    </article>
-                    <div class="paging-navigation clearfix">
-                        <span aria-current="page" class="page-numbers current">1</span>
-                        <a class="page-numbers" href="#">2</a>
-                        <a class="next page-numbers" href="#">Next</a>
-                    </div>
+                    <?php } else {
+                        ?>
+                        <div class="clearfix"></div>
+                        <div class="alert alert-danger">Blogs not found.</div>
+                        <?php
+                    } ?>
                 </div>
             </div>
             <div class="sidebar-mobile-canvas-icon" title="Click to show Canvas Sidebar">
