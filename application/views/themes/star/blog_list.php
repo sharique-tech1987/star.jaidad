@@ -19,7 +19,7 @@ $where = " AND blog_posts.status='Published' ";
 $_is_order = '';
 $order = 'blog_posts.id DESC';
 
-$limit = 18;
+$limit = 3;
 $offset = 0;
 if (getVar('limit') > 0) {
     $limit = intval(getVar('limit'));

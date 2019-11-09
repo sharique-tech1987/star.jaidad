@@ -62,7 +62,7 @@ class M_blog_posts extends CI_Model
     {
 
         $SQL = "SELECT SQL_CALC_FOUND_ROWS blog_posts.*,
-			blog_categories.type, blog_categories.image, blog_categories.status, blog_categories.ordering
+			blog_categories.type as `Category`, blog_categories.image, blog_categories.status, blog_categories.ordering
 			-- ,blog_tags_rel.tag_id, blog_tags.type
                
 FROM blog_posts

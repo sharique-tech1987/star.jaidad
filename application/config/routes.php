@@ -77,6 +77,9 @@ $route['project/(:any)'] = "project/$1";
 
 $route['agent/(:num)'] = "agent/index/$1";
 $route['agent/(:any)'] = "agent/$1";
+
+$route['blog/([a-zA-Z0-9-_]+)(\.html)+'] = "blog/index/$1";
+$route['blog/(:any)'] = "blog/$1";
 /*
  * Blog
  */

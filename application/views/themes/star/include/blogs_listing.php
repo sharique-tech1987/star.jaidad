@@ -5,22 +5,22 @@
     <div class="entry-content-wrap clearfix">
         <div class="entry-thumb-wrap">
             <div class="entry-thumbnail">
-                <a href="#" title="We are Offering the Best Real Estate Deals" class="entry-thumbnail-overlay">
-                    <img src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" alt="We are Offering the Best Real Estate Deals" class="img-responsive"> </a>
+                <a href="#" title="<?php echo $row->title ?>" class="entry-thumbnail-overlay">
+                    <img src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" alt="<?php echo $row->title ?>" class="img-responsive"> </a>
                 <a data-thumb-src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1-340x340.jpg" data-gallery-id="1701687358" data-rel="lightGallery" href="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" class="zoomGallery">
                     <i class="fa fa-expand"></i>
                 </a>
             </div>
         </div>
         <div class="entry-post-meta">
-            <div class="entry-meta-author">
-                <span>By </span><a href="#">admin</a>
-            </div>
+<!--            <div class="entry-meta-author">-->
+<!--                <span>By </span><a href="#">admin</a>-->
+<!--            </div>-->
             <div class="entry-meta-date">
                 <?php
                     $post_created = strtotime($row->created);
                 ?>
-                <a href="#"><?php echo date('F d,  Y',$post_created); ?></a>
+                <a href="#"><?php echo date('F d, Y',$post_created); ?></a>
             </div>
         </div>
         <div class="entry-content-inner">
@@ -39,6 +39,7 @@
                     // Print Final Except
                     echo $final_except;
                     ?>
+                    <div><a href="<?php echo $url; ?>">Read More</a></div>
                 </div>
             </div>
         </div>
