@@ -280,7 +280,52 @@ WHERE 1 {$where}";
     function export(){}
 
 
-    public function file_upload(){}
+    public function file_upload()
+    {
+
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        if (!empty($_FILES)) {
+            /**
+             * Directory
+             */
+            $dir = "assets/front/{$this->table}/";
+            if (!is_dir($dir)) mkdir($dir);
+            $id = intval(getVar('id'));
+            /*if ($id > 0) { $dir .= $id . '/'; mkdir($dir); }*/
+
+            $config['upload_path'] = './' . $dir;
+            $config['allowed_types'] = '';
+
+            $this->load->library('upload');
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('file')) {
+                $fileinfo = $this->upload->data();
+                $output['result']['filename'] = $fileinfo['file_name'];
+
+
+                $thumb_file = _img(base_url(file_icon($dir . $fileinfo['file_name'])), 200, 200);
+
+                $output['result']['thumb_url'] = $thumb_file;
+                $output['result']['image_url'] = site_url($dir . $fileinfo['file_name']);
+                $output['result']['title'] = substr(str_replace(array('-', '_'), array(' ', ' '), $fileinfo['file_name']), 0, -(strlen($fileinfo['file_ext'])));
+                $output['result']['size'] = $fileinfo['file_size'];
+                $output['result']['file_ext'] = $fileinfo['file_ext'];
+            } else {
+                $output['error']['filename'] = $_FILES['file']['name'];
+                $output['error']['message'] = $this->upload->display_errors();
+            }
+
+            echo json_encode($output);
+        } else {
+            redirect(admin_url($this->_route));
+        }
+    }
 
     function duplicate(){}
 

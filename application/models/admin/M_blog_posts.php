@@ -34,7 +34,33 @@ class M_blog_posts extends CI_Model
     }
 
 
-    function file_upload($file_name, $_config = array()){}
+    function file_upload($file_name, $_config = array())
+    {
+
+        $config['upload_path'] = ASSETS_DIR . "front/{$this->table}/";
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+
+        $config = array_merge($config, $_config);
+
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path']);
+        }
+
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+
+        $RES = $this->upload->upload_multi($file_name);
+
+        if (count($RES['error']) > 0) {
+            $return = $RES;
+            $return['status'] = FALSE;
+        } else {
+            $return = $RES;
+            $return['status'] = TRUE;
+        }
+
+        return $return;
+    }
 
     /**
      * @param int $id
@@ -62,7 +88,7 @@ class M_blog_posts extends CI_Model
     {
 
         $SQL = "SELECT SQL_CALC_FOUND_ROWS blog_posts.*,
-			blog_categories.type as `Category`, blog_categories.image, blog_categories.status, blog_categories.ordering
+			blog_categories.type as `Category`, blog_categories.image as `category_image`, blog_categories.status, blog_categories.ordering
 			-- ,blog_tags_rel.tag_id, blog_tags.type
                
 FROM blog_posts
@@ -108,7 +134,7 @@ WHERE 1{$where}";
 
         /** @var  $upload */
         $_file_column = 'image';
-        if (isset($_POST[$_file_column . '--rm'])) $this->db_data[$_file_column] = '';
+        if (isset($_POST['image--rm'])) $this->db_data[$_file_column] = '';
         if (!empty($_FILES[$_file_column]['name'])) {
             $upload = $this->file_upload($_file_column);
             if (!$upload['status']) {

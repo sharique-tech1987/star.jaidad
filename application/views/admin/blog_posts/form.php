@@ -61,6 +61,28 @@ $params = json_encode($row->icon);
                         </div>
                     </div>
 
+                    <div class="form-group m-form__group row">
+                        <label class="col-sm-2 control-label">
+                            <?php echo __('Image');?>
+                        </label>
+                        <div class="col-lg-4">
+                            <input disabled type="hidden" name="image--rm" value="<?php echo $row->image;?>">
+                            <label class="custom-file">
+                                <input type="file" name="image" id="image" class="custom-file-input" placeholder="Image" value="<?php echo ($row->image);?>" />
+                                <span class="custom-file-label"></span>
+                            </label>
+
+                        </div>
+                        <?php
+                        if (!empty($row->image)) {
+                            $thumb_url = asset_url("front/{$this->table}/" . $row->image);
+                            $delete_img_url = admin_url($this->_route . '/AJAX/delete_img/' . $row->id . '/image');
+                            echo thumb_box($thumb_url, $delete_img_url);
+                        }
+                        ?>
+                    </div>
+
+
                 </div>
                 <div class="col-md-3 right-side">
 

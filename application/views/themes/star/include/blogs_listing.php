@@ -4,10 +4,19 @@
     ?>
     <div class="entry-content-wrap clearfix">
         <div class="entry-thumb-wrap">
+            <?php
+                $image = checkAltImg("assets/front/blog_posts/{$row->image}");
+                if(!empty(get_option('wm_logo'))) {
+                    $wm_img = ADMIN_ASSETS_DIR . 'img/' . get_option('wm_logo');
+                    $img_url = base_url(_Image::wm($image, 870, 490, $wm_img));
+                } else {
+                    $img_url = base_url(_Image::open($image)->zoomCrop(870, 490));
+                }
+            ?>
             <div class="entry-thumbnail">
                 <a href="#" title="<?php echo $row->title ?>" class="entry-thumbnail-overlay">
-                    <img src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" alt="<?php echo $row->title ?>" class="img-responsive"> </a>
-                <a data-thumb-src="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1-340x340.jpg" data-gallery-id="1701687358" data-rel="lightGallery" href="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" class="zoomGallery">
+                    <img src="<?php echo $img_url ?>" alt="<?php echo $row->title ?>" class="img-responsive"> </a>
+                <a data-thumb-src="<?php echo $img_url ?>" data-gallery-id="1701687358" data-rel="lightGallery" href="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" class="zoomGallery">
                     <i class="fa fa-expand"></i>
                 </a>
             </div>
@@ -37,7 +46,7 @@
                         $final_except = $row->excerpt;
                     }
                     // Print Final Except
-                    echo $final_except;
+                    echo $final_except . "...";
                     ?>
                     <div><a href="<?php echo $url; ?>">Read More</a></div>
                 </div>
