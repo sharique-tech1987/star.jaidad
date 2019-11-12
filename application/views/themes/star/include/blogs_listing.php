@@ -29,7 +29,7 @@
                 <?php
                     $post_created = strtotime($row->created);
                 ?>
-                <a href="#"><?php echo date('F d, Y',$post_created); ?></a>
+                <h4><?php echo date('F d, Y',$post_created); ?></h4>
             </div>
         </div>
         <div class="entry-content-inner">
@@ -48,8 +48,8 @@
                     // Print Final Except
                     echo $final_except . "...";
                     ?>
-                    <div><a href="<?php echo $url; ?>">Read More</a></div>
                 </div>
+                <div><a href="<?php echo $url; ?>">Read More</a></div>
             </div>
         </div>
     </div>

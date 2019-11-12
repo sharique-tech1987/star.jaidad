@@ -84,10 +84,11 @@ class M_blog_posts extends CI_Model
      * @param string $heaving
      * @return object $rows
      */
-    function rows($where = '', $limit = 0, $offset = 0, $order_by = '', $heaving = '')
+    function rows($where = '', $limit = 0, $offset = 0, $order_by = '', $heaving = '', $post_tags=false)
     {
 
-        $SQL = "SELECT SQL_CALC_FOUND_ROWS blog_posts.*,
+        if(!$post_tags) {
+            $SQL = "SELECT SQL_CALC_FOUND_ROWS blog_posts.*,
 			blog_categories.type as `Category`, blog_categories.image as `category_image`, blog_categories.status, blog_categories.ordering
 			-- ,blog_tags_rel.tag_id, blog_tags.type
                
@@ -96,6 +97,16 @@ FROM blog_posts
 	   -- LEFT JOIN blog_tags_rel ON(blog_posts.id = blog_tags_rel.blog_id)
 	   -- LEFT JOIN blog_tags ON(blog_tags.id = blog_tags_rel.tag_id)
 WHERE 1{$where}";
+        }
+        else {
+            $SQL = "SELECT SQL_CALC_FOUND_ROWS blog_posts.*,
+			blog_categories.type as `Category`, blog_categories.image as `category_image`, blog_categories.status, blog_categories.ordering
+               
+FROM blog_posts
+       LEFT JOIN blog_categories ON(blog_categories.id = blog_posts.category_id)
+       LEFT JOIN blog_tags_rel ON(blog_tags_rel.blog_id = blog_posts.id)
+WHERE 1{$where}";
+        }
 
         if(!empty($order_by)){
             $SQL .= " ORDER BY {$order_by}";

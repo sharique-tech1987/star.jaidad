@@ -102,7 +102,7 @@ $params = json_encode($row->icon);
                     <?php } ?>
 
                     <div class="form-group m-form__group row">
-                        <label class="-col-sm-2 control-label">
+                        <label class="-col-sm-2 control-label required">
                             <?php echo __('Categories');?>
                         </label>
                         <div class="col-lg-12">
