@@ -6,7 +6,7 @@
  * @property M_subscribe_non_members $module
  * @property M_subscribe_non_members $m_non_members
  */
-class Subscribe_Non_Members extends CI_Controller
+class Subscribe_non_members extends CI_Controller
 {
     var $table;
     var $id_field;
