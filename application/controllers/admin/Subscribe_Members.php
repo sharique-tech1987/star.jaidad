@@ -67,13 +67,15 @@ class Subscribe_Members extends CI_Controller
         $this->breadcrumb->add_item($this->_info->module_title, admin_url($this->_route));
 
         /** -------- Query */
-        $where = ' AND users.newsletter = 1';
+        $where = $this->where;
+//        $where = ' AND users.newsletter = 1';
         $query = "SELECT
             users.id
             , TRIM(CONCAT(IFNULL(users.first_name, ''), ' ', IFNULL(users.last_name, ''))) as full_name
             , users.photo
             , users.email
             , users.created
+            , users.newsletter
         FROM users AS users
         LEFT JOIN user_types ON (user_types.id = users.user_type_id)
         WHERE 1 {$where}";

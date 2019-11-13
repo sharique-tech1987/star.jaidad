@@ -68,11 +68,12 @@ class Subscribe_Non_Members extends CI_Controller
 
         /** -------- Query */
         $where = $this->where;
-        $query = "SELECT  subscribers.id, subscribers.email
+        $query = "SELECT subscribers.*  
+-- subscribers.id, subscribers.email
 
 FROM 	subscribers
 WHERE 1 {$where}";
-        $query .= getFindQuery($query, 'search', ['email' => 'subscribers.email']);
+        $query .= getFindQuery($query);
 
 
         $data['query'] = $query;
