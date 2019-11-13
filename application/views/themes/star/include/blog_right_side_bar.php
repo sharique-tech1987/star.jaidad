@@ -48,7 +48,7 @@ s?>
 
             </ul>
         </aside>
-        <aside id="categories-2" class="widget widget_categories">
+        <aside id="categories-2" class="widget widget_categories" style="display:none;">
             <h4 class="widget-title">
                 <span>Categories</span>
             </h4>

@@ -116,7 +116,7 @@ class Menus extends CI_Controller
                 'title' => 'Blog Categories',
                 'name' => 'blog_category',
                 'url_base' => site_url('blog/category') . '/',
-                'listing' => $this->db->select('id,category as title, friendly_url')->order_by('category', 'asc')->get_where('blog_categories')->result_array()
+                'listing' => $this->db->select('id,type as title, type as friendly_url')->order_by('type', 'asc')->get_where('blog_categories')->result_array()
             ];
         }
         if($this->db->table_exists('categories')) {
