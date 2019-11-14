@@ -6012,3 +6012,7 @@ div.fields label {
 div#field {
     margin-top: 20px;
 }
+.benaa-class .modal-login .modal-content .nav-tabs>li {
+    width: 33.3%;
+    text-align: center;
+}
