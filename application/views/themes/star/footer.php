@@ -320,6 +320,7 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a id="ere_login_modal_tab" href="#login" data-toggle="tab">Log in</a></li>
                 <li><a id="ere_register_modal_tab" href="#register" data-toggle="tab">Register</a></li>
+                <li><a id="ere_agent_modal_tab" href="#agent" data-toggle="tab">Agent</a></li>
             </ul>
             <div class="tab-content ">
                 <div class="tab-pane active" id="login">
@@ -425,38 +426,83 @@
                                 </div>
                             </div>
 
-                            <div class="form-group control-become-agent">
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="become_agent" id="become_agent" type="checkbox">
-                                        <span>Become An Agent</span>
-                                    </label>
-                                </div>
-                            </div>
 
-
-                            <div class="sj-hide-el">
-                                <label class="control-label required"><?php echo __('City');?></label><br>
-                                <select name="city" id="reg_agent_city" class="form-control control-password m-select2" load-select="#reg_agent_area_ids">
-                                    <option value="">- Select -</option>
-                                    <?php echo selectBox("SELECT id, city AS _city FROM cities")?>
-                                </select>
-                            </div>
-
-                            <div class="sj-hide-el">
-                                <?php
-                                $area_ids = array();
-                                ?>
-                                <label class="control-label required"><?php echo __("Deals in Area's");?></label><br>
-                                <select name="area_ids[]" id="reg_agent_area_ids" class="form-control control-password m_select2-tags" multiple load-url="<?php echo site_url('property/ajax/city_area');?>">
-                                    <option value="">- Select -</option>
-                                </select>
-                            </div>
 
 
 
                             <button type="submit" data-redirect-url=""
                                     class="ere-register-button btn btn-primary btn-block">Register
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="agent">
+                    <div class="ere-agent-wrap">
+                        <div class="ere_messages message"></div>
+                        <form class="ere-agent" method="post" enctype="multipart/form-data"
+                              action="<?php echo site_url('login/registration'); ?>">
+                            <input type="hidden" name="redirect" value="<?php echo getVar('redirect'); ?>">
+                            <input type="hidden" name="become_agent" value="1">
+                            <div class="form-group control-username">
+                                <input name="first_name" class="form-control control-icon" type="text"
+                                       placeholder="Full name"/>
+                            </div>
+                            <div class="form-group control-phone">
+                                <input class="form-control control-icon" type="text" placeholder="Phone" name="phone"
+                                       data-inputmask="'mask': '+999999999999'">
+                            </div>
+                            <div class="form-group control-email">
+                                <input name="email" type="email" class="form-control control-icon" placeholder="Email"/>
+                            </div>
+                            <div class="form-group control-password">
+                                <input class="form-control" type="password" placeholder="Password" id="ag_password"
+                                       name="password">
+                            </div>
+                            <div class="form-group control-password">
+                                <input class="form-control m-login__form-input--last" type="password"
+                                       placeholder="Confirm Password" name="rpassword">
+                            </div>
+
+                            <div class="">
+                                <label class="control-label required"><?php echo __('City');?></label><br>
+                                <select  name="city" id="reg_agent_city" class="form-control control-password m-select2" load-select="#reg_agent_area_ids">
+                                    <option value="">- Select -</option>
+                                    <?php echo selectBox("SELECT id, city AS _city FROM cities")?>
+                                </select>
+                            </div>
+
+                            <div class="">
+                                <?php
+                                $area_ids = array();
+                                ?>
+                                <label class="control-label required"><?php echo __("Deals in Area's");?></label><br>
+                                <select  name="area_ids[]" id="reg_agent_area_ids" class="form-control control-password m_select2-tags" multiple load-url="<?php echo site_url('property/ajax/city_area');?>">
+                                    <option value="">- Select -</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group control-term-condition">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="agree" type="checkbox"> I agree with your <a target="_blank"
+                                                                                                  href="<?php echo site_url('terms-conditions'); ?>">Terms
+                                            &amp; Conditions</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group control-newsletter">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="newsletter" id="newsletter" type="checkbox">
+                                        <span>Subscribe To Our Newsletter</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" data-redirect-url=""
+                                    class="ere-agent-button btn btn-primary btn-block">Register
                             </button>
                         </form>
                     </div>
@@ -881,14 +927,6 @@ if ($member->user_type_id == $agent_type_id) {
             }
         });
 
-        $('#become_agent').change(function() {
-            if (this.checked) {
-                $('.sj-hide-el').show();
-            }
-            else{
-                $('.sj-hide-el').hide();
-            }
-        });
 
     });
 
