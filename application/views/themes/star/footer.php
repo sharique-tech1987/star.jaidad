@@ -438,7 +438,7 @@
                 </div>
 
                 <div class="tab-pane" id="agent">
-                    <div class="ere-agent-wrap">
+                    <div class="ere-register-wrap ere-agent-wrap">
                         <div class="ere_messages message"></div>
                         <form class="ere-agent" method="post" enctype="multipart/form-data"
                               action="<?php echo site_url('login/registration'); ?>">
@@ -465,7 +465,7 @@
                             </div>
 
                             <div class="">
-                                <label class="control-label required"><?php echo __('City');?></label><br>
+                                <label class="control-label"><?php echo __('City');?></label><br>
                                 <select  name="city" id="reg_agent_city" class="form-control control-password m-select2" load-select="#reg_agent_area_ids">
                                     <option value="">- Select -</option>
                                     <?php echo selectBox("SELECT id, city AS _city FROM cities")?>
@@ -476,7 +476,7 @@
                                 <?php
                                 $area_ids = array();
                                 ?>
-                                <label class="control-label required"><?php echo __("Deals in Area's");?></label><br>
+                                <label class="control-label"><?php echo __("Deals in Area's");?></label><br>
                                 <select  name="area_ids[]" id="reg_agent_area_ids" class="form-control control-password m_select2-tags" multiple load-url="<?php echo site_url('property/ajax/city_area');?>">
                                     <option value="">- Select -</option>
                                 </select>
