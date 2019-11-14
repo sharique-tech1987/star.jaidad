@@ -1894,6 +1894,7 @@ li.select2-results__option {
 }
 
 .carousel-inner .item > img {
+    width:100%;
     margin: 0 auto;
 }
 
@@ -5989,4 +5990,25 @@ p.newscolor {
     animation: none;
     -webkit-animation: none;
 
+}
+
+/*tax Calculator*/
+.dfield input {
+    width: 100% !important;
+    border-radius: 20px;
+}
+.dfield select {
+    width: 100% !important;
+    border-radius: 20px;
+}
+button.pbNext {
+    width: 100%;
+    border-radius: 20px;
+    margin: 25px 0;
+}
+div.fields label {
+    margin-top: 20px;
+}
+div#field {
+    margin-top: 20px;
 }
