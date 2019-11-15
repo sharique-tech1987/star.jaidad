@@ -6016,3 +6016,7 @@ div#field {
     width: 33.3%;
     text-align: center;
 }
+
+.container.clearfix.inner-container-wrap.hide-mini-search.sj-recommended {
+    margin-top: 30px;
+}

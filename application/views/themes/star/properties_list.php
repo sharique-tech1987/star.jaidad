@@ -9,6 +9,7 @@ if(empty($_COOKIE['area_unit'])){
 
 $area_attr['limit'] = 36;
 $where = " AND properties.status='Active' ";
+$where_different_range = " AND properties.status='Active' ";
 /**------------------------------------------------------
  *  Searching
  *-----------------------------------------------------*/
@@ -29,10 +30,12 @@ $bathrooms = getVar('bathrooms');
 
 if(!empty($purpose)){
     $where .= " AND LOWER(properties.purpose)='{$purpose}' ";
+    $where_different_range .= " AND LOWER(properties.purpose)='{$purpose}' ";
 }
 if(!empty($city_id)){
     $_city = $this->db->where('id', $city_id)->get('cities')->row();
     $where .= " AND properties.city_id='{$city_id}' ";
+    $where_different_range .= " AND properties.city_id='{$city_id}' ";
     $area_attr['where'] .= "AND area.city_id='{$city_id}'";
 }
 
@@ -48,12 +51,14 @@ if(count($area_ids) > 0 && is_array($area_ids)){
 
     if(count($_area_ids_ch) > 0){
         $where .= " AND area.area IN('".join("','", $_area_ids_ch)."') ";
+        $where_different_range .= " AND area.area IN('".join("','", $_area_ids_ch)."') ";
     }
 
     if(count($_area_ids_int) > 0) {
         $_area = $this->db->where('id', intval($_area_ids_int[0]))->get('area')->row();
         $area_attr['where'] = " AND area.parent_id IN(" . join(',', array_map("intval", $_area_ids_int)) . ")";
         $where .= " AND properties.area_id IN(" . join(',', array_map("intval", $_area_ids_int)) . ") ";
+        $where_different_range .= " AND properties.area_id IN(" . join(',', array_map("intval", $_area_ids_int)) . ") ";
     }
 } else{
     $area_ids = [];
@@ -61,6 +66,7 @@ if(count($area_ids) > 0 && is_array($area_ids)){
 
 if(!empty($type_id)){
     $where .= " AND properties.type_id='{$type_id}' ";
+    $where_different_range .= " AND properties.type_id='{$type_id}' ";
 }
 if($price['min'] > 0 && $price['max'] > 0){
     $where .= " AND properties.price BETWEEN '{$price['min']}' AND '{$price['max']}'";
@@ -75,22 +81,34 @@ $area_max = area_conversion(floatval($area['max']), $_COOKIE['area_unit']);
 
 if($area['min'] > 0 && $area['max'] > 0){
     $where .= " AND properties.square_meter BETWEEN '{$area_min}' AND '{$area_max}'";
+    $where_different_range .= " AND properties.square_meter BETWEEN '{$area_min}' AND '{$area_max}'";
 } else if($area['min'] > 0){
     $where .= " AND properties.square_meter >= '{$area_min}' ";
+    $where_different_range .= " AND properties.square_meter >= '{$area_min}' ";
 } else if($area['max'] > 0){
     $where .= " AND properties.square_meter <= '{$area_max}' ";
+    $where_different_range .= " AND properties.square_meter <= '{$area_max}' ";
 }
 if($bedrooms > 0){
-    if($bedrooms == 10)
+    if($bedrooms == 10) {
         $where .= " AND properties.bedrooms >= '{$bedrooms}'";
-    else
-    $where .= " AND properties.bedrooms = '{$bedrooms}'";
+        $where_different_range .= " AND properties.bedrooms >= '{$bedrooms}'";
+    }
+    else {
+        $where .= " AND properties.bedrooms = '{$bedrooms}'";
+        $where_different_range .= " AND properties.bedrooms = '{$bedrooms}'";
+    }
 }
 if($bathrooms > 0){
-    if($bathrooms == 10)
+    if($bathrooms == 10) {
         $where .= " AND properties.bathrooms >= '{$bathrooms}'";
-    else
-    $where .= " AND properties.bathrooms = '{$bathrooms}'";
+        $where_different_range .= " AND properties.bathrooms >= '{$bathrooms}'";
+    }
+
+    else {
+        $where .= " AND properties.bathrooms = '{$bathrooms}'";
+        $where_different_range .= " AND properties.bathrooms = '{$bathrooms}'";
+    }
 }
 
 /**---------------------------------------------------------*/
@@ -99,6 +117,7 @@ if(!empty($city)){
     $_city = $this->db->where('city', $city)->get('cities')->row();
     $city_id = $_city->id;
     $where .= " AND cities.id='{$city_id}'";
+    $where_different_range .= " AND cities.id='{$city_id}'";
     $area_attr['where'] .= "AND area.city_id='{$city_id}'";
 }
 $x_area = explode('-', getUri(3));
@@ -113,6 +132,7 @@ if(!empty($__area)){
 //    array_push($area_ids, $area_id);
 //    array_push($_area_ids_int, $area_id);
     $where .= " AND properties.area_id='{$area_id}'";
+    $where_different_range .= " AND properties.area_id='{$area_id}'";
     $area_attr['where'] .= "AND area.parent_id='{$area_id}'";
     //$area_attr['where'] = " AND area.parent_id IN(".join(array_map('intval', $_area_ids_int)).") ";
 }
@@ -148,6 +168,16 @@ if (getVar('per_page') > 0) {
 $rows = $ci->m_properties->rows($where, $limit, $offset, $order);
 $num_rows = $ci->m_properties->num_rows;
 $total_rows = $ci->m_properties->total_rows;
+
+
+if( $num_rows == 0 && $price['max'] > 0){
+    $percent = floatval(get_option('price_range_percent'));
+    $price['max'] = $price['max'] + ($price['max'] * $percent);
+    $where_different_range .= " AND properties.price <= '{$price['max']}' ";
+    $recommend_rows = $ci->m_properties->rows($where_different_range, $limit, $offset, $order);
+    $recommend_num_rows = $ci->m_properties->num_rows;
+    $recommend_total_rows = $ci->m_properties->total_rows;
+}
 
 
 ?>
@@ -277,6 +307,92 @@ $total_rows = $ci->m_properties->total_rows;
             </div>
         </div>
     </div>
+
+            <!-- Recommended Listing -->
+            <?php if($num_rows == 0 && $recommend_num_rows > 0) { ?>
+                <div class="container clearfix inner-container-wrap hide-mini-search sj-recommended">
+                <div class="archive-property-inner">
+                    <div id="container">
+                        <div id="content" role="main">
+                            <div class="ere-archive-property-wrap ere-property-wrap">
+                                <!--============== top filter    ==============-->
+                                <div class="ere-archive-property archive-property">
+                                    <?php include('include/properties_list_header.php'); ?>
+
+                                    <!--============== recommended listing    ==============-->
+                                    <div class="ere-property clearfix property-grid col-gap-30 columns-3 columns-md-3 columns-sm-2 columns-xs-1 columns-mb-1">
+
+                                        <?php
+                                        if (count($recommend_rows) > 0) {
+                                            foreach ($recommend_rows as $row) {
+                                                $amenities_code = ['air-conditioning', 'kitchens'];
+                                                $amenities = $ci->m_amenities->amenities($row->id, '', 'Property', $amenities_code);
+                                                //echo '<pre>'; print_r($amenities); echo '</pre>';
+                                                include('include/recommended_listing.php');
+                                                ?>
+                                            <?php }
+                                            ?>
+                                            <div class="clearfix"></div>
+
+                                            <!--============== pagination ==============-->
+                                            <?php
+
+                                            $config['base_url'] = generate_url('per_page');
+                                            $config['total_rows'] = $recommend_total_rows;
+                                            $config['per_page'] = $limit;
+                                            $config['page_query_string'] = TRUE;
+                                            $choice = $config["total_rows"] / $config["per_page"];
+                                            $config["total_links"] = ceil($choice);
+                                            $config["num_links"] = 6;
+
+                                            $config['attributes'] = array('class' => 'page-numbers');
+                                            $config['cur_tag_open'] = '<span class="page-numbers current">';
+                                            $config['cur_tag_close'] = '</span>';
+
+                                            $this->pagination->initialize($config);
+                                            $pagination = $this->pagination->create_links();
+                                            ?>
+                                            <div class="paging-navigation clearfix">
+                                                <?php echo $pagination; ?>
+                                            </div>
+                                        <?php } else {
+                                            ?>
+                                            <div class="clearfix"></div>
+                                            <div class="alert alert-danger">Sorry No Recommendations Are Found.</div>
+                                            <?php
+                                        } ?>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php }
+            else if($num_rows == 0 && $recommend_num_rows == 0) {
+             ?>
+                <div class="container clearfix inner-container-wrap hide-mini-search sj-recommended">
+                    <div class="archive-property-inner">
+                        <div id="container">
+                            <div id="content" role="main">
+                                <div class="ere-archive-property-wrap ere-property-wrap">
+                                    <!--============== top filter    ==============-->
+                                    <div class="ere-archive-property archive-property">
+                                        <?php include('include/properties_list_header.php'); ?>
+
+                                        <div class="ere-property clearfix property-grid col-gap-30 columns-3 columns-md-3 columns-sm-2 columns-xs-1 columns-mb-1">
+                                            <div class="clearfix"></div>
+                                            <div class="alert alert-danger">Sorry No Recommendations Are Found.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
 </div>
 <style>
 
