@@ -484,7 +484,7 @@
 
                             <div class="form-group control-term-condition">
                                 <div class="checkbox">
-                                    <label>
+                                    <label style="margin-top: 15px;">
                                         <input name="agree" type="checkbox"> I agree with your <a target="_blank"
                                                                                                   href="<?php echo site_url('terms-conditions'); ?>">Terms
                                             &amp; Conditions</a>
