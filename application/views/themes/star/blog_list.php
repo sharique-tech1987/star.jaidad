@@ -51,11 +51,11 @@ $num_rows = $ci->m_blog_posts->num_rows;
 $total_rows = $ci->m_blog_posts->total_rows;
 
 ?>
-<div id="primary-content" class="pd-top-100 pd-bottom-100 archive-wrap archive-large-image">
+<div id="primary-content" class="page-wrap pd-top-100 pd-bottom-100">
     <div class="container clearfix">
-        <div class="row">
-            <div class="col-md-9 archive-inner">
-                <div class="blog-wrap clearfix">
+        <div class="page-inner">
+            <div class="col-md-9">
+<!--                <div class="blog-wrap clearfix">-->
                     <?php
                     if (count($rows) > 0) {
                     foreach ($rows as $row) {
@@ -63,7 +63,7 @@ $total_rows = $ci->m_blog_posts->total_rows;
                     ?>
                     <?php }
                     ?>
-                        <div class="clearfix"></div>
+<!--                        <div class="clearfix"></div>-->
 
                         <!--============== pagination ==============-->
                         <?php
@@ -92,11 +92,11 @@ $total_rows = $ci->m_blog_posts->total_rows;
                         <div class="alert alert-danger">Blogs not found.</div>
                         <?php
                     } ?>
-                </div>
+<!--                </div>-->
             </div>
-            <div class="sidebar-mobile-canvas-icon" title="Click to show Canvas Sidebar">
-                <i class="fa fa-sliders"></i>
-            </div>
+<!--            <div class="sidebar-mobile-canvas-icon" title="Click to show Canvas Sidebar">-->
+<!--                <i class="fa fa-sliders"></i>-->
+<!--            </div>-->
             <?php include('include/blog_right_side_bar.php'); ?>
         </div>
     </div>

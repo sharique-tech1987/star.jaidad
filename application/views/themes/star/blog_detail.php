@@ -21,9 +21,9 @@ $row->tags = $res->result();
         </div>
     </section>
 
-    <div id="primary-content" class="pd-top-100 pd-bottom-100 sm-pd-top-50 sm-pd-bottom-0">
-        <div class="container clearfix">
-            <div class="row">
+<!--    <div id="primary-content" class="pd-top-100 pd-bottom-100 sm-pd-top-50 sm-pd-bottom-0">-->
+<!--        <div class="container clearfix">-->
+<!--            <div class="row">-->
                 <div id="primary-content" class="pd-top-100 pd-bottom-100 archive-wrap archive-large-image">
                     <div class="container clearfix">
                         <div class="row">
@@ -97,18 +97,18 @@ $row->tags = $res->result();
                                     </article>
                                 </div>
                             </div>
-                            <div class="sidebar-mobile-canvas-icon" title="Click to show Canvas Sidebar">
-                                <i class="fa fa-sliders"></i>
-                            </div>
+<!--                            <div class="sidebar-mobile-canvas-icon" title="Click to show Canvas Sidebar">-->
+<!--                                <i class="fa fa-sliders"></i>-->
+<!--                            </div>-->
 
                             <?php include('include/blog_right_side_bar.php'); ?>
                         </div>
                     </div>
                 </div>
 
-            </div>
-
-        </div>
-    </div>
+<!--            </div>-->
+<!---->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 <?php get_footer(); ?>
