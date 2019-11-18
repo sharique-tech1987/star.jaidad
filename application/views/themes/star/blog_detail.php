@@ -7,7 +7,7 @@ $row->tags = $res->result();
 ?>
 <div id="wrapper-content" class="clearfix ">
     <section class="page-title page-title-large property-single-page-title page-title-background" style="padding-top:70px;padding-bottom:70px">
-        <div class="page-title-background" style="background-image: url(http://localhost/star_m/assets/star/images/properties-2-1920x204.jpg)"></div>
+        <div class="page-title-background" style="background-image: url(<?php echo media_url('images/properties-2-1920x204.jpg'); ?>"></div>
         <div class="container">
             <div class="page-title-inner">
                 <div class="property-info-header property-info-action">
@@ -70,8 +70,8 @@ $row->tags = $res->result();
                                                     </div>
 
                                                     <div class="entry-excerpt">
-                                                        <label>Categories: </label>
-                                                        <a href="<?php echo site_url("blogs?cat_id=$row->category_id") ?>"> <?php echo $row->Category ?> </a>
+<!--                                                        <label>Categories: </label>-->
+<!--                                                        <a href="--><?php //echo site_url("blogs?cat_id=$row->category_id") ?><!--"> --><?php //echo $row->Category ?><!-- </a>-->
 
                                                         <label>Tags: </label>
                                                         <?php

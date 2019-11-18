@@ -16,7 +16,7 @@
             <div class="entry-thumbnail">
                 <a href="#" title="<?php echo $row->title ?>" class="entry-thumbnail-overlay">
                     <img src="<?php echo $img_url ?>" alt="<?php echo $row->title ?>" class="img-responsive"> </a>
-                <a data-thumb-src="<?php echo $img_url ?>" data-gallery-id="1701687358" data-rel="lightGallery" href="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" class="zoomGallery">
+                <a data-thumb-src="<?php echo $img_url ?>" data-gallery-id="1701687358" data-rel="lightGallery" href="<?php echo $img_url ?>" class="zoomGallery">
                     <i class="fa fa-expand"></i>
                 </a>
             </div>
