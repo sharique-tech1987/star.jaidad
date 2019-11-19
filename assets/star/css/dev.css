@@ -6040,6 +6040,21 @@ div#field {
     /*box-shadow: 1px 2px 8px 4px;*/
     /*background-color: #92c800;*/
 }
+@media(max-width: 992px) {
+    .mobilehide{
+        display: none;
+    }
+
+}
+@media(max-width: 767px) {
+    .mobile_width{
+        width: 100% !important;
+    }
+    .wrapper-sticky.mobile_width {
+        display: none !important;
+    }
+
+}
 input.bg_transparent {
     width: 70% !important;
     background-color: transparent;
@@ -6060,6 +6075,12 @@ input.bg_transparent {
 .pb1.pbreak.pbEnd{
     margin-left: 0px !important;
 }
+    .mobile_width{
+        width: 100% !important;
+    }
+    .wrapper-sticky.mobile_width {
+        display: none !important;
+    }
 }
 /*@media(max-width: 992px){*/
 /*    .pb1.pbreak.pbEnd {*/
