@@ -11,6 +11,7 @@ $area_attr['limit'] = 36;
 $where = " AND properties.status='Active' ";
 $where_different_range = " AND properties.status='Active' ";
 $where_same_city_range = " AND properties.status='Active' ";
+$where_nearest_area_range = " AND properties.status='Active' ";
 /**------------------------------------------------------
  *  Searching
  *-----------------------------------------------------*/
@@ -33,12 +34,14 @@ if(!empty($purpose)){
     $where .= " AND LOWER(properties.purpose)='{$purpose}' ";
     $where_different_range .= " AND LOWER(properties.purpose)='{$purpose}' ";
     $where_same_city_range .= " AND LOWER(properties.purpose)='{$purpose}' ";
+    $where_nearest_area_range .= " AND LOWER(properties.purpose)='{$purpose}' ";
 }
 if(!empty($city_id)){
     $_city = $this->db->where('id', $city_id)->get('cities')->row();
     $where .= " AND properties.city_id='{$city_id}' ";
     $where_different_range .= " AND properties.city_id='{$city_id}' ";
     $where_same_city_range .= " AND properties.city_id='{$city_id}' ";
+    $where_nearest_area_range .= " AND properties.city_id='{$city_id}' ";
     $area_attr['where'] .= "AND area.city_id='{$city_id}'";
 }
 
@@ -71,16 +74,20 @@ if(!empty($type_id)){
     $where .= " AND properties.type_id='{$type_id}' ";
     $where_different_range .= " AND properties.type_id='{$type_id}' ";
     $where_same_city_range .= " AND properties.type_id='{$type_id}' ";
+    $where_nearest_area_range .= " AND properties.type_id='{$type_id}' ";
 }
 if($price['min'] > 0 && $price['max'] > 0){
     $where .= " AND properties.price BETWEEN '{$price['min']}' AND '{$price['max']}'";
     $where_same_city_range .= " AND properties.price BETWEEN '{$price['min']}' AND '{$price['max']}'";
+    $where_nearest_area_range .= " AND properties.price BETWEEN '{$price['min']}' AND '{$price['max']}'";
 } else if($price['min'] > 0){
     $where .= " AND properties.price >= '{$price['min']}' ";
     $where_same_city_range .= " AND properties.price >= '{$price['min']}' ";
+    $where_nearest_area_range .= " AND properties.price >= '{$price['min']}' ";
 } else if($price['max'] > 0){
     $where .= " AND properties.price <= '{$price['max']}' ";
     $where_same_city_range .= " AND properties.price <= '{$price['max']}' ";
+    $where_nearest_area_range .= " AND properties.price <= '{$price['max']}' ";
 }
 
 $area_min = area_conversion(floatval($area['min']), $_COOKIE['area_unit']);
@@ -90,25 +97,30 @@ if($area['min'] > 0 && $area['max'] > 0){
     $where .= " AND properties.square_meter BETWEEN '{$area_min}' AND '{$area_max}'";
     $where_different_range .= " AND properties.square_meter BETWEEN '{$area_min}' AND '{$area_max}'";
     $where_same_city_range .= " AND properties.square_meter BETWEEN '{$area_min}' AND '{$area_max}'";
+    $where_nearest_area_range .= " AND properties.square_meter BETWEEN '{$area_min}' AND '{$area_max}'";
 } else if($area['min'] > 0){
     $where .= " AND properties.square_meter >= '{$area_min}' ";
     $where_different_range .= " AND properties.square_meter >= '{$area_min}' ";
     $where_same_city_range .= " AND properties.square_meter >= '{$area_min}' ";
+    $where_nearest_area_range .= " AND properties.square_meter >= '{$area_min}' ";
 } else if($area['max'] > 0){
     $where .= " AND properties.square_meter <= '{$area_max}' ";
     $where_different_range .= " AND properties.square_meter <= '{$area_max}' ";
     $where_same_city_range .= " AND properties.square_meter <= '{$area_max}' ";
+    $where_nearest_area_range .= " AND properties.square_meter <= '{$area_max}' ";
 }
 if($bedrooms > 0){
     if($bedrooms == 10) {
         $where .= " AND properties.bedrooms >= '{$bedrooms}'";
         $where_different_range .= " AND properties.bedrooms >= '{$bedrooms}'";
         $where_same_city_range .= " AND properties.bedrooms >= '{$bedrooms}'";
+        $where_nearest_area_range .= " AND properties.bedrooms >= '{$bedrooms}'";
     }
     else {
         $where .= " AND properties.bedrooms = '{$bedrooms}'";
         $where_different_range .= " AND properties.bedrooms = '{$bedrooms}'";
         $where_same_city_range .= " AND properties.bedrooms = '{$bedrooms}'";
+        $where_nearest_area_range .= " AND properties.bedrooms = '{$bedrooms}'";
     }
 }
 if($bathrooms > 0){
@@ -116,12 +128,14 @@ if($bathrooms > 0){
         $where .= " AND properties.bathrooms >= '{$bathrooms}'";
         $where_different_range .= " AND properties.bathrooms >= '{$bathrooms}'";
         $where_same_city_range .= " AND properties.bathrooms >= '{$bathrooms}'";
+        $where_nearest_area_range .= " AND properties.bathrooms >= '{$bathrooms}'";
     }
 
     else {
         $where .= " AND properties.bathrooms = '{$bathrooms}'";
         $where_different_range .= " AND properties.bathrooms = '{$bathrooms}'";
         $where_same_city_range .= " AND properties.bathrooms = '{$bathrooms}'";
+        $where_nearest_area_range .= " AND properties.bathrooms = '{$bathrooms}'";
     }
 }
 
@@ -184,7 +198,7 @@ $rows = $ci->m_properties->rows($where, $limit, $offset, $order);
 $num_rows = $ci->m_properties->num_rows;
 $total_rows = $ci->m_properties->total_rows;
 
-
+//    Same Area But Different Range
 if(count($area_ids) && $num_rows == 0 && $price['max'] > 0){
     $percent = floatval(get_option('price_range_percent'));
     $price['max'] = $price['max'] + ($price['max'] * $percent);
@@ -194,6 +208,37 @@ if(count($area_ids) && $num_rows == 0 && $price['max'] > 0){
     $recommend_total_rows = $ci->m_properties->total_rows;
 }
 
+//    Nearest Area and Same Range
+if($num_rows == 0 && $recommend_num_rows == 0 && ($price['min'] > 0 || $price['max'] > 0)){
+    if(count($area_ids) > 0 && is_array($area_ids)){
+        $area_lat_lng = $this->db->query("SELECT id, lat, lng FROM area WHERE id='{$area_ids[0]}'")->row();
+        $NEAREST_SQL = "SELECT id, area, ( 3959 * acos ( cos ( radians(" . $area_lat_lng->lat . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" .
+            $area_lat_lng->lng . ") ) + sin ( radians(" .
+            $area_lat_lng->lat . ") ) * sin( radians( lat ) ) ) ) AS distance 
+            FROM sjaidad_star.area 
+            WHERE 1 
+            HAVING distance < 3
+            ORDER BY distance";
+
+        $NEAREST_RES = $this->db->query($NEAREST_SQL);
+        if ($NEAREST_RES) {
+            $nearest_area_ids_int = [];
+            $nearest_rows = $NEAREST_RES->result();
+            foreach ($nearest_rows as $nearest_row) {
+                $nearest_area_ids_int[] = $nearest_row->id;
+            }
+
+            if(count($nearest_area_ids_int) > 0) {
+                $where_nearest_area_range .= " AND properties.area_id IN(" . join(',', array_map("intval", $nearest_area_ids_int)) . ") ";
+                $recommend_rows = $ci->m_properties->rows($where_nearest_area_range, $limit, $offset, $order);
+                $recommend_num_rows = $ci->m_properties->num_rows;
+                $recommend_total_rows = $ci->m_properties->total_rows;
+            }
+        }
+    }
+}
+
+//    Within City And Same Range
 if($num_rows == 0 && $recommend_num_rows == 0 && ($price['min'] > 0 || $price['max'] > 0)){
     $recommend_rows = $ci->m_properties->rows($where_same_city_range, $limit, $offset, $order);
     $recommend_num_rows = $ci->m_properties->num_rows;
