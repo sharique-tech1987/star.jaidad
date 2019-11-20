@@ -24,10 +24,14 @@ $row->tags = $res->result();
 <!--    <div id="primary-content" class="pd-top-100 pd-bottom-100 sm-pd-top-50 sm-pd-bottom-0">-->
 <!--        <div class="container clearfix">-->
 <!--            <div class="row">-->
-                <div id="primary-content" class="pd-top-100 pd-bottom-100 archive-wrap archive-large-image">
-                    <div class="container clearfix">
+
+                <div id="primary-content" class="pd-top-100 archive-wrap archive-large-image">
+
+<!--                <div id="primary-content space" class="pd-top-100 pd-bottom-100 archive-wrap archive-large-image">-->
+
+                    <div class="container clearfix" style="padding: 20px 20px !important;">
                         <div class="row">
-                            <div class="col-md-9 archive-inner">
+                            <div class="col-md-9 col-sm-12 archive-inner">
                                 <div class="blog-wrap clearfix">
                                     <article id="post-3523" class="post-large-image clearfix post-3523 post type-post status-publish format-standard has-post-thumbnail hentry category-apartment category-real-estates tag-apartment tag-villa">
                                         <div class="entry-content-wrap clearfix">
@@ -45,7 +49,7 @@ $row->tags = $res->result();
                                                     <a href="#" title="We are Offering the Best Real Estate Deals" class="entry-thumbnail-overlay">
                                                         <img src="<?php echo $img_url ?>" alt="<?php echo $row->title ?>" class="img-responsive"> </a>
                                                     <a data-thumb-src="<?php echo $img_url ?>" data-gallery-id="1701687358" data-rel="lightGallery" href="http://themes.g5plus.net/benaa/wp-content/uploads/2018/01/properties-1.jpg" class="zoomGallery">
-                                                        <i class="fa fa-expand"></i>
+<!--                                                        <i class="fa fa-expand"></i>-->
                                                     </a>
                                                 </div>
                                             </div>
@@ -101,7 +105,9 @@ $row->tags = $res->result();
 <!--                                <i class="fa fa-sliders"></i>-->
 <!--                            </div>-->
 
+                            <div class="mobilehide">
                             <?php include('include/blog_right_side_bar.php'); ?>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -15,8 +15,8 @@ $blog_categories =  $ci->m_blog_categories->rows($where='', $limit, $offset, $bl
 $blog_tags =  $ci->m_blog_tags->rows($where='', $limit=10, $offset, $blog_tags_order);
 s?>
 
-<div class="wrapper-sticky" style="display: block; height: 1134px; width: 25%; margin: auto; position: relative; float: left; left: auto; right: auto; top: auto; bottom: auto; vertical-align: top;">
-    <div class="primary-sidebar sidebar col-md-3 sidebar-mobile-canvas gf-sticky" style="left: 0px; width: 300px; position: absolute; top: 0px;">
+<div class="wrapper-sticky mobile_width" style="display: block; height: auto; width: 25%; margin: auto; position: relative; float: left; left: auto; right: auto; top: auto; bottom: auto; vertical-align: top;">
+    <div class="primary-sidebar mobile_width sidebar sidebar-mobile-canvas -gf-sticky">
         <aside id="search-2" class="widget widget_search">
             <h4 class="widget-title"><span>Search</span></h4>
             <form role="search" class="search-form" method="get" id="searchform" action="<?php echo site_url('blogs'); ?>">
