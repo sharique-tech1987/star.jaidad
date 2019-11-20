@@ -215,7 +215,7 @@ if($num_rows == 0 && $recommend_num_rows == 0 && ($price['min'] > 0 || $price['m
         $NEAREST_SQL = "SELECT id, area, ( 3959 * acos ( cos ( radians(" . $area_lat_lng->lat . ") ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(" .
             $area_lat_lng->lng . ") ) + sin ( radians(" .
             $area_lat_lng->lat . ") ) * sin( radians( lat ) ) ) ) AS distance 
-            FROM sjaidad_star.area 
+            FROM area 
             WHERE 1 
             HAVING distance < 3
             ORDER BY distance";
