@@ -20,7 +20,107 @@ class Crons extends CI_Controller
         ]);
     }
 
+    function update_lat_lng(){
+        $PARENT_AREA_SQL = "SELECT SQL_CALC_FOUND_ROWS `countries`.countryName
+                , `cities`.`city`
+                , `area`.*
+                , CONCAT_WS(',',`area`.area, `cities`.`city`, `countries`.countryName) `FullAddress` 
+                FROM `cities` 
+                LEFT JOIN `area` ON (`cities`.`id` = `area`.`city_id`) 
+                LEFT JOIN `countries` ON (`countries`.countryCode = `cities`.country) 
+                WHERE 1 AND `area`.`parent_id` = 0 AND `area`.lat = 0 AND `area`.lng = 0 LIMIT 0,40";
 
+        $when_lat_clause = "";
+        $when_lng_clause = "";
+        $ids_array = array();
+        $parent_rows = $this->db->query($PARENT_AREA_SQL)->result();
+        if (count($parent_rows) > 0) {
+            foreach ($parent_rows as $row) {
+                $latLng = getLatLng($row->FullAddress);
+                if($latLng->lat != null && $latLng->lat != 0) {
+                    array_push($ids_array, $row->id);
+                    $when_lat_clause .= " WHEN " . $row->id . " THEN " . $latLng->lat;
+                    $when_lng_clause .= " WHEN " . $row->id . " THEN " . $latLng->lng;
+                }
+            }
+
+            if(count($ids_array)) {
+                $UPDATE_LAT_SQL = "UPDATE area
+                        SET lat = (CASE id " . $when_lat_clause .
+                    " END)
+                        WHERE id IN(" . join(",", $ids_array) . ");";
+
+                $UPDATE_LNG_SQL = "UPDATE area
+                        SET lng = (CASE id " . $when_lng_clause .
+                    " END)
+                        WHERE id IN(" . join(",", $ids_array) . ");";
+
+//                echo $UPDATE_LAT_SQL;
+//                echo "<br/>";
+//                echo $UPDATE_LNG_SQL;
+                echo "----- Modified Ids -----";
+                var_dump($ids_array);
+
+                //            Run Batch update
+                $this->db->query($UPDATE_LAT_SQL);
+                $this->db->query($UPDATE_LNG_SQL);
+            }
+
+        }
+
+
+        $SUB_AREA_SQL = "SELECT SQL_CALC_FOUND_ROWS `countries`.countryName
+                , `cities`.`city`
+                , `area`.*
+                , CONCAT_WS(',',`area`.area, `cities`.`city`, `countries`.countryName) `FullAddress` 
+                FROM `cities` 
+                LEFT JOIN `area` ON (`cities`.`id` = `area`.`city_id`) 
+                LEFT JOIN `countries` ON (`countries`.countryCode = `cities`.country) 
+                WHERE 1 AND `area`.`parent_id` != 0 AND `area`.lat = 0 AND `area`.lng = 0 LIMIT 0,25";
+
+        $when_lat_clause = "";
+        $when_lng_clause = "";
+        $ids_array = array();
+        $sub_rows = $this->db->query($SUB_AREA_SQL)->result();
+
+        if (count($sub_rows) > 0) {
+            foreach ($sub_rows as $row) {
+                $latLng = getLatLng($row->FullAddress);
+                if($latLng->lat != null && $latLng->lat != 0) {
+                    array_push($ids_array, $row->id);
+                    $when_lat_clause .= " WHEN " . $row->id . " THEN " . $latLng->lat;
+                    $when_lng_clause .= " WHEN " . $row->id . " THEN " . $latLng->lng;
+                }
+            }
+
+            if(count($ids_array)) {
+                $UPDATE_SUB_AREA_LAT_SQL = "UPDATE area
+                        SET lat = (CASE id " . $when_lat_clause .
+                    " END)
+                        WHERE id IN(" . join(",", $ids_array) . ");";
+
+                $UPDATE_SUB_AREA_LNG_SQL = "UPDATE area
+                        SET lng = (CASE id " . $when_lng_clause .
+                    " END)
+                        WHERE id IN(" . join(",", $ids_array) . ");";
+
+                echo "<br/>";
+//                echo $UPDATE_SUB_AREA_LAT_SQL;
+//                echo "<br/>";
+//                echo $UPDATE_SUB_AREA_LNG_SQL;
+                echo "----- Modified Ids -----";
+                var_dump($ids_array);
+
+//            Run Batch update
+                $this->db->query($UPDATE_SUB_AREA_LAT_SQL);
+                $this->db->query($UPDATE_SUB_AREA_LNG_SQL);
+            }
+        }
+
+        echo "<br/>";
+        echo "Updated Lat Long";
+
+    }
 
     function payment_reminders($reminder_days)
     {
