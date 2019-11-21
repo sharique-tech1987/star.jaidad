@@ -344,7 +344,7 @@
                 </div>
                 <div class="tab-pane fade" id="social-setting">
                     <?php
-                    $inputs = ['Facebook', 'Twitter', 'Youtube', 'google-plus' => 'Google+', 'instagram' => 'Instagram', 'pinterest', 'Linkedin', 'Skype'];
+                    $inputs = ['Facebook', 'Twitter', 'Youtube', 'google-plus' => 'Google+', 'instagram' => 'Instagram', 'pinterest', 'Linkedin', 'Skype', 'play' => 'Playstore'];
                     $values = json_decode(get_option('social'), true);
 
                     foreach ($inputs as $key => $title) {
