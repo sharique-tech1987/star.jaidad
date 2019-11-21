@@ -6047,6 +6047,9 @@ div#field {
 
 }
 @media(max-width: 767px) {
+    .mysize a img {
+        width: 30% !important;
+    }
     .mobile_width{
         width: 100% !important;
     }
