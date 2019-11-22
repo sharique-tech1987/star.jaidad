@@ -435,6 +435,89 @@ class Profile extends CI_Controller
                         $JSON['text'] = __('Income');
                         $JSON['subtext'] = __($sub_title);
                         break;
+
+                    case 'search-property-types':
+                        $where = '';
+                        $year = date('Y');
+                        $month = date('m');
+                        $SQL = "SELECT property_types.type  property_type
+                                , count(q_params->>'$.type_id') property_count
+                                FROM search_queries
+                                INNER JOIN property_types
+                                ON(property_types.id=q_params->>'$.type_id')
+                                WHERE 1 {$where}   
+                                AND q_params->>'$.type_id' > 0
+                                AND MONTH(`created`) ='{$month}'
+                                AND YEAR(`created`) ='{$year}'
+                                GROUP BY q_params->>'$.type_id'";
+                        $ch_rows = $this->db->query($SQL)->result();
+                        $chart_data = [];
+                        if (count($ch_rows) > 0) {
+                            foreach ($ch_rows as $ch_row) {
+                                $chart_data['legend_data'][] = $ch_row->property_type;
+                                $chart_data['property_type_data_pie'][] = ['value' => $ch_row->property_count, 'name' => $ch_row->property_type];
+                            }
+                        }
+                        $JSON = $chart_data;
+                        $JSON['text'] = __('Search By Property Types');
+                        $JSON['subtext'] = __('');
+
+                        break;
+
+                    case 'search-city':
+                        $where = '';
+                        $year = date('Y');
+                        $month = date('m');
+                        $SQL = "SELECT cities.city
+                                , count(q_params->>'$.city_id') city_count
+                                FROM search_queries
+                                INNER JOIN
+                                cities ON(cities.id=q_params->>'$.city_id')
+                                WHERE 1 {$where}
+                                AND q_params->>'$.city_id' > 0 
+                                AND MONTH(`created`) ='{$month}'
+                                AND YEAR(`created`) ='{$year}'
+                                GROUP BY q_params->>'$.city_id'";
+                        $ch_rows = $this->db->query($SQL)->result();
+                        $chart_data = [];
+                        if (count($ch_rows) > 0) {
+                            foreach ($ch_rows as $ch_row) {
+                                $chart_data['legend_data'][] = $ch_row->city;
+                                $chart_data['cities_data_pie'][] = ['value' => $ch_row->city_count, 'name' => $ch_row->city];
+                            }
+                        }
+                        $JSON = $chart_data;
+                        $JSON['text'] = __('Search By Cities');
+                        $JSON['subtext'] = __('');
+
+                        break;
+
+                    case 'search-purpose':
+                        $where = '';
+                        $year = date('Y');
+                        $month = date('m');
+                        $SQL = "SELECT q_params->>'$.purpose' purpose
+                                , count(q_params->>'$.purpose') purpose_count
+                                FROM search_queries 
+                                WHERE 1  {$where}  
+                                AND q_params->>'$.purpose' IS NOT NULL  
+                                AND MONTH(`created`) ='{$month}'
+                                AND YEAR(`created`) ='{$year}'
+                                GROUP BY purpose";
+
+                        $ch_rows = $this->db->query($SQL)->result();
+                        $chart_data = [];
+                        if (count($ch_rows) > 0) {
+                            foreach ($ch_rows as $ch_row) {
+                                $chart_data['legend_data'][] = $ch_row->purpose;
+                                $chart_data['series_data_pie'][] = ['value' => $ch_row->purpose_count, 'name' => $ch_row->purpose];
+                            }
+                        }
+                        $JSON = $chart_data;
+                        $JSON['text'] = __('Search By Purpose');
+                        $JSON['subtext'] = __('');
+
+                        break;
                     case 'income-pie':
                         $where = '';
                         $SQL = "SELECT income_head, SUM(amount) AS total

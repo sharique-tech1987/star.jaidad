@@ -6,7 +6,11 @@ $ci->load->model(ADMIN_DIR . 'm_amenities');
 if(empty($_COOKIE['area_unit'])){
     $_COOKIE['area_unit'] = 'Marla';
 }
-
+if(count($_GET) && !isset($_GET["per_page"])) {
+    $search_params_json = json_encode($_GET);
+    $data = array("q_params" => $search_params_json, "created" => date('Y-m-d H:i:s'));
+    save('search_queries', $data);
+}
 $area_attr['limit'] = 36;
 $where = " AND properties.status='Active' ";
 $where_different_range = " AND properties.status='Active' ";
