@@ -71,7 +71,7 @@ class Scheme_forms extends CI_Controller
         $query = "SELECT scheme_forms.id
 , scheme_forms.form_type
 , scheme_forms.name
-, scheme_forms.area
+, scheme_forms.cities
 , scheme_forms.property_type
 , scheme_forms.father_name
 , scheme_forms.cnic
@@ -387,6 +387,7 @@ WHERE 1 {$where}";
     {
 
         $type = $this->uri->segment(4);
+		$type = (empty($type) ? 'csv' : $type);
         $this->load->dbutil();
         $query = _session($this->module_name . '_export_query');
         if (!empty($query)) {
@@ -397,9 +398,10 @@ WHERE 1 {$where}";
 
         $query = $this->db->query($query);
 
-        $dir = dirname(__FILE__) . "/";
+        $dir = ASSETS_DIR;
 
         $filename = "{$dir}{$this->table}.{$type}";
+
         switch ($type) {
             case 'xml':
                 $config = array(
@@ -418,11 +420,10 @@ WHERE 1 {$where}";
         }
 
         activity_log(getUri(3), $this->table);
-
         fileDownload($filename);
         @unlink($filename);
-
-        redirect(admin_url($this->_route));
+		die;
+        redirectBack();
     }
 
 
