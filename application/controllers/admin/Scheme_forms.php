@@ -71,6 +71,8 @@ class Scheme_forms extends CI_Controller
         $query = "SELECT scheme_forms.id
 , scheme_forms.form_type
 , scheme_forms.name
+, scheme_forms.area
+, scheme_forms.property_type
 , scheme_forms.father_name
 , scheme_forms.cnic
 , scheme_forms.cell
