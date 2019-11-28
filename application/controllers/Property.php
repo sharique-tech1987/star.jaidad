@@ -157,6 +157,7 @@ class Property extends CI_Controller
             }
             $db_data['created_by'] = $member_id;
             $db_data['modified_by'] = $member_id;
+            $db_data['status'] = 'Inactive';
             if ($this->m_properties->update($id, $db_data) && $id > 0) {
 
                 set_notification(__('Property has been updated'), 'success');
@@ -166,14 +167,31 @@ class Property extends CI_Controller
 
             } else if ($id = $this->m_properties->insert($db_data)) {
 //              Send Email of Add property to user and CC to admin
-                set_notification(__('Property has been submitted'), 'success');
+                $property = $this->m_properties->row($id);
+                $property->property_url = admin_url() . "/properties/view/" . $id;
+                $property->property_approve = admin_url() . '/properties/status/' . $id . '/?status=Active';
+                $property->property_reject = admin_url() . '/properties/status/' . $id . '/?status=Inactive';
+
+                    set_notification(__('Property has been submitted'), 'success');
                 $this->m_properties->update_files_DB($id);
                 $msg = get_email_template($member, 'New Property');
+                $admin_msg = get_email_template($property, 'Admin New Property');
                 if ($msg->status == 'Active') {
                     $emaildata = array(
                         'to' => $member->email,
                         'subject' => $msg->subject,
                         'message' => $msg->message
+                    );
+                    if (!send_mail($emaildata)) {
+                        set_notification('Email sending failed.', 'danger');
+                    }
+                }
+
+                if ($admin_msg->status == 'Active') {
+                    $emaildata = array(
+                        'to' => get_option('admin_cc_email'),
+                        'subject' => $admin_msg->subject,
+                        'message' => $admin_msg->message
                     );
                     if (!send_mail($emaildata)) {
                         set_notification('Email sending failed.', 'danger');
