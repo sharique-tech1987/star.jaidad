@@ -18,6 +18,7 @@ class M_login extends CI_Model
     {
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             return false;

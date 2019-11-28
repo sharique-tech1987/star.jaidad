@@ -26,6 +26,9 @@ include dirname(__FILE__) . "/includes/head.php";
                         <div class="form-group m-form__group">
                             <input class="form-control m-input m-login__form-input--last" type="password" placeholder="<?php echo __('Password');?>" name="password">
                         </div>
+                        <div class="form-group m-form__group">
+                            <div style="padding: 25px 0px;" class="g-recaptcha" data-sitekey="<?php echo get_option('captcha_site_key'); ?>"></div>
+                        </div>
                         <div class="row m-login__form-sub">
                             <div class="col m--align-left m-login__form-left">
                                 <label class="m-checkbox  m-checkbox--light">

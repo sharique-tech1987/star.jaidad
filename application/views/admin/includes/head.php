@@ -17,6 +17,7 @@
     <script src="<?php echo asset_url('app/js/numeral.min.js', true);?>" type="text/javascript"></script>
     <script src="<?php echo asset_url('app/js/print.js', true);?>" type="text/javascript"></script>
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script>
         WebFont.load({

@@ -54,6 +54,7 @@ class Login extends CI_Controller
             $username = getVar('username');
             $password = encryptPassword(getVar('password'));
             $remember = getVar('remember');
+            $gcaptcha = getVar('g-recaptcha-response');
 
             $result = $this->m_login->chklogin($username, $password, " AND user_types.login IN('Backend', 'Both')");
 
