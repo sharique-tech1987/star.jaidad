@@ -152,7 +152,9 @@ class Property extends CI_Controller
 
                 }
             }
-
+            if(is_null ( $member )){
+                $member = $this->m_users->row($member_id);
+            }
             $db_data['created_by'] = $member_id;
             $db_data['modified_by'] = $member_id;
             if ($this->m_properties->update($id, $db_data) && $id > 0) {
@@ -163,9 +165,20 @@ class Property extends CI_Controller
 
 
             } else if ($id = $this->m_properties->insert($db_data)) {
-
+//              Send Email of Add property to user and CC to admin
                 set_notification(__('Property has been submitted'), 'success');
                 $this->m_properties->update_files_DB($id);
+                $msg = get_email_template($member, 'New Property');
+                if ($msg->status == 'Active') {
+                    $emaildata = array(
+                        'to' => $member->email,
+                        'subject' => $msg->subject,
+                        'message' => $msg->message
+                    );
+                    if (!send_mail($emaildata)) {
+                        set_notification('Email sending failed.', 'danger');
+                    }
+                }
                 redirect('member/account/properties');
 
             } else {

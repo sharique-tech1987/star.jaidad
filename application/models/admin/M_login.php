@@ -14,11 +14,13 @@ class M_login extends CI_Model
         $this->load->model(ADMIN_DIR . 'm_users');
     }
 
-    function validate()
+    function validate($options=array())
     {
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required');
+        if($options["chk_captcha"]) {
+            $this->form_validation->set_rules('g-recaptcha-response', 'Captcha', 'required');
+        }
 
         if ($this->form_validation->run() == FALSE) {
             return false;

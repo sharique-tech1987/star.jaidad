@@ -50,7 +50,7 @@ class Login extends CI_Controller
     public function do_login()
     {
         $JSON = ['status' => false];
-        if ($this->m_login->validate()) {
+        if ($this->m_login->validate(["chk_captcha" => true])) {
             $username = getVar('username');
             $password = encryptPassword(getVar('password'));
             $remember = getVar('remember');

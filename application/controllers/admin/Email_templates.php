@@ -296,7 +296,7 @@ class Email_templates extends CI_Controller
      * @method email_templates AJAX actions
      * *****************************************************************************************************************
      */
-    function AJAX($action, $id)
+    function AJAX($action, $id=0)
     {
         $JSON = [];
         switch ($action) {
