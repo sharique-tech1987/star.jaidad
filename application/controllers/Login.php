@@ -104,11 +104,15 @@ class Login extends CI_Controller
                     $member->password = getVar('password');
                     $msg = get_email_template($member, 'New Account');
                     if ($msg->status == 'Active') {
+                        $admin_cc_email = get_option('admin_cc_email');
                         $emaildata = array(
                             'to' => $member->email,
                             'subject' => $msg->subject,
                             'message' => $msg->message
                         );
+                        if(!empty($admin_cc_email)){
+                            $emaildata['cc'] = $admin_cc_email;
+                        }
                         if (!send_mail($emaildata)) {
                             set_notification('Email sending failed.', 'danger');
                         } else {
