@@ -2,7 +2,15 @@
     <div class="page-top-section">
         <section class="page-title page-title-large page-title-background" style="padding-top:70px;padding-bottom:70px">
             <div class="page-title-background"
-                 style="background-image: url(<?php echo asset_url('front/pages/' . $page->thumbnail); ?>)"></div>
+                 <?php
+                 $banner_img_url = '';
+                 if(empty($page->thumbnail)){
+                     $banner_img_url = asset_url('front/pages/new_cover.jpg' );
+                 }else{
+                     $banner_img_url = asset_url('front/pages/' . $page->thumbnail);
+                 }
+                 ?>
+                 style="background-image: url(<?php echo $banner_img_url; ?>)"></div>
             <div class="container">
                 <div class="page-title-inner">
                     <div class="page-title-main-info">
