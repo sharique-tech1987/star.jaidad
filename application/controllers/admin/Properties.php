@@ -232,24 +232,33 @@ WHERE 1 {$where}";
         if (save($this->table, $data, $where)) {
             set_notification(__('Status has been updated'), 'success');
 //        Send email if id is single
-            if(intval(getUri(4)) && $status == 'Active'){
+            if(intval(getUri(4))){
                 $property = $this->module->row($IDs);
                 $member = $this->m_users->row($property->created_by);
                 $email_data_obj = new stdClass();
                 $email_data_obj->first_name = $member->first_name;
                 $email_data_obj->email = $member->email;
                 $email_data_obj->property_name = $property->title;
-                $msg = get_email_template($email_data_obj, 'Property Approval');
-                if ($msg->status == 'Active') {
+                $p_aprroval_msg = get_email_template($email_data_obj, 'Property Approval');
+                $p_reject_msg = get_email_template($email_data_obj, 'Property Rejection');
+
+                if ( in_array($status, array('Active', 'Inactive')) ) {
                     $emaildata = array(
-                        'to' => $email_data_obj->email,
-                        'subject' => $msg->subject,
-                        'message' => $msg->message
+                        'to' => $email_data_obj->email
                     );
+                    if($status == 'Active' && $p_aprroval_msg->status == 'Active'){
+                        $email_status_notification = $p_aprroval_msg->subject . " email has been sent" ;
+                        $emaildata['subject'] = $p_aprroval_msg->subject;
+                        $emaildata['message'] = $p_aprroval_msg->message;
+                    }else if($status == 'Inactive' && $p_reject_msg->status == 'Active'){
+                        $email_status_notification = $p_reject_msg->subject . " email has been sent" ;
+                        $emaildata['subject'] = $p_reject_msg->subject;
+                        $emaildata['message'] = $p_reject_msg->message;
+                    }
                     if (!send_mail($emaildata)) {
                         set_notification('Email sending failed.', 'danger');
                     } else {
-                        set_notification('Property approval email has been sent', 'success');
+                        set_notification( $email_status_notification, 'success');
                     }
                 }
             }
