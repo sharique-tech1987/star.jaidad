@@ -33,6 +33,7 @@ class Properties extends CI_Controller
         //TODO:: Module Name
         $this->module_name = getUri(2);
 
+        $this->load->model(ADMIN_DIR . 'm_users');
         $this->module = 'm_' . $this->module_name;
         $this->load->model(ADMIN_DIR . $this->module);
         $this->module = $this->{$this->module};
@@ -230,6 +231,28 @@ WHERE 1 {$where}";
         $where = $this->id_field . " IN({$IDs}) " . $this->where;
         if (save($this->table, $data, $where)) {
             set_notification(__('Status has been updated'), 'success');
+//        Send email if id is single
+            if(intval(getUri(4)) && $status == 'Active'){
+                $property = $this->module->row($IDs);
+                $member = $this->m_users->row($property->created_by);
+                $email_data_obj = new stdClass();
+                $email_data_obj->first_name = $member->first_name;
+                $email_data_obj->email = $member->email;
+                $email_data_obj->property_name = $property->title;
+                $msg = get_email_template($email_data_obj, 'Property Approval');
+                if ($msg->status == 'Active') {
+                    $emaildata = array(
+                        'to' => $email_data_obj->email,
+                        'subject' => $msg->subject,
+                        'message' => $msg->message
+                    );
+                    if (!send_mail($emaildata)) {
+                        set_notification('Email sending failed.', 'danger');
+                    } else {
+                        set_notification('Property approval email has been sent', 'success');
+                    }
+                }
+            }
 
         } else {
             $db_error = $this->db->error()['message'];
