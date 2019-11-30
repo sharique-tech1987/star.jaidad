@@ -441,15 +441,17 @@ class Profile extends CI_Controller
                         $year = date('Y');
                         $month = date('m');
                         $SQL = "SELECT property_types.type  property_type
-                                , count(q_params->>'$.type_id') property_count
-                                FROM search_queries
-                                INNER JOIN property_types
+                                        ,search_queries.id
+                                        , count(q_params->>'$.type_id') property_count
+                                FROM property_types
+                                LEFT JOIN search_queries
                                 ON(property_types.id=q_params->>'$.type_id')
-                                WHERE 1 {$where}   
-                                AND q_params->>'$.type_id' > 0
-                                AND MONTH(`created`) ='{$month}'
-                                AND YEAR(`created`) ='{$year}'
-                                GROUP BY q_params->>'$.type_id'";
+                                WHERE 1    
+                                AND (q_params->>'$.type_id' > 0  OR search_queries.id IS NULL)
+                                AND (MONTH(`created`) ='{$month}' OR MONTH(`created`) IS NULL)
+                                AND (YEAR(`created`) ='{$year}' OR  YEAR(`created`) IS NULL)
+                                GROUP BY property_types.type
+                                ORDER BY property_count DESC";
                         $ch_rows = $this->db->query($SQL)->result();
                         $chart_data = [];
                         if (count($ch_rows) > 0) {
@@ -473,11 +475,14 @@ class Profile extends CI_Controller
                                 FROM search_queries
                                 INNER JOIN
                                 cities ON(cities.id=q_params->>'$.city_id')
-                                WHERE 1 {$where}
-                                AND q_params->>'$.city_id' > 0 
+                                WHERE 1 
+                                AND q_params->>'$.city_id' > 0
                                 AND MONTH(`created`) ='{$month}'
                                 AND YEAR(`created`) ='{$year}'
-                                GROUP BY q_params->>'$.city_id'";
+                                GROUP BY q_params->>'$.city_id'
+                                ORDER BY city_count DESC
+                                LIMIT 0,5";
+
                         $ch_rows = $this->db->query($SQL)->result();
                         $chart_data = [];
                         if (count($ch_rows) > 0) {
@@ -487,7 +492,7 @@ class Profile extends CI_Controller
                             }
                         }
                         $JSON = $chart_data;
-                        $JSON['text'] = __('Search By Cities');
+                        $JSON['text'] = __('Top 5 Search Cities');
                         $JSON['subtext'] = __('');
 
                         break;
