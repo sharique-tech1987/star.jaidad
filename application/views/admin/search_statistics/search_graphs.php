@@ -104,51 +104,51 @@
     <?php } ?>
 
     <?php if (user_do_action('search_cities', 'search_statistics')) { ?>
-        <div class="col-lg-6">
-            <div class="m-portlet" style="height: 420px;">
-                <div class="m-portlet__body p-1">
-                    <div id="search_cities" style="width: 100%;height:400px;"></div>
-                </div>
+<!--        <div class="col-lg-6">-->
+<!--            <div class="m-portlet" style="height: 420px;">-->
+<!--                <div class="m-portlet__body p-1">-->
+<!--                    <div id="search_cities" style="width: 100%;height:400px;"></div>-->
+<!--                </div>-->
 
                 <script>
-                    var searchCitiesPieChart = echarts.init(document.getElementById('search_cities'));
-                    searchCitiesPieChart.setOption(basic_option);
-                    searchCitiesPieChart.showLoading();
-                    $(document).ready(function () {
+                    // var searchCitiesPieChart = echarts.init(document.getElementById('search_cities'));
+                    // searchCitiesPieChart.setOption(basic_option);
+                    // searchCitiesPieChart.showLoading();
+                    // $(document).ready(function () {
                         //income-pie        search-purpose
-                        $.getJSON('<?php echo admin_url('profile/AJAX/chart/search-city');?>').done(function (data) {
-                            console.log(data);
-                            searchCitiesPieChart.hideLoading();
-                            searchCitiesPieChart.setOption({
-                                title: {
-                                    text: data.text,
-                                    subtext: data.subtext
-                                },
-                                legend: {
-                                    data: data.legend_data
-                                },
-                                series: [{
-                                    name: 'Statistics',
-                                    type: 'pie',
-                                    //roseType: 'radius',
-                                    radius : '58%',
-                                    center: ['50%', '50%'],
-                                    //color: ['#c0f95f','#f00b07', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
-                                    data: data.cities_data_pie,
-                                    itemStyle: {
-                                        emphasis: {
-                                            shadowBlur: 10,
-                                            shadowOffsetX: 0,
-                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                        }
-                                    }
-                                }]
-                            });
-                        });
-                    });
+                    //    $.getJSON('<?php ////echo admin_url('profile/AJAX/chart/search-city');?>//').done(function (data) {
+                    //        console.log(data);
+                    //        searchCitiesPieChart.hideLoading();
+                    //        searchCitiesPieChart.setOption({
+                    //            title: {
+                    //                text: data.text,
+                    //                subtext: data.subtext
+                    //            },
+                    //            legend: {
+                    //                data: data.legend_data
+                    //            },
+                    //            series: [{
+                    //                name: 'Statistics',
+                    //                type: 'pie',
+                    //                //roseType: 'radius',
+                    //                radius : '58%',
+                    //                center: ['50%', '50%'],
+                    //                //color: ['#c0f95f','#f00b07', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+                    //                data: data.cities_data_pie,
+                    //                itemStyle: {
+                    //                    emphasis: {
+                    //                        shadowBlur: 10,
+                    //                        shadowOffsetX: 0,
+                    //                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    //                    }
+                    //                }
+                    //            }]
+                    //        });
+                    //    });
+                    //});
                 </script>
-            </div>
-        </div>
+<!--            </div>-->
+<!--        </div>-->
     <?php } ?>
 
     <?php if (user_do_action('search_property_types', 'search_statistics')) { ?>

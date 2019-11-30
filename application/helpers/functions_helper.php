@@ -1818,3 +1818,12 @@ function replace_urls($content){
 function number_to_int($number){
     return intval(str_replace(',', '', $number));
 }
+
+function result_to_json($result, $col_name, $fetch_cols=array()){
+    $json_result_arr = array();
+    foreach ($result as $res) {
+        $decoded_data = json_decode($res->{$col_name});
+        array_push($json_result_arr, $decoded_data);
+    }
+    return $json_result_arr;
+}

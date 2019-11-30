@@ -440,22 +440,35 @@ class Profile extends CI_Controller
                         $where = '';
                         $year = date('Y');
                         $month = date('m');
-                        $SQL = "SELECT property_types.type  property_type
-                                        ,search_queries.id
-                                        , count(q_params->>'$.type_id') property_count
-                                FROM property_types
-                                LEFT JOIN search_queries
-                                ON(property_types.id=q_params->>'$.type_id')
-                                WHERE 1    
-                                AND (q_params->>'$.type_id' > 0  OR search_queries.id IS NULL)
-                                AND (MONTH(`created`) ='{$month}' OR MONTH(`created`) IS NULL)
-                                AND (YEAR(`created`) ='{$year}' OR  YEAR(`created`) IS NULL)
-                                GROUP BY property_types.type
-                                ORDER BY property_count DESC";
+                        $SQL = "SELECT q_params
+                                FROM search_queries
+                                WHERE 1  {$where}
+                                AND MONTH(`created`) ='{$month}'
+                                AND YEAR(`created`) ='{$year}'";
                         $ch_rows = $this->db->query($SQL)->result();
+                        $ch_rows = result_to_json($ch_rows, 'q_params');
+
+                        $property_rows = array();
+                        $PROPERTY_TYPE_SQL = "SELECT * FROM `property_types` WHERE status='Active' ORDER BY ordering ASC";
+                        $property_type_rows = $this->db->query($PROPERTY_TYPE_SQL)->result();
+                        foreach ($property_type_rows as $property_type_row) {
+                            $obj = new stdClass();
+                            $obj->property_type = $property_type_row->type;
+                            $obj->property_count = 0;
+                            $property_rows[$property_type_row->id] = $obj;
+                        }
+                        foreach ($ch_rows as $ch_row) {
+                            if(!empty($ch_row->type_id) ) {
+                                if (array_key_exists($ch_row->type_id, $property_rows)) {
+                                    $obj = $property_rows[$ch_row->type_id];
+                                    $obj->property_count = $obj->property_count + 1;
+                                    $property_rows[$ch_row->type_id] = $obj;
+                                }
+                            }
+                        }
                         $chart_data = [];
-                        if (count($ch_rows) > 0) {
-                            foreach ($ch_rows as $ch_row) {
+                        if (count($property_rows) > 0) {
+                            foreach ($property_rows as $key => $ch_row) {
                                 $chart_data['legend_data'][] = $ch_row->property_type;
                                 $chart_data['property_type_data_pie'][] = ['value' => $ch_row->property_count, 'name' => $ch_row->property_type];
                             }
@@ -501,19 +514,29 @@ class Profile extends CI_Controller
                         $where = '';
                         $year = date('Y');
                         $month = date('m');
-                        $SQL = "SELECT q_params->>'$.purpose' purpose
-                                , count(q_params->>'$.purpose') purpose_count
-                                FROM search_queries 
-                                WHERE 1  {$where}  
-                                AND q_params->>'$.purpose' IS NOT NULL  
+                        $SQL = "SELECT q_params
+                                FROM search_queries
+                                WHERE 1  {$where}
                                 AND MONTH(`created`) ='{$month}'
-                                AND YEAR(`created`) ='{$year}'
-                                GROUP BY purpose";
-
+                                AND YEAR(`created`) ='{$year}'";
                         $ch_rows = $this->db->query($SQL)->result();
+                        $ch_rows = result_to_json($ch_rows, 'q_params');
+                        $property_rows = array();
+                        foreach ($ch_rows as $ch_row) {
+                            if(array_key_exists($ch_row->purpose,$property_rows)){
+                                $obj = $property_rows[$ch_row->purpose];
+                                $obj->purpose_count = $obj->purpose_count + 1;
+                                $property_rows[$ch_row->purpose] = $obj;
+                            }else{
+                                $obj = new stdClass();
+                                $obj->purpose = $ch_row->purpose;
+                                $obj->purpose_count = 1;
+                                $property_rows[$ch_row->purpose] = $obj;
+                            }
+                        }
                         $chart_data = [];
-                        if (count($ch_rows) > 0) {
-                            foreach ($ch_rows as $ch_row) {
+                        if (count($property_rows) > 0) {
+                            foreach ($property_rows as $key => $ch_row) {
                                 $chart_data['legend_data'][] = $ch_row->purpose;
                                 $chart_data['series_data_pie'][] = ['value' => $ch_row->purpose_count, 'name' => $ch_row->purpose];
                             }
