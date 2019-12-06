@@ -43,9 +43,16 @@ class Property extends CI_Controller
             $data['amenities'] = $this->m_amenities->amenities($id);
             $data['agent'] = get_member($data['row']->created_by);
 
-            $this->template->set_site_title($data['row']->title);
-            $this->template->meta('keywords', $data['row']->title);
-            $this->template->meta('description', $data['row']->title);
+			$image = checkAltImg("assets/front/properties/{$data['images'][0]->filename}");
+			if(!empty(get_option('wm_logo'))) {
+				$wm_img = ADMIN_ASSETS_DIR . 'img/' . get_option('wm_logo');
+				$full_img_url = base_url(_Image::wm($image, null, null, $wm_img));
+				//$img_url = base_url(_Image::wm($image, 770, 470, $wm_img));
+			} else {
+				$full_img_url = base_url($image);
+				//$img_url = base_url(_Image::open($image)->resize(770, 470));
+			}
+			$this->template->set_meta_tags($data['row']->title, $data['row']->title, $data['row']->title, $full_img_url);
 
             $this->breadcrumb->add_item('Properties', site_url($this->listing_url));
             $this->breadcrumb->add_item($id, '');

@@ -75,10 +75,7 @@ class Agent extends CI_Controller
         /**‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
         | End
         *‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒*/
-
-        $this->template->set_site_title($data['agent']->title);
-        $this->template->meta('keywords', $data['agent']->title);
-        $this->template->meta('description', $data['agent']->title);
+		$this->template->set_meta_tags($data['agent']->meta_title, $data['agent']->meta_keywords, $data['agent']->meta_description);
 
         $this->breadcrumb->add_item('Agent', site_url($this->listing_url));
         $this->breadcrumb->add_item($id, '');

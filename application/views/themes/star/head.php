@@ -13,6 +13,26 @@
     <meta name="robots" content="<?php echo get_option('robots'); ?>" />
     <link rel="canonical" href="<?php echo current_url();?>"/>
 
+	<!-- Open Graph -->
+	<meta property="og:title" content="<?php echo $this->template->meta('og:title');?>" />
+	<meta property="og:description" content="<?php echo $this->template->meta('og:description');?>" />
+	<meta property="og:type" content="<?php echo $this->template->meta('og:type');?>" />
+	<meta property="og:url" content="<?php echo $this->template->meta('og:url');?>" />
+	<meta property="og:image" content="<?php echo $this->template->meta('og:image');?>" />
+	<meta property="og:image:type" content="<?php echo $this->template->meta('og:image:type');?>" />
+	<meta property="og:image:width" content="<?php echo $this->template->meta('og:image:width');?>" />
+	<meta property="og:image:height" content="<?php echo $this->template->meta('og:image:height');?>" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="<?php echo $this->template->meta('twitter:card');?>" />
+	<meta name="twitter:title" content="<?php echo $this->template->meta('twitter:title');?>" /><!--gmail:developer.adnan-->
+	<meta name="twitter:description" content="<?php echo $this->template->meta('twitter:description');?>" />
+	<meta name="twitter:image:src" content="<?php echo $this->template->meta('twitter:image:src');?>" />
+	<meta name="twitter:image:width" content="<?php echo $this->template->meta('twitter:image:width');?>" />
+	<meta name="twitter:image:height" content="<?php echo $this->template->meta('twitter:image:height');?>" />
+	<meta name="twitter:site" content="<?php echo $this->template->meta('twitter:site');?>" />
+	<meta name="twitter:creator" content="<?php echo $this->template->meta('twitter:creator');?>" />
+
     <script type="text/javascript">
         var site_url = '<?php echo site_url();?>';
         var base_url = '<?php echo base_url();?>';
@@ -24,29 +44,13 @@
     <link rel="icon" href="<?php echo _img(asset_url('img/' . get_option('favicon'), true), 16, 16); ?>" type="image/x-icon"/>
 
     <!-- Stylesheets -->
-    <!-- Single File-->
     <link rel="stylesheet" href="<?php echo media_url('css/site-style.css'); ?>"/>
 
     <!-- Separate Files-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/style0.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/style01.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/style02.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/style03.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/main.min.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/owl.carousel.min.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/lightgallery.min.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/listing-property-taxonomy.min7d4c.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/advanced_search.min.css'); */?>"/>-->
     <link rel="stylesheet" href="<?php echo media_url('css/animate.css'); ?>"/>
-
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/single-property.min.css'); */?>"/>-->
     <link rel="stylesheet" href="<?php echo media_url('css/custom2.css'); ?>"/>
     <link rel="stylesheet" href="<?php echo media_url('css/custom.css'); ?>"/>
-
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/line-awesome.css'); */?>"/>-->
-    <!--<link rel="stylesheet" href="<?php /*echo media_url('css/jquery.fancybox.min.css'); */?>"/>-->
-
-    <link href="<?php echo media_url('css/select2.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo media_url('css/select2.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo media_url('css/dev.css'); ?>"/>
 
     <!-- Javascript-->

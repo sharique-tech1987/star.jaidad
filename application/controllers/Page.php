@@ -43,9 +43,7 @@ class Page extends CI_Controller
         $data['page'] = get_page($front_id);
         $data['author'] = get_member($data['page']->created_by);
 
-        $this->template->set_site_title($data['page']->meta_title);
-        $this->template->meta('keywords', $data['page']->meta_keywords);
-        $this->template->meta('description', $data['page']->meta_description);
+		$this->template->set_meta_tags($data['page']->meta_title, $data['page']->meta_keywords, $data['page']->meta_description);
 
         $template = ($data['page']->template == 'default') ? 'index' : $data['page']->template;
         $this->template->load($template, $data);
@@ -74,9 +72,7 @@ class Page extends CI_Controller
         $data['page'] = get_page(null, $where);
         $data['author'] = get_member($data['page']->created_by);
 
-        $this->template->set_site_title($data['page']->meta_title);
-        $this->template->meta('keywords', $data['page']->meta_keywords);
-        $this->template->meta('description', $data['page']->meta_description);
+		$this->template->set_meta_tags($data['page']->meta_title, $data['page']->meta_keywords, $data['page']->meta_description);
 
         $this->breadcrumb->add_item($data['page']->title, get_permalink($data['page']->friendly_url));
         /*---------------------------------------------------------------------------------------*/

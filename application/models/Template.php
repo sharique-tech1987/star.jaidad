@@ -138,6 +138,35 @@ class Template extends CI_Model
         $this->output->_display();
         exit;
     }
+
+    function set_meta_tags($title, $keywords, $description, $image = ''){
+
+		# Meta
+		$this->set_site_title($title);
+		$this->meta('keywords', $keywords);
+		$this->meta('description', $description);
+
+		list($img_width, $img_height, $img_type, $img_attr) = getimagesize($image);
+		# FB Meta
+		$this->meta('og:title', $title);
+		$this->meta('og:description', $description);
+		$this->meta('og:type', 'article');
+		$this->meta('og:url', current_url());
+		$this->meta('og:image', $image);
+		$this->meta('og:image:type', image_type_to_mime_type($img_type));
+		$this->meta('og:image:width', $img_width);
+		$this->meta('og:image:height', $img_height);
+
+		# Twitter Meta
+		$this->meta('twitter:card', 'photo');
+		$this->meta('twitter:title', $title);
+		$this->meta('twitter:description', $description);
+		$this->meta('twitter:site', '@StarJaidad');
+		$this->meta('twitter:creator', '@StarJaidad');
+		$this->meta('twitter:image:src', $image);
+		$this->meta('twitter:image:width', $img_width);
+		$this->meta('twitter:image:height', $img_height);
+	}
 }
 
 /* End of file template.php */
