@@ -120,7 +120,8 @@ class Hauth extends CI_Controller
             header('Location: ' . DOMAIN_URL . $redirect);
         }
         catch (\Exception $e) {
-            redirect();
+            redirect($this->site_url, 'refresh');
+            die();
             //echo '<pre>'; print_r($e->getMessage()); echo '</pre>';
         }
     }

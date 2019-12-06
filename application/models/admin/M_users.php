@@ -228,8 +228,9 @@ class M_users extends CI_Model
         $DbArray = getDbArray($this->table);
         $this->db_data = $DbArray['dbdata'];
 
+        $this->db_data['token_num'] = md5(random_string());
         $this->db_data['password'] = encryptPassword($this->db_data['password']);
-        $this->db_data['status'] = 'Active';
+        $this->db_data['status'] = 'Pending';
         $this->db_data['created'] = date('Y-m-d H:i:s');
         $this->db_data['modified'] = date('Y-m-d H:i:s');
         $this->db_data['created_by'] = user_info('id');

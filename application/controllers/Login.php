@@ -102,23 +102,34 @@ class Login extends CI_Controller
                     # registration_email
                     $member = $this->m_users->row($member_id);
                     $member->password = getVar('password');
-                    $msg = get_email_template($member, 'New Account');
+                    $member->activation_link = site_url() . 'login/activate_account?id=' .
+                                                $member->username . '&t=' . $member->token_num;
+                    $msg = get_email_template($member, 'Activate Account');
+                    $admin_msg = get_email_template($member, 'New Account');
                     if ($msg->status == 'Active') {
-                        $admin_cc_email = get_option('admin_cc_email');
                         $emaildata = array(
                             'to' => $member->email,
                             'subject' => $msg->subject,
                             'message' => $msg->message
                         );
-                        if(!empty($admin_cc_email)){
-                            $emaildata['cc'] = $admin_cc_email;
-                        }
                         if (!send_mail($emaildata)) {
                             set_notification('Email sending failed.', 'danger');
                         } else {
                             set_notification('Please check your email for username & password!','success');
                         }
                     }
+                    $admin_cc_email = get_option('admin_cc_email');
+                    if(!empty($admin_cc_email) && $admin_msg->status == 'Active'){
+                        $emaildata = array(
+                            'to' => $admin_cc_email,
+                            'subject' => $admin_msg->subject,
+                            'message' => $admin_msg->message
+                        );
+                        if (!send_mail($emaildata)) {
+                            set_notification('Admin Email sending failed.', 'danger');
+                        }
+                    }
+
 
                 } else if ($this->{$module}->update($member_id) && $edit) {
                     set_notification(__('Request has been submitted!'), 'success');
@@ -441,6 +452,23 @@ class Login extends CI_Controller
         }
 
         echo json_encode($JSON);
+    }
+
+    function activate_account(){
+        $get_params = $_GET;
+        $sql = "SELECT * FROM users WHERE username='{$get_params['id']}' AND `token_num`='{$get_params['t']}'";
+        $rs = $this->db->query($sql);
+        $data = array();
+        $data['activation_msg'] = "Your account has not been activated. 
+            Please contact at " . get_option('contact_email');
+        if ($rs->num_rows() > 0) {
+            $update_sql = "UPDATE users SET `status` = 'Active' WHERE username = '{$get_params['id']}' ";
+            $this->db->query($update_sql);
+            $data['activation_msg'] = "Your account has been activated successfully. 
+            Please login with username and password which is sent in the email";
+        }
+
+        $this->template->load('login/account_activation', $data);
     }
 
 }
