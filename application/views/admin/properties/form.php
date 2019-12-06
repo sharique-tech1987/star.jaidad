@@ -103,6 +103,23 @@
             </div>
         </div>
         <div class="form-group m-form__group row">
+            <label class="col-lg-2 control-label">
+                <?php echo __('Tags');?>
+            </label>
+            <div class="col-lg-10">
+                <?php
+                $tag_ids = singleColArray("SELECT tag_id FROM property_tags_rel WHERE property_id='{$row->id}'", 'tag_id');
+                ?>
+                <select name="tag_ids[]" id="tag_ids" class="form-control m_select2-tags" multiple>
+                    <!--<select name="area_id" id="area_id" class="form-control m-select2" load-url="<?php /*echo site_url('property/ajax/city_area');*/?>">-->
+                    <option value="">- Select -</option>
+                    <?php //echo selectBox("SELECT id, type FROM  blog_tags", $tag_ids)?>
+                    <?php echo selectBox("SELECT id, type FROM  property_tags", $tag_ids)?>
+                </select>
+
+            </div>
+        </div>
+        <div class="form-group m-form__group row">
             <label class="col-lg-2 control-label required"><?php echo __('Price');?>:</label>
             <div class="col-lg-6">
                 <input type="text" name="price" id="price" class="form-control" placeholder="<?php echo __('Price');?>" value="<?php echo htmlentities($row->price);?>" />

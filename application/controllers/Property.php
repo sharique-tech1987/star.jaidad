@@ -43,6 +43,21 @@ class Property extends CI_Controller
             $data['amenities'] = $this->m_amenities->amenities($id);
             $data['agent'] = get_member($data['row']->created_by);
 
+//            Move this sql to property tags model
+            $PROPERTY_TAGS_SQL = "select property_tags.type from property_tags
+                                INNER join property_tags_rel
+                                ON (property_tags.id=property_tags_rel.tag_id)
+                                WHERE property_tags_rel.property_id={$data['row']->id}";
+            $property_tags_rs = $this->db->query($PROPERTY_TAGS_SQL)->result();
+            $tag_str = "";
+            if(count($property_tags_rs)){
+                foreach ($property_tags_rs as $property_tag){
+                    $tag_str .=  $property_tag->type . ", ";
+                }
+                $tag_str = rtrim($tag_str, ", ");
+            }
+
+            $data['keywords'] = !empty($tag_str) ? $tag_str : $data['row']->title;
 			$image = checkAltImg("assets/front/properties/{$data['images'][0]->filename}");
 			if(!empty(get_option('wm_logo'))) {
 				$wm_img = ADMIN_ASSETS_DIR . 'img/' . get_option('wm_logo');
@@ -52,7 +67,7 @@ class Property extends CI_Controller
 				$full_img_url = base_url($image);
 				//$img_url = base_url(_Image::open($image)->resize(770, 470));
 			}
-			$this->template->set_meta_tags($data['row']->title, $data['row']->title, $data['row']->title, $full_img_url);
+			$this->template->set_meta_tags($data['row']->title, $data['keywords'], $data['row']->title, $full_img_url);
 
             $this->breadcrumb->add_item('Properties', site_url($this->listing_url));
             $this->breadcrumb->add_item($id, '');

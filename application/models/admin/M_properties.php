@@ -174,6 +174,31 @@ class M_properties extends CI_Model
         if ($this->_id = save($this->table, $this->db_data)) {
 
             /**‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+             * | property_tags_rel
+             *‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒*/
+            $rel_table = 'property_tags_rel';
+            if($this->db->table_exists($rel_table)) {
+                delete_rows($rel_table, "property_id='{$this->_id}'");
+                $tag_ids = getVar('tag_ids', false, false);
+                if (count($tag_ids) > 0) {
+                    foreach ($tag_ids as $tag_id) {
+                        if(!is_numeric($tag_id)){
+                            $_tag = $this->db->query("select id from property_tags WHERE type='{$tag_id}'");
+                            if($_tag->num_rows() > 0){
+                                $tag_id = $_tag->row()->id;
+                            }else {
+                                //$city_id = $this->db->query("select id from cities WHERE city='".getVar('city')."'")->row()->id;
+                                $tag_id = save('property_tags', ['type' => $tag_id]);
+                            }
+                        }
+
+                        save($rel_table, ['property_id' => $this->_id, 'tag_id' => $tag_id]);
+                    }
+                }
+            }
+
+
+            /**‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
             | Amenities
             *‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒*/
             delete_rows('property_amenities', "property_id='{$this->_id}'");
@@ -230,6 +255,30 @@ class M_properties extends CI_Model
         $this->db_data = array_merge($this->db_data, $ow_db_data);
 
         if (save($this->table, $this->db_data, "{$this->id_field} = '{$this->_id}'")) {
+
+            /**‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+             * | property_tags_rel
+             *‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒*/
+            $rel_table = 'property_tags_rel';
+            if($this->db->table_exists($rel_table)) {
+                delete_rows($rel_table, "property_id='{$this->_id}'");
+                $tag_ids = getVar('tag_ids', false, false);
+                if (count($tag_ids) > 0) {
+                    foreach ($tag_ids as $tag_id) {
+                        if(!is_numeric($tag_id)){
+                            $_tag = $this->db->query("select id from property_tags WHERE type='{$tag_id}'");
+                            if($_tag->num_rows() > 0){
+                                $tag_id = $_tag->row()->id;
+                            }else {
+                                //$city_id = $this->db->query("select id from cities WHERE city='".getVar('city')."'")->row()->id;
+                                $tag_id = save('property_tags', ['type' => $tag_id]);
+                            }
+                        }
+
+                        save($rel_table, ['property_id' => $this->_id, 'tag_id' => $tag_id]);
+                    }
+                }
+            }
 
             /**‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
             | Amenities
