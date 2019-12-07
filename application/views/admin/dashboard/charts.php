@@ -146,6 +146,50 @@
         </div>
     </div>
     <?php } ?>
+
+    <?php if (user_do_action('properties_status_statistics', 'dashboard')) { ?>
+        <div class="col-lg-6">
+            <div class="m-portlet" style="height: 420px;">
+                <div class="m-portlet__body p-1">
+                    <div id="properties-status-chart" style="width: 100%;height:400px;"></div>
+                </div>
+
+                <script>
+                    var propertiesStatusChart = echarts.init(document.getElementById('properties-status-chart'));
+                    propertiesStatusChart.setOption(basic_option);
+                    propertiesStatusChart.showLoading();
+                    $(document).ready(function () {
+                        $.getJSON('<?php echo admin_url('profile/AJAX/chart/properties-status-count');?>').done(function (data) {
+                            console.log(data);
+                            propertiesStatusChart.hideLoading();
+                            propertiesStatusChart.setOption({
+                                title: {
+                                    text: data.text,
+                                    subtext: data.subtext
+                                },
+                                legend: {
+                                    data: data.legend_data
+                                },
+                                series: [{
+                                    name: 'Properties Status',
+                                    type: 'pie',
+                                    roseType: 'area',
+                                    data: data.series_data_pie,
+                                    itemStyle: {
+                                        emphasis: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }]
+                            });
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    <?php } ?>
     <?php if (user_do_action('income_expense', 'dashboard')) { ?>
         <div class="col-lg-6">
             <div class="m-portlet" style="height: 420px;">

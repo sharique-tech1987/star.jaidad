@@ -289,6 +289,31 @@ class Profile extends CI_Controller
                         $JSON['text'] = __('Student Statistics');
                         $JSON['subtext'] = __('Class Statistics');
                     break;
+                    case 'properties-status-count':
+                        $user_id = _session(ADMIN_SESSION_ID);
+                        $user_type = _session('user_type');
+                        $show_graphs_to_users = array(get_option('client_type_id'), get_option('agent_type_id'));
+                        $where = "";
+                        if($user_id != 0 && in_array($user_type, $show_graphs_to_users)){
+                            $where .= "AND `created_by`={$user_id}";
+                        }
+                        $SQL = "SELECT `status`, count(`status`) status_count FROM `properties` 
+                                WHERE 1 {$where}
+                                AND `status` NOT IN ('Deleted')
+                                GROUP BY `status`";
+
+                        $ch_rows = $this->db->query($SQL)->result();
+                        $chart_data = [];
+                        if (count($ch_rows) > 0) {
+                            foreach ($ch_rows as $ch_row) {
+                                $chart_data['legend_data'][] = $ch_row->status;
+                                $chart_data['series_data_pie'][] = ['value' => $ch_row->status_count, 'name' => $ch_row->status];
+                            }
+                        }
+                        $JSON = $chart_data;
+                        $JSON['text'] = __('Properties Status Statistics');
+                        $JSON['subtext'] = __('');
+                    break;
                     case 'users':
                         $user_type[] = get_option('admin_user_type');
 
