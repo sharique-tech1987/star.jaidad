@@ -645,6 +645,7 @@ if (!$member_id && $total_logedin > 0) {
 if ($total_logedin > 0) {
     ?>
     <script type='text/javascript' src="<?php echo media_url('js/page.mindf0b.js'); ?>"></script>
+
     <div class="popup2 bounceIn animated infinite demoLabel mainDemo-17">
         <img src="<?php echo media_url('images/LOGO-12.png'); ?>" alt="">
     </div>
@@ -695,6 +696,11 @@ if ($member->user_type_id == $agent_type_id) {
     </div>
     <div class="userProfile agent-popup  for-agent" data-sm-init="true">
         <!--<div class="agent-popup  for-agent">-->
+        <div>
+            <button id="agent_mute" type="button">
+                Mute
+            </button>
+        </div>
         <h4>Do you want to contact?</h4>
         <?php //if(count($member_rows) > 0) {
         ?>
@@ -718,7 +724,8 @@ if ($member->user_type_id == $agent_type_id) {
                     data: {},
                 }).done(function (json) {
                     if (json.status) {
-                        if (json.status > num_agent) {
+                        var agent_mute = $.cookie("mute");
+                        if (json.status > num_agent && (typeof agent_mute === 'undefined' || agent_mute != 1)) {
                             let audio = new Audio('<?php echo media_url('to-the-point.mp3');?>');
                             audio.play();
                         }
@@ -793,6 +800,25 @@ if ($member->user_type_id == $agent_type_id) {
 
 
     $(document).ready(function () {
+
+        var agent_mute = $.cookie("mute");
+        if( (typeof agent_mute === 'undefined' || agent_mute != 1 ) ){
+            $('#agent_mute').text("Mute");
+        }else{
+            $('#agent_mute').text("Unmute");
+        }
+
+        $('#agent_mute').click(function () {
+            var agent_mute = $.cookie("mute");
+            if( (typeof agent_mute === 'undefined' || agent_mute != 1) ){
+                $.cookie("mute", 1, { path: '/' });
+                $(this).text("Unmute");
+            }else{
+                $.removeCookie('mute', { path: '/' })
+                $(this).text("Mute");
+            }
+
+        });
 
         var data = [];
         var menu_item;
