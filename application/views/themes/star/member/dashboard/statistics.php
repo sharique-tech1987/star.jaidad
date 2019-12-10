@@ -55,68 +55,115 @@
 
         };
     </script>
+<?php
+    $user_id = _session(FRONT_SESSION_ID);
+    $SQL = "select count(id) AS total_properties from properties 
+            WHERE 1 
+            AND created_by = {$user_id}";
+    $rs = $this->db->query($SQL)->row();
+?>
 <div class="hidden-xs hidden-sm visible-md hidden-lg">
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 </div>
-    <div class="dashboard">
+    <div class="dashboard cus_mar">
         <div class="container-fluid">
             <div class="content-area">
                 <div class="dashboard-content">
-                    <div class="dashboard-header clearfix">
+                    <div class="dashboard-header clearfix cus_bottom_margin">
                         <div class="row">
-<!--                            <div class="col-md-6 col-sm-12 breadcrumb_member_cust"><h4>Statistics</h4></div>-->
-<!--                            <div class="col-md-6 col-sm-12 breadcrumb_member_cust ">-->
+                            <div class="col-md-12 cus_font">
+                                <h3>Total Properties <?php echo $rs->total_properties; ?></h3>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="m-portlet" style="height: 420px;">
+                                    <div class="m-portlet__body p-1">
+                                        <div id="properties-status-chart" class="custom-status" style="width: 100%;height:400px;"></div>
+                                    </div>
+
+                                    <script>
+                                        var propertiesStatusChart = echarts.init(document.getElementById('properties-status-chart'));
+                                        propertiesStatusChart.setOption(basic_option);
+                                        propertiesStatusChart.showLoading();
+                                        $(document).ready(function () {
+                                            $.getJSON('<?php echo site_url('member/AJAX/chart/properties-status-count');?>').done(function (data) {
+                                                console.log(data);
+                                                propertiesStatusChart.hideLoading();
+                                                propertiesStatusChart.setOption({
+                                                    title: {
+                                                        text: data.text,
+                                                        subtext: data.subtext
+                                                    },
+                                                    legend: {
+                                                        data: data.legend_data
+                                                    },
+                                                    series: [{
+                                                        name: 'Properties Status',
+                                                        type: 'pie',
+                                                        //roseType: 'area',
+                                                        data: data.series_data_pie,
+                                                        itemStyle: {
+                                                            emphasis: {
+                                                                shadowBlur: 10,
+                                                                shadowOffsetX: 0,
+                                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                            }
+                                                        }
+                                                    }]
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="m-portlet" style="height: 420px;">
+                                    <div class="m-portlet__body p-1">
+                                        <div id="properties-purpose-count" class="custom-status" style="width: 100%;height:400px;"></div>
+                                    </div>
+
+                                    <script>
+                                        var propertiesPurposeChart = echarts.init(document.getElementById('properties-purpose-count'));
+                                        propertiesPurposeChart.setOption(basic_option);
+                                        propertiesPurposeChart.showLoading();
+                                        $(document).ready(function () {
+                                            $.getJSON('<?php echo site_url('member/AJAX/chart/properties-purpose-count');?>').done(function (data) {
+                                                console.log(data);
+                                                propertiesPurposeChart.hideLoading();
+                                                propertiesPurposeChart.setOption({
+                                                    title: {
+                                                        text: data.text,
+                                                        subtext: data.subtext
+                                                    },
+                                                    legend: {
+                                                        data: data.legend_data
+                                                    },
+                                                    series: [{
+                                                        name: 'Properties Purpose',
+                                                        type: 'pie',
+                                                        //roseType: 'area',
+                                                        data: data.series_data_pie,
+                                                        itemStyle: {
+                                                            emphasis: {
+                                                                shadowBlur: 10,
+                                                                shadowOffsetX: 0,
+                                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                            }
+                                                        }
+                                                    }]
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
 
 
-    <div class="col-lg-6">
-        <div class="m-portlet" style="height: 420px;">
-            <div class="m-portlet__body p-1">
-                <div id="properties-status-chart" class="custom-status" style="width: 100%;height:400px;"></div>
-            </div>
-
-            <script>
-                var propertiesStatusChart = echarts.init(document.getElementById('properties-status-chart'));
-                propertiesStatusChart.setOption(basic_option);
-                propertiesStatusChart.showLoading();
-                $(document).ready(function () {
-                    $.getJSON('<?php echo site_url('member/AJAX/chart/properties-status-count');?>').done(function (data) {
-                        console.log(data);
-                        propertiesStatusChart.hideLoading();
-                        propertiesStatusChart.setOption({
-                            title: {
-                                text: data.text,
-                                subtext: data.subtext
-                            },
-                            legend: {
-                                data: data.legend_data
-                            },
-                            series: [{
-                                name: 'Properties Status',
-                                type: 'pie',
-                                //roseType: 'area',
-                                data: data.series_data_pie,
-                                itemStyle: {
-                                    emphasis: {
-                                        shadowBlur: 10,
-                                        shadowOffsetX: 0,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                    }
-                                }
-                            }]
-                        });
-                    });
-                });
-            </script>
+                        </div></div>
+                </div></div>
         </div>
-    </div>
-
-
-<!--                        </div>-->
-                    </div></div>
-            </div></div>
-    </div>
 
 <?php get_footer();?>

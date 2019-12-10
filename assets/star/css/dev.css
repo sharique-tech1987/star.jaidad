@@ -6100,3 +6100,18 @@ input.bg_transparent {
     position: relative;
     top: 90px !important;
 }
+.cus_mar {
+    position: relative;
+    top: 90px;
+}
+.cus_font h3 {
+    position: relative;
+    display: block;
+    font-size: 20px;
+    line-height: 30px;
+    color: #222222;
+    font-weight: 500;
+}
+.cus_bottom_margin{
+    margin-bottom: 96px !important;
+}

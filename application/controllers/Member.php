@@ -304,12 +304,13 @@ class Member extends CI_Controller
                 switch ($_type) {
                     case 'properties-status-count':
                         $showed_status_column_data = ['Inactive','Sold'];
+                        $showed_status_str = "'" . implode("','", $showed_status_column_data) . "'";
                         $where = "";
                         $user_id = _session(FRONT_SESSION_ID);
                         $SQL = "SELECT `status`, count(`status`) status_count FROM `properties` 
                                 WHERE 1 {$where}
                                 AND `created_by`={$user_id}
-                                AND `status` IN ('Inactive','Sold')
+                                AND `status` IN ({$showed_status_str})
                                 GROUP BY `status`";
 
                         $ch_rows = $this->db->query($SQL)->result();
@@ -332,6 +333,27 @@ class Member extends CI_Controller
                         $RS = $chart_data;
                         $RS['text'] = __('Properties Status Statistics');
                         $RS['subtext'] = __('');
+                    break;
+                    case 'properties-purpose-count':
+                        $where = "";
+                        $user_id = _session(FRONT_SESSION_ID);
+                        $SQL = "SELECT purpose, count(purpose) AS purpose_count from properties 
+                                WHERE 1 
+                                AND created_by ={$user_id}
+                                GROUP BY `purpose`";
+
+                        $ch_rows = $this->db->query($SQL)->result();
+                        $chart_data = [];
+                        if (count($ch_rows) > 0) {
+                            foreach ($ch_rows as $ch_row) {
+                                $chart_data['legend_data'][] = $ch_row->purpose;
+                                $chart_data['series_data_pie'][] = ['value' => $ch_row->purpose_count, 'name' => $ch_row->purpose];
+                            }
+                        }
+                        $RS = $chart_data;
+                        $RS['text'] = __('Purpose Status Statistics');
+                        $RS['subtext'] = __('');
+                    break;
                 }
 
         }
