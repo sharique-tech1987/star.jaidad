@@ -151,7 +151,7 @@ $rows = $ci->m_properties->rows($where, $limit, $offset, $order);
                     </div>
                    <div class="trend_property_view_all"><a href="<?php echo site_url("properties/"); ?>" >View All</a></div>
                 </div>
-                <div class="g5plus-space space-5cec5e37ba70d" data-id="5cec5e37ba70d" data-tablet="80" data-tablet-portrait="60" data-mobile="40" data-mobile-landscape="40" style="clear: both; display: block; height: 100px"></div>
+<!--                <div class="g5plus-space space-5cec5e37ba70d" data-id="5cec5e37ba70d" data-tablet="80" data-tablet-portrait="60" data-mobile="40" data-mobile-landscape="40" style="clear: both; display: block; height: 100px"></div>-->
             </div>
         </div>
     </div>

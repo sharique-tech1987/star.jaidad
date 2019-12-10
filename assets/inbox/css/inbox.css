@@ -185,7 +185,7 @@
 }
 .inbox-container .split-view .split-list {
     float: left;
-    width: 360px;
+    /*width: 360px;*/
     background: #fff;
     height: 100%;
     overflow-y: auto;

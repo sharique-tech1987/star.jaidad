@@ -5,4 +5,11 @@
 	}
 }
 
+#contentContainer .thin{
+	border: 20px solid #000000;
+	display: none !important;
+}
+#contentContainer{
+	border: 20px solid #000000;
+}
 

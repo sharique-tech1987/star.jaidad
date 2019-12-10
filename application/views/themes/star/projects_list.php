@@ -177,7 +177,7 @@ $total_rows = $ci->m_projects->total_rows;
                                                                                     }
                                                                                     echo substr(strip_tags($row->description), 0, 100) . $read_more; ?></p>
                                                                             </div>
-                                                                            <div class="property-status-price">
+                                                                            <div class="property-status-price" style="padding-top: 13px !important;">
                                                                                 <div class="property-status">
                                                                                     <p class="status-item">
                                                                                         <a href="<?php echo $path_url; ?>"

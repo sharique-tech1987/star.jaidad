@@ -24,7 +24,8 @@ if($member_id > 0){
         <input type="text" name="phone" id="phone" data-inputmask="'mask': '+999999999999'" value="<?php echo $member->phone;?>" placeholder="Phone No.">
     </div>
     <div class="form-group">
-        <textarea name="message" id="message" class="form-control" rows="5" placeholder="Massage">I would like to inquire about your property ID - (<?php echo $row->id;?>). Please contact me at your earliest convenience.</textarea>
+<!--        <textarea name="message" id="message" class="form-control" rows="5" placeholder="Massage">I would like to inquire about your property ID - (--><?php //echo $row->id;?><!--). Please contact me at your earliest convenience.</textarea>-->
+        <textarea name="message" id="message" class="form-control" rows="5" placeholder="Massage">I would like to inquire about your property and project. Please contact me at your earliest convenience.</textarea>
     </div>
     <div class="form-group">
         <button class="theme-btn btn-style-one" type="submit" name="submit-form">Submit now</button>

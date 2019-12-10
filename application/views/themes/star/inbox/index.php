@@ -6,53 +6,57 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
 <link href="<?php echo asset_url("inbox/css/inbox.css ");?>" rel="stylesheet">
 <!-- Modal -->
 <div class="inbox-container">
-
-    <div class="modal fade" id="composeModal" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <form action="<?php echo site_url('inbox/ajax/reply');?>" method="post" id='reply_form' enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Compose</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                                <input type="hidden" name="msg_id" value="">
-                                <input type="hidden" name="to_id" value="">
-                                <input type="hidden" name="sender_type" value="Guest">
-
-                                <div class="form-group">
-                                    <label>Subject: </label>
-                                    <input type='text' name='subject' placeholder='Subject' class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <label>Message: </label>
-                                    <textarea name='message' rows="7" class="form-control" placeholder='Write your message here...'></textarea>
-                                </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <input type='submit' name='submit' value='send'  class="btn btn-primary"/>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <input type="reset" class="reset" style="display: none;">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+<!--    <div class="modal fade" id="composeModal" role="dialog">-->
+<!--        <div class="modal-dialog modal-lg" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <form action="--><?php //echo site_url('inbox/ajax/reply');?><!--" method="post" id='reply_form' enctype="multipart/form-data">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h4 class="modal-title">Compose</h4>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <div>-->
+<!--                                <input type="hidden" name="msg_id" value="">-->
+<!--                                <input type="hidden" name="to_id" value="">-->
+<!--                                <input type="hidden" name="sender_type" value="Guest">-->
+<!---->
+<!--                                <div class="form-group">-->
+<!--                                    <label>Subject: </label>-->
+<!--                                    <input type='text' name='subject' placeholder='Subject' class="form-control"/>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label>Message: </label>-->
+<!--                                    <textarea name='message' rows="7" class="form-control" placeholder='Write your message here...'></textarea>-->
+<!--                                </div>-->
+<!---->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <input type='submit' name='submit' value='send'  class="btn btn-primary"/>-->
+<!--                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                            <input type="reset" class="reset" style="display: none;">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!---->
 
     <!--
     End Compose
     -->
+    <div class="container">
+        <div class="row">
+            <h3 class="msg_head">My Messages</h3>
+        </div>
 
-    <nav class="secondary-sidebar">
+    </div>
+    <nav class="second-sidebar col-lg-3 col-md-3 col-sm-3 col-xs-4" >
         <!--<div class=" m-b-30 m-l-30 m-r-30 d-sm-none d-md-block d-lg-block d-xl-block">
             <a href="#myModal" class="btn btn-complete btn-block btn-compose" data-toggle="modal" data-target="#composeModal">Compose</a>
         </div>-->
 
-        <p class="menu-title">BROWSE</p>
-        <ul class="main-menu">
+        <p class="menu-title" style="padding: 0px 30px;">BROWSE</p>
+        <ul class="main-menu cus_display">
             <li class="active">
                 <a href="#" data-box="inbox" data-start="0">
                     <span class="title"><i class="pg-inbox"></i> Inbox</span>
@@ -95,7 +99,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
     <div class="inner-content full-height">
         <div class="split-view">
 
-            <div class="split-list">
+            <div class="split-list col-md-5 col-sm-6 col-xs-12 nopadding">
                 <a class="list-refresh" href="#"><i class="fa fa-refresh"></i></a>
                 <div class="list-box">
 
@@ -105,7 +109,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                     <a href="javascript: void(0);" class="load-more btn btn-success btn-block">Load more.</a>
                 </div>
             </div>
-            <div  class="split-details">
+            <div  class="split-details col-md-6 col-sm-6 col-xs-12">
 
                 <div class="no-result" style="display: block;">
                     <h1>No email has been selected</h1>
@@ -133,7 +137,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                                      data-src="<?php echo asset_url("inbox/img/profiles/a.jpg ");?>"
                                      src="<?php echo asset_url("inbox/img/profiles/a2x.jpg ");?>">
                             </div>
-                            <div class="sender inline m-l-10">
+                            <div class="sender inline m-l-10 cus_mar">
                                 <p class="name no-margin bold"></p>
                                 <p class="datetime no-margin"></p>
                             </div>
@@ -148,9 +152,9 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                 </div>
             </div>
 
-            <div class="compose-wrapper d-md-none">
-                <a class="compose-email text-info pull-right m-r-10 m-t-10" href=""><i class="fa fa-pencil-square-o"></i></a>
-            </div>
+<!--            <div class="compose-wrapper d-md-none">-->
+<!--                <a class="compose-email text-info pull-right m-r-10 m-t-10" href=""><i class="fa fa-pencil-square-o"></i></a>-->
+<!--            </div>-->
 
         </div>
     </div>

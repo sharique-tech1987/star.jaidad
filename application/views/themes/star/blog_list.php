@@ -51,7 +51,7 @@ $num_rows = $ci->m_blog_posts->num_rows;
 $total_rows = $ci->m_blog_posts->total_rows;
 
 ?>
-<div id="primary-content" class="page-wrap pd-top-100">
+<div id="primary-content" class="page-wrap pd-top-100 xs-pd-top-30 sm-pd-top-50">
     <div class="container clearfix">
         <div class="page-inner">
             <div class="col-md-9" style="margin-bottom: 20px;">

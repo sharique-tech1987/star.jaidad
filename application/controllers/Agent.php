@@ -168,8 +168,8 @@ class Agent extends CI_Controller
                         <tr>
                             <td><img src="<?php echo _img("assets/front/users/" . $member_row->photo, 48,48, USER_IMG_NA);?>" alt="<?php echo $member_row->full_name;?>"></td>
                             <td valign="middle"><?php echo $member_row->full_name;?></td>
-                            <td valign="middle"><?php echo $member_row->full_address;?></td>
-                            <td valign="middle" align="right"><a href="javascript: void(0);" data-id="<?php echo $member_row->id;?>" data-phone="<?php echo $member_row->phone;?>" class="btn btn-sm btn-success call-now"><i class="fa fa-phone"></i>&nbsp&nbsp;Call Now</a></td>
+                            <td valign="middle" style="font-size: 12px;"><?php echo $member_row->full_address;?></td>
+                            <td valign="middle" align="right" class="cus_style"><a href="javascript: void(0);" data-id="<?php echo $member_row->id;?>" data-phone="<?php echo $member_row->phone;?>" class="btn btn-sm btn-success call-now"><i class="fa fa-phone"></i>&nbsp&nbsp;Call Now</a></td>
                         </tr>
                         <?php
                     }

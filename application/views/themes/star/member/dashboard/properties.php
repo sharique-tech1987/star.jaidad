@@ -22,12 +22,42 @@ switch ($action){
             $status = 'Deleted';
         } elseif ($action == 'status' && $uri_status == 'hide'){
             $status = 'Hidden';
+        } elseif ($action == 'status' && $uri_status == 'sold'){
+            $status = 'Sold';
         }
 
         $ow_data = ['status' => $status];
-        save($ci->m_properties->table, $ow_data, "id='{$id}'");
+        if(save($ci->m_properties->table, $ow_data, "id='{$id}'")){
+			set_notification('Property has been ' . ($action == 'delete' ? 'deleted' : 'updated'), 'success');
 
-        set_notification('Property has been ' . ($action == 'delete' ? 'deleted' : 'updated'), 'success');
+			# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			# registration_email
+			$property = $this->m_properties->row($id);
+			$property->property_id = $property->id;
+			$member = get_member(_session(FRONT_SESSION_ID));
+
+			$msg = get_email_template(array_merge($property, $member), 'Property ' . $status);
+			if ($msg->status == 'Active') {
+				$admin_cc_email = get_option('admin_cc_email');
+				$emaildata = array(
+					'to' => $member->email,
+					'subject' => $msg->subject,
+					'message' => $msg->message
+				);
+				if(!empty($admin_cc_email)){
+					$emaildata['cc'] = $admin_cc_email;
+				}
+				if (!send_mail($emaildata)) {
+					set_notification('Email sending failed.', 'danger');
+				} else {
+					//set_notification('Please check your email for username & password!','success');
+				}
+			}
+
+		} else {
+			set_notification('Some error occurred!');
+		}
+
         redirectBack();
     break;
 }
@@ -63,7 +93,6 @@ $total_rows = $ci->m_properties->total_rows;
                         </div>
                     </div>
                 </div>
-                <p>&nbsp;</p>
                 <?php echo show_validation_errors();?>
                 <div class="row">
                     <div class="column col-lg-12">
@@ -108,6 +137,7 @@ $total_rows = $ci->m_properties->total_rows;
                                             <ul class="action-list">
                                                 <li><a href="<?php echo site_url('property/update/' .$row->id);?>"><i class="la la-edit"></i> Edit</a></li>
                                                 <li><a href="<?php echo site_url('member/account/properties/status/' . $row->id . '/hide');?>"><i class="la la-eye-slash"></i> Hide</a></li>
+                                                <li><a href="<?php echo site_url('member/account/properties/status/' . $row->id . '/sold');?>"><i class="la la-bookmark"></i> Sold</a></li>
                                                 <li><a href="<?php echo site_url('member/account/properties/delete/' . $row->id);?>"><i class="la la-trash-o"></i> Delete</a></li>
                                             </ul>
                                         </div>

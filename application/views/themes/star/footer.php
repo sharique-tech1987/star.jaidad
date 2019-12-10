@@ -705,7 +705,7 @@ if ($member->user_type_id == $agent_type_id) {
         <?php //if(count($member_rows) > 0) {
         ?>
         <table class="table member-contact-list">
-        </table>
+        </table
         <?php //}
         ?>
         <table class="table member-call-list">

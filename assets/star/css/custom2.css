@@ -265,7 +265,7 @@
 .benaa-class .ere-search-properties.style-mini-line .form-search-wrap{padding-top:0;}
 .benaa-class .ere-search-properties.style-mini-line .form-search-wrap input,
 .benaa-class .ere-search-properties.style-mini-line .form-search-wrap select,
-.benaa-class .ere-search-properties.style-mini-line .form-search-wrap .select2-container .select2-selection--single{border:none;-webkit-border-radius:0 !important;-moz-border-radius:0 !important;border-radius:0 !important;height:64px !important;background:#FFFFFF;background-image:initial !important;}
+.benaa-class .ere-search-properties.style-mini-line .form-search-wrap .select2-container .select2-selection--single{border:none;-webkit-border-radius:35px !important;-moz-border-radius:35px !important;border-radius:35px !important;height:64px !important;background:#FFFFFF;background-image:initial !important;}
 .benaa-class .ere-search-properties.style-mini-line .form-search-wrap .select2-selecti__rendered,
 .benaa-class .ere-search-properties.style-mini-line .form-search-wrap .select2-selection__arrow{height:64px !important;line-height:64px !important;color:#727272 !important;}
 .benaa-class .ere-search-properties.style-mini-line .form-search-wrap select{background-image:url("https://starjaidad.com/assets/star/images/icon-dropdown-3.png") !important;background-position:center right 20px !important;}
