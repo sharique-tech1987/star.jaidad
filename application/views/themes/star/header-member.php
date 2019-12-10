@@ -15,7 +15,6 @@ $NAV += [
     'Submit Property' => ['url' => site_url('property/add'), 'icon' => ('Edit-Profile.png')],
     'Edit Profile' => ['url' => site_url('member/account/?edit=edit'), 'icon' => ('Edit-Profile.png')],
     'Become an Agent' => ['url' => site_url('member/become_agent'), 'icon' => ('Edit-Profile.png')],
-    'Statistics' => ['url' => site_url('member/account/statistics/' . $member_id), 'icon' => ('property.png')],
     'Logout' => ['url' => site_url('login/logout'), 'icon' => ('logout.png')],
 ];
 
