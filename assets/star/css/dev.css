@@ -6096,3 +6096,7 @@ input.bg_transparent {
 
 /*}*/
 
+.custom-status{
+    position: relative;
+    top: 90px !important;
+}

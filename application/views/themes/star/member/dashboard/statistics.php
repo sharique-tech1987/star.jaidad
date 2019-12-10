@@ -61,11 +61,20 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 </div>
+    <div class="dashboard">
+        <div class="container-fluid">
+            <div class="content-area">
+                <div class="dashboard-content">
+                    <div class="dashboard-header clearfix">
+                        <div class="row">
+<!--                            <div class="col-md-6 col-sm-12 breadcrumb_member_cust"><h4>Statistics</h4></div>-->
+<!--                            <div class="col-md-6 col-sm-12 breadcrumb_member_cust ">-->
+
 
     <div class="col-lg-6">
         <div class="m-portlet" style="height: 420px;">
             <div class="m-portlet__body p-1">
-                <div id="properties-status-chart" style="width: 100%;height:400px;"></div>
+                <div id="properties-status-chart" class="custom-status" style="width: 100%;height:400px;"></div>
             </div>
 
             <script>
@@ -102,6 +111,12 @@
                 });
             </script>
         </div>
+    </div>
+
+
+<!--                        </div>-->
+                    </div></div>
+            </div></div>
     </div>
 
 <?php get_footer();?>
