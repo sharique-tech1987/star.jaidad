@@ -129,7 +129,7 @@
                             series: [{
                                 name: 'User',
                                 type: 'pie',
-                                roseType: 'area',
+                                // roseType: 'area',
                                 data: data.series_data_pie,
                                 itemStyle: {
                                     emphasis: {
@@ -173,7 +173,7 @@
                                 series: [{
                                     name: 'Properties Status',
                                     type: 'pie',
-                                    roseType: 'area',
+                                    // roseType: 'area',
                                     data: data.series_data_pie,
                                     itemStyle: {
                                         emphasis: {

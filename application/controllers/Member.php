@@ -299,6 +299,41 @@ class Member extends CI_Controller
                 }
                 break;
 
+            case 'chart':
+                $_type =  getUri(4);
+                switch ($_type) {
+                    case 'properties-status-count':
+                        $showed_status_column_data = ['Inactive','Sold'];
+                        $where = "";
+                        $user_id = _session(FRONT_SESSION_ID);
+                        $SQL = "SELECT `status`, count(`status`) status_count FROM `properties` 
+                                WHERE 1 {$where}
+                                AND `created_by`={$user_id}
+                                AND `status` IN ('Inactive','Sold')
+                                GROUP BY `status`";
+
+                        $ch_rows = $this->db->query($SQL)->result();
+                        $chart_data = [];
+                        if (count($ch_rows) > 0) {
+                            $found_status = array();
+                            foreach ($ch_rows as $ch_row) {
+                                $found_status[] = $ch_row->status;
+                                $chart_data['legend_data'][] = $ch_row->status;
+                                $chart_data['series_data_pie'][] = ['value' => $ch_row->status_count, 'name' => $ch_row->status];
+                            }
+                        }
+                        foreach ($showed_status_column_data as $ssc) {
+                            if(!in_array($ssc, $found_status)){
+                                $chart_data['legend_data'][] = $ssc;
+                                $chart_data['series_data_pie'][] = ['value' => "0", 'name' => $ssc];
+                            }
+
+                        }
+                        $RS = $chart_data;
+                        $RS['text'] = __('Properties Status Statistics');
+                        $RS['subtext'] = __('');
+                }
+
         }
         echo json_encode($RS);
     }
