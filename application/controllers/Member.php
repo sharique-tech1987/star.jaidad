@@ -339,19 +339,11 @@ class Member extends CI_Controller
                         $showed_purpose_column_data = ['Sale','Rent'];
                         $showed_purpose_str = "'" . implode("','", $showed_purpose_column_data) . "'";
                         $user_id = _session(FRONT_SESSION_ID);
-                        $SQL = "SELECT properties.purpose, count(properties.purpose) AS purpose_count
-                                FROM properties
-                                LEFT JOIN (
-                                SELECT property_images.filename,property_images.property_id FROM property_images WHERE 1 GROUP BY property_images.property_id ORDER BY property_images.ordering ASC
-                                ) AS _property_images ON( _property_images.property_id = properties.id)
-                                LEFT JOIN property_types ON(property_types.id = properties.type_id)
-                                LEFT JOIN cities ON(cities.id = properties.city_id)
-                                LEFT JOIN area ON(area.id = properties.area_id)
-                                WHERE 1  AND properties.created_by={$user_id} AND properties.status NOT IN('Deleted')";
-//                        $SQL = "SELECT purpose, count(purpose) AS purpose_count from properties
-//                                WHERE 1
-//                                AND created_by ={$user_id}
-//                                GROUP BY `purpose`";
+                        $SQL = "SELECT purpose, count(purpose) AS purpose_count from properties
+                                WHERE 1
+                                AND created_by ={$user_id}
+                                AND properties.status NOT IN('Deleted')
+                                GROUP BY `purpose`";
 
                         $ch_rows = $this->db->query($SQL)->result();
                         $chart_data = [];

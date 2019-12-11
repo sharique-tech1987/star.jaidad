@@ -134,10 +134,13 @@ $total_rows = $ci->m_properties->total_rows;
                 }
             }
         },
-        color: ['#f00b07', '#2f4554', '#0975a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
+        color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3', '#f00b07', '#2f4554', '#0975a8', '#d48265', '#91c7ae'],
         calculable: true,
 
     };
+
+    var property_purpose_option = Object.assign({}, basic_option);
+    property_purpose_option.color = ['#d48265', '#546570', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#c4ccd3', '#f00b07', '#2f4554', '#0975a8'];
 </script>
 <div class="dashboard">
     <div class="container-fluid">
@@ -218,7 +221,7 @@ $total_rows = $ci->m_properties->total_rows;
 
                                 <script>
                                     var propertiesPurposeChart = echarts.init(document.getElementById('properties-purpose-count'));
-                                    propertiesPurposeChart.setOption(basic_option);
+                                    propertiesPurposeChart.setOption(property_purpose_option);
                                     propertiesPurposeChart.showLoading();
                                     $(document).ready(function () {
                                         $.getJSON('<?php echo site_url('member/AJAX/chart/properties-purpose-count');?>').done(function (data) {
