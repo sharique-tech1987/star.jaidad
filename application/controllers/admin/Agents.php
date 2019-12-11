@@ -213,6 +213,12 @@ class Agents extends CI_Controller
         $id = intval(getUri(4));
 
         if ($this->module->validate()) {
+            if(isset($_POST['logo_status']) && $_POST['logo_status'] == 'on'){
+                $_POST['logo_status'] = 'Active';
+            }else{
+                $_POST['logo_status'] = 'Inactive';
+            }
+
 
             $ow_db_data['user_type_id'] = $this->user_type_id;
             if ($this->module->update($id, $ow_db_data)) {
