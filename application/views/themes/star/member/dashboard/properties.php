@@ -35,11 +35,12 @@ switch ($action){
 
 			# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			# registration_email
-			$property = $this->m_properties->row($id);
+			$property = $ci->m_properties->row($id);
 			$property->property_id = $property->id;
 			$member = get_member(_session(FRONT_SESSION_ID));
 
-			$msg = get_email_template(array_merge($property, $member), 'Property ' . $status);
+			$mail_data = array_merge((array)$property, (array)$member);
+			$msg = get_email_template($mail_data, 'Property ' . $status);
 			if ($msg->status == 'Active') {
 				$admin_cc_email = get_option('admin_cc_email');
 				$emaildata = array(

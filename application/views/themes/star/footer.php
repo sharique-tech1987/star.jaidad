@@ -448,6 +448,9 @@
                                 <input name="first_name" class="form-control control-icon" type="text"
                                        placeholder="Full name"/>
                             </div>
+							<div class="form-group control-company">
+								<input class="form-control -m-login__form-input--last" type="text" placeholder="Company" name="company">
+							</div>
                             <div class="form-group control-phone">
                                 <input class="form-control control-icon" type="text" placeholder="Phone" name="phone"
                                        data-inputmask="'mask': '+999999999999'">
@@ -460,8 +463,7 @@
                                        name="password">
                             </div>
                             <div class="form-group control-password">
-                                <input class="form-control m-login__form-input--last" type="password"
-                                       placeholder="Confirm Password" name="rpassword">
+                                <input class="form-control m-login__form-input--last" type="password" placeholder="Confirm Password" name="rpassword">
                             </div>
 
                             <div class="">
@@ -705,7 +707,7 @@ if ($member->user_type_id == $agent_type_id) {
         <?php //if(count($member_rows) > 0) {
         ?>
         <table class="table member-contact-list">
-        </table
+        </table>
         <?php //}
         ?>
         <table class="table member-call-list">

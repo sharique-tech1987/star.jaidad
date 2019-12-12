@@ -45,14 +45,14 @@ class M_users extends CI_Model
 
         $this->form_validation->set_rules('first_name', 'Name', 'required');
         if(empty($member->social)) {
-            if(!$username){
+            if(!$username) {
                 $this->form_validation->set_rules('username', 'Email Address', 'required|db_unique[users.username.id.' . $id . ']');
             } else {
                 $this->form_validation->set_rules('username', 'Username', 'required|db_unique[users.username.id.' . $id . ']');
                 $this->form_validation->set_rules('email', 'Email', 'required|valid_email|db_unique[users.email.id.' . $id . ']');
             }
         }else{
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+            //$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         }
 
         $reserve_types = array_pop(_reserve_types());
@@ -61,7 +61,7 @@ class M_users extends CI_Model
             $this->form_validation->set_rules('phone', 'Phone', 'required|integer|db_unique[users.phone.id.' . $id . ']');
         }
 
-        if($id == 0 || empty($member->social)){
+        if($id == 0)/*empty($member->social)*/{
             $this->form_validation->set_rules('password', 'Password', 'required');
         }
 
@@ -247,6 +247,9 @@ class M_users extends CI_Model
         }
 
         $this->db_data = array_merge($this->db_data, $ow_db_data);
+		$city_id = intval(getVar('city'));
+		$this->db_data['city'] = $this->db->query("SELECT city FROM cities WHERE id='{$city_id}'")->row()->city;
+
         if($this->_id = save($this->table, $this->db_data)){
             activity_log(getUri(3), $this->table, $this->_id);
             return $this->_id;
@@ -286,6 +289,8 @@ class M_users extends CI_Model
         }
         $this->db_data['newsletter'] = getVar('newsletter');
         $this->db_data['modified'] = date('Y-m-d H:i:s');
+		$city_id = intval(getVar('city'));
+		$this->db_data['city'] = $this->db->query("SELECT city FROM cities WHERE id='{$city_id}'")->row()->city;
 
         $this->db_data = array_merge($this->db_data, $ow_db_data);
         if(save($this->table, $this->db_data, "{$this->id_field} = '{$this->_id}'")){

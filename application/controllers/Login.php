@@ -132,7 +132,11 @@ class Login extends CI_Controller
 
 
                 } else if ($this->{$module}->update($member_id) && $edit) {
-                    set_notification(__('Request has been submitted!'), 'success');
+                	if($module == 'm_agents') {
+						set_notification(__('Request has been submitted!'), 'success');
+					} else{
+						set_notification(__('Profile has been updated!'), 'success');
+					}
                 } else {
                     set_notification(__('Some error occurred!'), 'error');
                 }
@@ -158,7 +162,7 @@ class Login extends CI_Controller
             $data['row'] = array2object($this->input->post());
             $data['redirect'] = getVar('redirect');
             if($edit){
-                set_notification('Request has been sent!!','success');
+                //set_notification('Request has been sent!!','success');
                 redirect('member/account');
 
                 //redirectBack();

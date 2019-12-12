@@ -20,7 +20,7 @@ $NAV += [
 /*if(!empty($member->social)){
     unset($NAV['Edit Profile']);
 }*/
-if($member->user_type_id == get_option('agent_type_id')) {
+if($member->user_type_id == get_option('agent_type_id') || $member->become_agent == 1) {
     unset($NAV['Become an Agent']);
 }
 ?>

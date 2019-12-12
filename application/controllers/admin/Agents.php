@@ -83,6 +83,7 @@ class Agents extends CI_Controller
             , users.photo
             , users.email
             , users.phone
+            , users.company
             , GROUP_CONCAT(DISTINCT area.area SEPARATOR ', ') AS areas
             , users.created
             , users.status
