@@ -6,7 +6,12 @@ $offset = 0;
 $order = 'clients_logo.ordering ASC';
 $where = " AND clients_logo.status='Active' ";
 
-$rows = $ci->m_clients_logo->rows($where, $limit, $offset, $order);
+$LOGO_SQL = "SELECT * FROM (SELECT 'clients_logo' as logo_type, clients_logo.logo, clients_logo.client_name, clients_logo.status  FROM clients_logo WHERE status='Active'
+UNION DISTINCT
+SELECT 'users' as logo_type, users.`logo`, users.logo_alt_name, users.`logo_status`  FROM `users` WHERE logo_status='Active') p
+LIMIT 0, 20";
+$rows = $this->db->query($LOGO_SQL)->result();
+//$rows = $ci->m_clients_logo->rows($where, $limit, $offset, $order);
 /*$num_rows = $ci->m_clients_logo->num_rows;
 $total_rows = $ci->m_clients_logo->total_rows;*/
 if (count($rows) > 0) {
@@ -21,10 +26,11 @@ if (count($rows) > 0) {
                                      "autoHeight": true, "dots": false, "nav": true, "responsive": {"0" : {"items" : 1}, "481" : {"items" : 2}, "768" : {"items" : 3}, "992" : {"items" : 4}, "1200" : {"items" : 5}}, "autoplay": true, "autoplaySpeed":250,"autoplayHoverPause":false}'>
                         <?php
                         foreach ($rows as $row) {
+                            $img_url = asset_url("front/clients_logo/" . $row->logo);
                             ?>
                             <div class='clients-item ' style="opacity: 1;">
                                 <div class="clients-item-inner "><img
-                                            src="<?php echo _img(asset_url("front/clients_logo/" . $row->logo), 204, 136); ?>"
+                                            src="<?php echo _img(asset_url("front/{$row->logo_type}/" . $row->logo), 204, 136); ?>"
                                             alt="<?php echo $row->client_name; ?>"></div>
                             </div>
                             <?php

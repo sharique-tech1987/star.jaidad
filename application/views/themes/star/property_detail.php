@@ -200,6 +200,14 @@ if(empty($_COOKIE['area_unit'])){
                                     </div>
                                     <?php } ?>
 
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <?php
+                                            include dirname(__FILE__) . "/include/property_blocks.php";
+                                            ?>
+                                        </div>
+                                    </div>
+
                                     <?php if(!empty(strip_tags($row->description))) { ?>
                                     <div class="single-property-element property-description">
                                         <div class="ere-heading-style2">

@@ -43,7 +43,10 @@ class Property extends CI_Controller
             $data['amenities'] = $this->m_amenities->amenities($id);
             $data['agent'] = get_member($data['row']->created_by);
 
-//            Move this sql to property tags model
+//            Update property views
+            $UPDATE_CLICKS_SQL = "UPDATE properties SET `clicks` = `clicks` + 1 where `id` = {$id}";
+            $this->db->query($UPDATE_CLICKS_SQL);
+
             $PROPERTY_TAGS_SQL = "select property_tags.type from property_tags
                                 INNER join property_tags_rel
                                 ON (property_tags.id=property_tags_rel.tag_id)
@@ -340,6 +343,11 @@ class Property extends CI_Controller
                     $data['agent'] = get_member($data['row']->created_by);
 
                     $JSON['phone'] = $data['agent']->phone;
+
+//            Update PHONE CLICKS
+                    $UPDATE_SHOW_PHONE_SQL = "UPDATE users SET `phone_clicks` = `phone_clicks` + 1 where `id` = {$data['agent']->id}";
+                    $this->db->query($UPDATE_SHOW_PHONE_SQL);
+
                     echo json_encode($JSON);
                 }
             break;

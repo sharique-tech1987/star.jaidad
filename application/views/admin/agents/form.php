@@ -1,7 +1,12 @@
 <form id="users" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" method="post" enctype="multipart/form-data" action="<?php echo admin_url($this->_route . (!$row->id ? '/add' : '/update/' . $row->id)); ?>">
     <?php
     $form_buttons = ['save', 'back'];
-    include __DIR__ . "/../includes/module_header.php"; ?>
+    include __DIR__ . "/../includes/module_header.php";
+
+    if(!empty($row->city)){
+        $row->city_id = $this->db->query("SELECT id FROM cities WHERE city='{$row->city}'")->row()->id;
+    }
+    ?>
     <!--begin::Form-->
 
     <input type="hidden" name="id" class="form-control" placeholder="ID" value="<?php echo $row->id;?>">
@@ -39,7 +44,7 @@
                 <label class="control-label"><?php echo __('City');?></label><br>
                 <select name="city" id="city" class="form-control m-select2" load-select="#area_ids">
                     <option value="">- Select -</option>
-                    <?php echo selectBox("SELECT id, city FROM cities", $row->city)?>
+                    <?php echo selectBox("SELECT id, city FROM cities", $row->city_id)?>
                 </select>
             </div>
         </div>
@@ -81,6 +86,9 @@
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </label>
 
+                <label class="control-label"><?php echo __('Show Logo');?></label>
+                <input type="checkbox" name="logo_status" id="logo_status" <?php echo $row->logo_status == 'Active' ? 'checked' : '' ?>>
+
                 <?php
                 if (!empty($row->photo)) {
                     $thumb_url = _img("assets/front/{$this->table}/" . $row->photo, 200,200, USER_IMG_NA);
@@ -88,6 +96,13 @@
                     echo thumb_box($thumb_url, $delete_img_url, '', 0);
                 }
                 ?>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group m-form__group row">
+                        <label class="control-label required"><?php echo __('Client Name');?></label>
+                        <input type="text" name="logo_alt_name" id="logo_alt_name" class="form-control" placeholder="Client Name" value="<?php echo ($row->logo_alt_name);?>" />
+
+                </div>
             </div>
         </div>
         <!--<div class="form-group m-form__group row">

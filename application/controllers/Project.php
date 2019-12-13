@@ -45,7 +45,12 @@ class Project extends CI_Controller
 
         $data['agent'] = get_member($data['row']->created_by);
 
-		$image = checkAltImg("assets/front/projects/{$data['images'][0]->filename}");
+//            Update Project views
+        $UPDATE_CLICKS_SQL = "UPDATE projects SET `clicks` = `clicks` + 1 where `id` = {$id}";
+        $this->db->query($UPDATE_CLICKS_SQL);
+
+
+        $image = checkAltImg("assets/front/projects/{$data['images'][0]->filename}");
 		if(!empty(get_option('wm_logo'))) {
 			$wm_img = ADMIN_ASSETS_DIR . 'img/' . get_option('wm_logo');
 			$full_img_url = base_url(_Image::wm($image, null, null, $wm_img));

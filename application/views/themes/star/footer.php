@@ -696,7 +696,7 @@ if ($member->user_type_id == $agent_type_id) {
     </div>
     <div class="userProfile agent-popup  for-agent" data-sm-init="true">
         <!--<div class="agent-popup  for-agent">-->
-        <div>
+        <div class="cus_style_size ">
             <button id="agent_mute" type="button">
                 Mute
             </button>
