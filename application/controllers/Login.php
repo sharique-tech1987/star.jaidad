@@ -94,7 +94,7 @@ class Login extends CI_Controller
 
                 if (!$edit && $member_id = $this->{$module}->insert(['user_type_id' => $this->user_type_id])) {
                     $JSON['success'] = $JSON['status'] = true;
-                    $JSON['message'] = 'Member has been registered' . "\n";
+                    $JSON['message'] = 'Member has been registered. Please check your email inbox/spam.' . "\n";
                     set_notification(__($JSON['message']), 'success');
 
                     activity_log('Registration', 'users', $member_id, $member_id);
@@ -215,7 +215,7 @@ class Login extends CI_Controller
                 $JSON['redirect'] = site_url("member/account/home/{$result->id}");
 
             } else {
-                set_notification(__('Incorrect username or password'));
+                set_notification(__('Incorrect username or password. If you register please check your email for username and password.'));
                 //redirectBack();
             }
         }
