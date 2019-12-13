@@ -24,7 +24,7 @@ $total_rows = $ci->m_projects->total_rows;
 
 <?php include "include/page_header.php"; ?>
 <div id="wrapper-content" class="clearfix ">
-    <div id="primary-content" class="pd-top-30 pd-bottom-100 page-wrap">
+    <div id="primary-content" class="pd-top-30 pd-bottom-50 page-wrap">
         <div class="container clearfix">
             <div class="col-md-9 page-inner">
                 <article class="pages post-3785 page type-page status-publish hentry">
@@ -34,7 +34,7 @@ $total_rows = $ci->m_projects->total_rows;
                                 <div class="wpb_column vc_column_container vc_col-sm-12">
                                     <div class="vc_column-inner">
                                         <div class="wpb_wrapper">
-                                            <div class="g5plus-heading style1 text-left color-dark vc_custom_1517823237063">
+                                            <div class="g5plus-heading style1 text-left color-dark vc_custom_1517823237063 cus_align">
                                                 <i class="icon-house-roof2"></i>
                                                 <h2>PROJECTS LISTING</h2>
                                                 <p>&nbsp;</p>

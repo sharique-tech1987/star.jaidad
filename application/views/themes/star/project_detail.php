@@ -24,7 +24,7 @@
         </div>
     </section>
 
-    <div id="primary-content" class="pd-top-50 pd-bottom-100 sm-pd-top-50 sm-pd-bottom-50">
+    <div id="primary-content" class="pd-top-50 pd-bottom-50 sm-pd-top-50 sm-pd-bottom-50">
             <div class="container clearfix">
 
                 <div class="row">
