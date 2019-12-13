@@ -463,14 +463,18 @@ class Login extends CI_Controller
         $sql = "SELECT * FROM users WHERE username='{$get_params['id']}' AND `token_num`='{$get_params['t']}'";
         $rs = $this->db->query($sql);
         $data = array();
-        $data['activation_msg'] = "Your account has not been activated. 
-            Please contact at " . get_option('contact_email');
         if ($rs->num_rows() > 0) {
             $update_sql = "UPDATE users SET `status` = 'Active' WHERE username = '{$get_params['id']}' ";
             $this->db->query($update_sql);
-            $data['activation_msg'] = "Your account has been activated successfully. 
-            Please login with username and password which is sent in the email";
+            set_notification('Your account has been activated successfully. 
+            Please login with username and password which is sent in the email', 'success');
         }
+        else{
+            set_notification("Your account has not been activated.
+            Please contact at " . get_option('contact_email'), 'error');
+        }
+
+
 
         $this->template->load('login/account_activation', $data);
     }
