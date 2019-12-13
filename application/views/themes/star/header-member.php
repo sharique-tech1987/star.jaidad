@@ -3,7 +3,7 @@ $NAV = [];
 $member_id = _session(FRONT_SESSION_ID);
 if($member_id > 0) {
     $member = get_member($member_id);
-    $NAV += [$member->full_name => []];
+//    $NAV += [$member->full_name => []];
 }
 
 $NAV += [
@@ -96,6 +96,7 @@ if(!$my_profile && !$edit){
                                                 </a>
                                                 <div class="dropdown-menu">
                                                     <?php
+                                                    echo '<span class="dropdown-item" >'. $member->full_name .'</span>';
                                                     foreach ($NAV as $title => $item) {
                                                         echo '<a class="dropdown-item" href="'.$item['url'].'">'.$title.'</a>';
                                                     }
