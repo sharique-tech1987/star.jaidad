@@ -170,8 +170,7 @@ $total_rows = $ci->m_properties->total_rows;
                         <div class="col-lg-6">
                             <div class="m-portlet" style="height: 420px;">
                                 <div class="m-portlet__body p-1">
-                                    <div id="properties-status-chart" class="custom-status"
-                                         style="width: 100%;height:400px;"></div>
+                                    <div id="properties-status-chart" class="custom-status" style="width: 100%;height:400px;"></div>
                                 </div>
 
                                 <script>

@@ -18,7 +18,7 @@ $rows = $ci->m_properties->rows($where, $limit, $offset, $order);
                 <div class="ere-property-wrap">
                     <div class="ere-property clearfix property-carousel ">
                         <div class="container">
-                            <div class="ere-heading ere-item-wrap mg-bottom-20 sm-mg-bottom-40  ere-heading-sub">
+                            <div class="ere-heading ere-item-wrap mg-bottom-20 sm-mg-bottom-10  ere-heading-sub">
                                 <h2>HOT PROPERTIES</h2>
                                 <p>FIND YOUR HOUSE IN YOUR CITY</p>
                             </div>

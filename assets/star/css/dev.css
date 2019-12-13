@@ -6114,25 +6114,25 @@ span.select2-selection.select2-selection--single:focus {
 
 /*}*/
 
-.custom-status{
-    position: relative;
-    top: 90px !important;
-}
-.cus_mar {
-    position: relative;
-    top: 90px;
-}
-.cus_font h3 {
-    position: relative;
-    display: block;
-    font-size: 20px;
-    line-height: 30px;
-    color: #222222;
-    font-weight: 500;
-}
-.cus_bottom_margin{
-    margin-bottom: 96px !important;
-}
+/*.custom-status{*/
+/*    position: relative;*/
+/*    top: 0px !important;*/
+/*}*/
+/*.cus_mar {*/
+/*    position: relative;*/
+/*    top: 90px;*/
+/*}*/
+/*.cus_font h3 {*/
+/*    position: relative;*/
+/*    display: block;*/
+/*    font-size: 20px;*/
+/*    line-height: 30px;*/
+/*    color: #222222;*/
+/*    font-weight: 500;*/
+/*}*/
+/*.cus_bottom_margin{*/
+/*    margin-bottom: 96px !important;*/
+/*}*/
 
 .dashboard-content {
     padding: 30px 35px !important;
@@ -6364,4 +6364,49 @@ aside#ere_widget_search_form-2 {
     left: 30px;
     bottom: 5px;
 }
+/*.dashboard {*/
+/*    background-image: url('../images/body1.jpg');*/
+/*    background-size: cover;*/
+/*}*/
+/*.column {*/
+/*    background-color: #fff;*/
+/*}*/
+/*.properties-box {*/
+/*    margin-bottom: 0px !important;*/
+/*}*/
+.cus_style_size {
+    left: 223px;
+    position: relative;
+    top: -30px;
+}
+button#agent_mute {
+    padding: 3px 15px;
+}
 
+@media(max-width: 767px)  {
+    .ere-property.property-list .property-item-content .property-excerpt {
+        max-height: 45px !important;}
+    .ere-property .property-item-content .property-info .property-info-inner {
+        height: auto !important;}
+    .prostyl .price {
+        font-size: 16px !important;
+        color: #ffffff;
+    }
+    .cus_font h3 {
+        text-align: center;
+        font-weight: 600!important;
+        font-size: 20px;
+    }
+    .cus_align {
+        text-align: center !important;
+    }
+    img.custom_width {
+        height: 28px !important;
+    }
+    div#properties-status-chart {
+        margin-top: 15px;
+    }
+}
+img.custom_width {
+    width: 90%;
+}

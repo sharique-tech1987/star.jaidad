@@ -15,11 +15,11 @@ $rows = $ci->m_projects->rows($where, $limit, $offset, $order);
     <div class="wpb_column vc_column_container vc_col-sm-12">
         <div class="vc_column-inner">
             <div class="wpb_wrapper">
-                <div class="g5plus-space space-5cec5e37b24b5" data-id="5cec5e37b24b5" data-tablet="70" data-tablet-portrait="50" data-mobile="40" data-mobile-landscape="40" style="clear: both; display: block; height: 30px"></div>
+<!--                <div class="g5plus-space space-5cec5e37b24b5" data-id="5cec5e37b24b5" data-tablet="70" data-tablet-portrait="50" data-mobile="40" data-mobile-landscape="40" style="clear: both; display: block; height: 30px"></div>-->
                 <div class="ere-property-wrap">
                     <div class="ere-property clearfix property-carousel ">
                         <div class="container">
-                            <div class="ere-heading ere-item-wrap mg-bottom-20 sm-mg-bottom-40  ere-heading-sub">
+                            <div class="ere-heading ere-item-wrap mg-bottom-20 sm-mg-bottom-10  ere-heading-sub">
                                 <h2>TRENDING PROJECTS</h2>
                                 <!--<p>FIND YOUR HOUSE IN YOUR CITY</p>-->
                             </div>
