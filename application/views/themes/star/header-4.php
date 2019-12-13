@@ -3,7 +3,7 @@ $NAV = [];
 $member_id = _session(FRONT_SESSION_ID);
 if($member_id > 0) {
     $member = get_member($member_id);
-    $NAV += [$member->full_name => []];
+//    $NAV += [$member->full_name => []];
 }
 $NAV += [
     'Dashboard' => ['url' => site_url('member/account/home/' . $member_id), 'icon' => ('Home.png')],
@@ -262,6 +262,7 @@ if($member->user_type_id == get_option('agent_type_id') || $member->become_agent
                                                 </a>
                                                 <div class="dropdown-menu">
                                                     <?php
+                                                    echo '<span class="dropdown-item" >'. $member->full_name .'</span>';
                                                     foreach ($NAV as $title => $item) {
                                                         echo '<a class="dropdown-item" href="'.$item['url'].'">'.$title.'</a>';
                                                     }

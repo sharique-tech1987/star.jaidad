@@ -127,12 +127,12 @@ $total_rows = $ci->m_properties->total_rows;
                     type: ['pie']
                     //type: ['pie,', 'line', 'bar', 'stack', 'tiled']
                 },
-                restore: {show: true, title: 'Reset'},
-                saveAsImage: {
-                    show: true, title: 'Save as Image',
-                    type: 'png',
-                    lang: ['Click to Save']
-                }
+                // restore: {show: true, title: 'Reset'},
+                // saveAsImage: {
+                //     show: true, title: 'Save as Image',
+                //     type: 'png',
+                //     lang: ['Click to Save']
+                // }
             }
         },
         color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3', '#f00b07', '#2f4554', '#0975a8', '#d48265', '#91c7ae'],
@@ -160,7 +160,7 @@ $total_rows = $ci->m_properties->total_rows;
                 ?>
                 <div class="row">
                     <div class="col-md-12 cus_font">
-                        <h3>Total Properties <?php echo $total_rows; ?></h3>
+                        <h3>Total Properties : <?php echo $total_rows; ?></h3>
                     </div>
                 </div>
                     <?php
@@ -312,6 +312,7 @@ $total_rows = $ci->m_properties->total_rows;
 
                                                 <li><a href="<?php echo site_url('property/update/' . $row->id);?>"><i class="la la-edit"></i> Edit</a></li>
                                                 <li><a href="<?php echo site_url('member/account/properties/status/' . $row->id . '/hide');?>"><i class="la la-eye-slash"></i> Hide</a></li>
+                                                <li><a href="<?php echo site_url('member/account/properties/status/' . $row->id . '/sold');?>"><i class="la la-bookmark"></i> Sold</a></li>
                                                 <li><a href="<?php echo site_url('member/account/properties/delete/' . $row->id);?>"><i class="la la-trash-o"></i> Delete</a></li>
                                             </ul>
                                         </div>

@@ -212,7 +212,7 @@ class Login extends CI_Controller
                 if (!empty($REFERER)) {
                     $JSON['redirect'] = $REFERER;
                 }
-                $JSON['redirect'] = site_url($this->redirect_module);
+                $JSON['redirect'] = site_url("member/account/home/{$result->id}");
 
             } else {
                 set_notification(__('Incorrect username or password'));
