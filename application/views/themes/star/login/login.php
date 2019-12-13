@@ -89,7 +89,7 @@
             <div class="card login-div">
                 <div class="card-header text-uppercase"><?php echo __('Sign in');?></div>
                 <div class="card-body login-div" data-eq-height="card">
-                    <form class="" id="login" method="post" action="<?php echo site_url('login/login');?>">
+                    <form class="" id="login_other" method="post" action="<?php echo site_url('login/login');?>">
                         <input type="hidden" name="redirect" value="<?php echo getVar('redirect');?>">
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="<?php echo __('Email');?>" name="email" id="email" autocomplete="off">
