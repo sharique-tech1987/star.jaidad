@@ -60,6 +60,8 @@ class Agents extends CI_Controller
             $_user_id = user_info('id');
             $this->where = " AND {$this->table}.created_by = '{$_user_id}'";
         }
+
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -171,6 +173,7 @@ class Agents extends CI_Controller
 
             $ow_db_data['user_type_id'] = $this->user_type_id;
             if ($id = $this->module->insert($ow_db_data)) {
+                $this->cache->file->clean('brand_logos');
                 set_notification(__('Record has been inserted'), 'success');
                 $user = $this->module->row($id);
                 $user->password = $_REQUEST['password'];
@@ -223,7 +226,7 @@ class Agents extends CI_Controller
 
             $ow_db_data['user_type_id'] = $this->user_type_id;
             if ($this->module->update($id, $ow_db_data)) {
-
+                $this->cache->file->clean('brand_logos');
                 $user = $this->module->row($id);
                 $logged_in_string = $user->username . '|' . $user->password;
                 set_cookie('logged_in', $logged_in_string, time() + 60 * 60 * 24 * 30);
