@@ -33,6 +33,8 @@ class Login extends CI_Controller
         $this->load->model(ADMIN_DIR . 'm_agents');
 
         $this->user_type_id = get_option('client_type_id');
+
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -93,6 +95,7 @@ class Login extends CI_Controller
             if ($this->{$module}->validate($member_id, false)) {
 
                 if (!$edit && $member_id = $this->{$module}->insert(['user_type_id' => $this->user_type_id])) {
+                    $this->cache->file->clean('brand_logos');
                     $JSON['success'] = $JSON['status'] = true;
                     $JSON['message'] = 'Member has been registered. Please check your email inbox/spam.' . "\n";
                     set_notification(__($JSON['message']), 'success');
@@ -132,6 +135,7 @@ class Login extends CI_Controller
 
 
                 } else if ($this->{$module}->update($member_id) && $edit) {
+                    $this->cache->file->clean('brand_logos');
                 	if($module == 'm_agents') {
 						set_notification(__('Request has been submitted!'), 'success');
 					} else{
@@ -204,6 +208,8 @@ class Login extends CI_Controller
                     //'user_info' => $result,
                 ));
 
+				activity_log('Login', 'users', $result->id, $result->id);
+
                 if(!empty(getVar('redirect'))){
                     redirect(getVar('redirect'));
                 }
@@ -234,6 +240,7 @@ class Login extends CI_Controller
     {
         $user_id = _session(FRONT_SESSION_ID);
         $this->m_login->set_login($user_id, 0);
+		activity_log('Logout', 'users', $user_id, $user_id);
 
         $this->session->unset_userdata(array(
             FRONT_SESSION_ID,
@@ -320,6 +327,7 @@ class Login extends CI_Controller
                         $token_num = md5(random_string());
                         save('users', array('token_num' => $token_num), "id='{$user->id}'");
 
+						activity_log('Forgot', 'users', $user->id, $user->id);
                         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                         # Email notification
                         $reset_pass_url = site_url('login/reset?token=' . $token_num);
@@ -418,6 +426,8 @@ class Login extends CI_Controller
 
                             save('users', array('password' => encryptPassword($newpass), 'token_num' => ''), "id='" . $user->id . "'");
                             set_notification('Your password has been reset successfully.', 'success');
+
+							activity_log('Reset', 'users', $user->id, $user->id);
                             redirect('login');
                         } else {
                             set_notification('Password should be 6 to 12 characters long.', 'error');
@@ -459,19 +469,27 @@ class Login extends CI_Controller
     }
 
     function activate_account(){
-        $get_params = $_GET;
-        $sql = "SELECT * FROM users WHERE username='{$get_params['id']}' AND `token_num`='{$get_params['t']}'";
+
+        $username = getVar('id');
+        $token_num = getVar('t');
+        $sql = "SELECT * FROM users WHERE username='{$username}' AND `token_num`='{$token_num}'";
         $rs = $this->db->query($sql);
         $data = array();
         if ($rs->num_rows() > 0) {
-            $update_sql = "UPDATE users SET `status` = 'Active' WHERE username = '{$get_params['id']}' ";
+			$user = $rs->row();
+            $update_sql = "UPDATE users SET `status` = 'Active', token_num = '' WHERE username = '{$username}' ";
             $this->db->query($update_sql);
-            set_notification('Your account has been activated successfully. 
+            set_notification('Your account has been activated successfully. <br>
             Please login with username and password which is sent in the email', 'success');
-        }
-        else{
-            set_notification("Your account has not been activated.
+
+			activity_log('Activate', 'users', $user->id, $user->id);
+        } else if(!empty($token_num)){
+			set_notification("Parameter missing.
             Please contact at " . get_option('contact_email'), 'error');
+		} else {
+            set_notification("Wrong URL. <br>
+            Please contact at " . get_option('contact_email'), 'error');
+            redirect('login');
         }
 
 
