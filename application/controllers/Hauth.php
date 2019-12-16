@@ -78,12 +78,14 @@ class Hauth extends CI_Controller
 
             //$user = $this->db->query("SELECT id FROM users WHERE JSON_EXTRACT(data, '$.identifier') = '{$userProfile['identifier']}'")->row();
             //$user = $this->db->query("SELECT id FROM users WHERE (`data` IS NOT NULL AND `data` != '') AND JSON_EXTRACT(data, '$.identifier') = '{$userProfile['identifier']}'")->row();
-            $user = $this->db->query("SELECT * FROM users WHERE email='{$userProfile['email']}'")->row();
+            //$user = $this->db->query("SELECT * FROM users WHERE email='{$userProfile['email']}'")->row();
+            $user = $this->db->query("SELECT * FROM users WHERE `identifier`='{$userProfile['identifier']}'")->row();
             if ($user->id == 0){
                 $db_data = getDbArray('users', ['id'], $userProfile)['dbdata'];
                 $db_data['status'] = 'Active';
                 $userProfile['user_type_id'] = $db_data['user_type_id'] = get_option('client_type_id');
-                $db_data['created'] = date('Y-m-d H:i:s');
+				$db_data['identifier'] = $userProfile['identifier'];
+				$db_data['created'] = date('Y-m-d H:i:s');
 
                 $id = save('users', $db_data);
 
@@ -101,23 +103,29 @@ class Hauth extends CI_Controller
                 }
             }
 
+			$user = $this->db->query("SELECT * FROM users WHERE `identifier`='{$userProfile['identifier']}'")->row();
+            if($user->status = 'Active') {
 
-            $this->m_login->set_login($id, 1);
+				$this->m_login->set_login($id, 1);
 
-            $this->session->set_userdata([
-                FRONT_SESSION_ID => $id,
-                'username' => $userProfile['identifier'],
-                'email' => $userProfile['email'],
-                'user_type_id' => $userProfile['user_type_id'],
-                //'user_info' => $result,
-            ]);
+				$this->session->set_userdata([
+					FRONT_SESSION_ID => $id,
+					'username' => $userProfile['identifier'],
+					'email' => $userProfile['email'],
+					'user_type_id' => $userProfile['user_type_id'],
+					//'user_info' => $result,
+				]);
 
-            // print_r( $tokens );
-            // print_r( $userProfile );
+				// print_r( $tokens );
+				// print_r( $userProfile );
 
-            $adapter->disconnect();
-
-            header('Location: ' . DOMAIN_URL . $redirect);
+				$adapter->disconnect();
+				//redirect($redirect);
+            	header('Location: ' . DOMAIN_URL . $redirect);
+			} else {
+				set_notification('Your account is deactivated! Contact support team.');
+				header('Location: ' . DOMAIN_URL . 'login');
+			}
         }
         catch (\Exception $e) {
             redirect($this->site_url, 'refresh');
@@ -130,6 +138,8 @@ class Hauth extends CI_Controller
 
         $user_id = _session(FRONT_SESSION_ID);
         $this->m_login->set_login($user_id, 0);
+
+		activity_log('Logout', 'users', $user_id, $user_id);
 
         $hybridauth = new Hybridauth($this->config);
 
