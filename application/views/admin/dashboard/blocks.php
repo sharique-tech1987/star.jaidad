@@ -55,11 +55,15 @@ $dashboard_boxs[] = [
     'title' => "Total Login's",
 ];
 
-$total_emp = _count_users(0, 0, "AND users.become_agent=1")[0]->total;
+$total_agents = 0;
+$agents = _count_users(0, 0, "AND users.become_agent=1");
+foreach ($agents as $agent){
+    $total_agents += intval($agent->total);
+}
 $dashboard_boxs[] = [
     'box_cls' => 'danger',
     'icon' => 'flaticon-alert-2',
-    'number' => $total_emp,
+    'number' => $total_agents,
     'title' => "Become an agent",
     'link' => admin_url('agent_request'),
 ];
