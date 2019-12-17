@@ -46,8 +46,8 @@ class Project extends CI_Controller
         $data['agent'] = get_member($data['row']->created_by);
 
 //            Update Project views
-        $UPDATE_CLICKS_SQL = "UPDATE projects SET `clicks` = `clicks` + 1 where `id` = {$id}";
-        $this->db->query($UPDATE_CLICKS_SQL);
+        $member_id = _session(FRONT_SESSION_ID);
+        activity_log('view', 'projects', $id, $member_id);
 
 
         $image = checkAltImg("assets/front/projects/{$data['images'][0]->filename}");

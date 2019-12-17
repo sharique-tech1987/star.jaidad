@@ -103,21 +103,13 @@
 </style>
 <?php
 
-$agent = get_member($row->created_by);
-
 $dashboard_boxs[] = [
     'box_cls' => 'brand',
     'icon' => 'fa fa-building',
-    'number' => $row->clicks,
+    'number' => $total_rows,
     'title' => "Views",
 ];
 
-$dashboard_boxs[] = [
-    'box_cls' => 'success',
-    'icon' => 'fa fa-phone',
-    'number' => $agent->phone_clicks,
-    'title' => "Phone views",
-];
 ?>
 <!--begin:: Widgets/Quick Stats-->
 <div class="row dashboard-box -m-row--full-height justify-content-center">
