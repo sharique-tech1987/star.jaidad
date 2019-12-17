@@ -174,7 +174,8 @@ $total_rows = $ci->m_properties->total_rows;
                         <div class="col-lg-6">
                             <div class="m-portlet" style="height: 420px;">
                                 <div class="m-portlet__body p-1">
-                                    <div id="properties-status-chart" class="custom-status" style="width: 100%;height:400px;"></div>
+                                    <div id="properties-status-chart" class="custom-status"
+                                         style="width: 100%;height:400px;"></div>
                                 </div>
 
                                 <script>
@@ -278,6 +279,29 @@ $total_rows = $ci->m_properties->total_rows;
                                     <div class="inner-box clearfix">
                                         <div class="image-box">
                                             <figure class="image">
+                                                <div class="property-label property-featured" style="left: 15px;top: 35px; display: none">
+                                                    <p class="label-item" style="color: #fff;font-weight: 400;">
+                                                        <span class="property-label-bg" style="background-color: #92C800;
+                                                       -webkit-border-bottom-right-radius: 10px;
+                                                        -moz-border-radius-bottomright: 10px;
+                                                        border-bottom-right-radius: 10px;
+                                                        -webkit-border-top-right-radius: 10px;
+                                                        -webkit-background-clip: padding-box;
+                                                        -moz-border-radius-topright: 10px;
+                                                        -moz-background-clip: padding;
+                                                        border-top-right-radius: 10px;
+                                                        background-clip: padding-box;
+                                                        font-size: 12px;
+                                                        font-weight: 500;
+                                                        text-transform: uppercase;
+                                                        padding-left: 17px;
+                                                        padding-right: 17px;
+                                                        display: inline-block;
+                                                        position: relative;
+                                                        top: 25px;
+                                                        line-height: 19px;"> Sold <span class="property-arrow"></span></span>
+                                                    </p>
+                                                </div>
                                             <?php
                                             $image = checkAltImg("assets/front/properties/{$row->image}");
                                             $img_url = _Image::open($image)->zoomCrop(370, 320);?>
