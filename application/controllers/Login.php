@@ -335,6 +335,7 @@ class Login extends CI_Controller
                         unset($user->password);
                         $msg = get_email_template($user, 'Forgot Password');
                         $JSON['m'] = $msg->message;
+                        $JSON['success'] = $JSON['status'] = true;
                         if ($msg->status == 'Active') {
                             $emaildata = array(
                                 'to' => $user->email,
@@ -343,7 +344,6 @@ class Login extends CI_Controller
                                 'message' => $msg->message
                             );
                             if (!send_mail($emaildata)) {
-                                $JSON['success'] = $JSON['status'] = true;
                                 set_notification(__('Email sending failed'));
                             } else {
                                 set_notification(__('Please check your email'), 'success');
