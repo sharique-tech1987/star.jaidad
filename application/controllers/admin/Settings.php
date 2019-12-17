@@ -151,6 +151,7 @@ class Settings extends CI_Controller
             }
         }
 
+		$this->cache->file->delete('options');
         $this->session->set_flashdata('success', 'Record has been updated.');
         redirect(ADMIN_DIR . $this->module_name);
 

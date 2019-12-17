@@ -342,12 +342,9 @@
                                </label>
                                </div>-->
                             <input type="hidden" name="redirect" value="<?php echo getVar('redirect'); ?>">
-                            <input type="hidden" name="action" value="ere_login_ajax"> <a href="javascript:void(0)"
-                                                                                          class="ere-reset-password">Forgot
-                                password?</a>
-                            <button type="submit" data-redirect-url=""
-                                    class="ere-login-button btn btn-primary btn-block">Login
-                            </button>
+                            <input type="hidden" name="action" value="ere_login_ajax">
+							<a href="javascript:void(0)" class="ere-reset-password">Forgot password?</a>
+                            <button type="submit" data-redirect-url="" class="ere-login-button btn btn-primary btn-block">Login</button>
                         </form>
                         <hr>
                         <div class="wp-social-login-widget">
@@ -448,6 +445,9 @@
                                 <input name="first_name" class="form-control control-icon" type="text"
                                        placeholder="Full name"/>
                             </div>
+							<div class="form-group control-company">
+								<input class="form-control -m-login__form-input--last" type="text" placeholder="Company" name="company">
+							</div>
                             <div class="form-group control-phone">
                                 <input class="form-control control-icon" type="text" placeholder="Phone" name="phone"
                                        data-inputmask="'mask': '+999999999999'">
@@ -460,8 +460,7 @@
                                        name="password">
                             </div>
                             <div class="form-group control-password">
-                                <input class="form-control m-login__form-input--last" type="password"
-                                       placeholder="Confirm Password" name="rpassword">
+                                <input class="form-control m-login__form-input--last" type="password" placeholder="Confirm Password" name="rpassword">
                             </div>
 
                             <div class="">
@@ -705,7 +704,7 @@ if ($member->user_type_id == $agent_type_id) {
         <?php //if(count($member_rows) > 0) {
         ?>
         <table class="table member-contact-list">
-        </table
+        </table>
         <?php //}
         ?>
         <table class="table member-call-list">
@@ -957,6 +956,25 @@ if ($member->user_type_id == $agent_type_id) {
     });
 
 </script>
+<script type="text/javascript">
+	if (window.history && window.history.pushState) {
+		$('#ere_signin_modal').on('show.bs.modal', function (e) {
+			window.history.pushState('forward', null, '');
+		});
+
+		$(window).on('popstate', function () {
+			$('#ere_signin_modal').find('.close').click();
+		});
+	}
+
+	$('#ere_signin_modal').on('shown.bs.modal', function (e) {
+		$(this).addClass('in');
+	});
+	$(document).on('click', '.close-password', function () {
+		$('#ere_signin_modal').find('.close').click();
+	})
+</script>
+
 <!--End pagewrapper-->
 <?php include "footer_js.php" ?>
 </body>

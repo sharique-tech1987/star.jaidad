@@ -6,10 +6,11 @@ $offset = 0;
 $order = 'clients_logo.ordering ASC';
 $where = " AND clients_logo.status='Active' ";
 
-$LOGO_SQL = "SELECT * FROM (SELECT 'clients_logo' as logo_type, clients_logo.logo, clients_logo.client_name, clients_logo.status  FROM clients_logo WHERE status='Active'
+$LOGO_SQL = "SELECT * FROM (SELECT 'clients_logo' as logo_type, clients_logo.logo, clients_logo.client_name, clients_logo.status  FROM clients_logo WHERE status='Active' AND clients_logo.logo IS NOT NULL 
 UNION DISTINCT
-SELECT 'users' as logo_type, users.`logo`, users.logo_alt_name, users.`logo_status`  FROM `users` WHERE logo_status='Active') p
+SELECT 'users' as logo_type, users.`logo`, users.logo_alt_name, users.`logo_status`  FROM `users` WHERE logo_status='Active' AND users.`logo` IS NOT NULL ) ds
 LIMIT 0, 20";
+
 $rows = $this->db->query($LOGO_SQL)->result();
 //$rows = $ci->m_clients_logo->rows($where, $limit, $offset, $order);
 /*$num_rows = $ci->m_clients_logo->num_rows;

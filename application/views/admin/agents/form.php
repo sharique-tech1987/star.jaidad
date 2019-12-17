@@ -90,9 +90,9 @@
                 <input type="checkbox" name="logo_status" id="logo_status" <?php echo $row->logo_status == 'Active' ? 'checked' : '' ?>>
 
                 <?php
-                if (!empty($row->photo)) {
-                    $thumb_url = _img("assets/front/{$this->table}/" . $row->photo, 200,200, USER_IMG_NA);
-                    $delete_img_url = admin_url($this->_route . '/AJAX/delete_img/' . $row->id . '/photo');
+                if (!empty($row->logo)) {
+                    $thumb_url = _img("assets/front/{$this->table}/" . $row->logo, 200,200, USER_IMG_NA);
+                    $delete_img_url = admin_url($this->_route . '/AJAX/delete_img/' . $row->id . '/logo');
                     echo thumb_box($thumb_url, $delete_img_url, '', 0);
                 }
                 ?>

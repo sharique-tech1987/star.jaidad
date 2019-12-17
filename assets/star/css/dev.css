@@ -6369,6 +6369,19 @@ aside#ere_widget_search_form-2 {
     background-size: contain;
     background-repeat: repeat;
 }
+
+span.dropdown-item {
+    color: #333;
+    font-size: 13px;
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    margin: 5px 0;
+}
+/*.dashboard {*/
+/*    background-image: url('../images/body1.jpg');*/
+/*    background-size: cover;*/
+/*}*/
 /*.column {*/
 /*    background-color: #fff;*/
 /*}*/

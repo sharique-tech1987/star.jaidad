@@ -33,6 +33,8 @@ class Login extends CI_Controller
         $this->load->model(ADMIN_DIR . 'm_agents');
 
         $this->user_type_id = get_option('client_type_id');
+
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -93,8 +95,9 @@ class Login extends CI_Controller
             if ($this->{$module}->validate($member_id, false)) {
 
                 if (!$edit && $member_id = $this->{$module}->insert(['user_type_id' => $this->user_type_id])) {
+                    $this->cache->file->clean('brand_logos');
                     $JSON['success'] = $JSON['status'] = true;
-                    $JSON['message'] = 'Member has been registered' . "\n";
+                    $JSON['message'] = 'Member has been registered. Please check your email inbox/spam.' . "\n";
                     set_notification(__($JSON['message']), 'success');
 
                     activity_log('Registration', 'users', $member_id, $member_id);
@@ -132,7 +135,12 @@ class Login extends CI_Controller
 
 
                 } else if ($this->{$module}->update($member_id) && $edit) {
-                    set_notification(__('Request has been submitted!'), 'success');
+                    $this->cache->file->clean('brand_logos');
+                	if($module == 'm_agents') {
+						set_notification(__('Request has been submitted!'), 'success');
+					} else{
+						set_notification(__('Profile has been updated!'), 'success');
+					}
                 } else {
                     set_notification(__('Some error occurred!'), 'error');
                 }
@@ -158,7 +166,7 @@ class Login extends CI_Controller
             $data['row'] = array2object($this->input->post());
             $data['redirect'] = getVar('redirect');
             if($edit){
-                set_notification('Request has been sent!!','success');
+                //set_notification('Request has been sent!!','success');
                 redirect('member/account');
 
                 //redirectBack();
@@ -200,6 +208,8 @@ class Login extends CI_Controller
                     //'user_info' => $result,
                 ));
 
+				activity_log('Login', 'users', $result->id, $result->id);
+
                 if(!empty(getVar('redirect'))){
                     redirect(getVar('redirect'));
                 }
@@ -208,10 +218,10 @@ class Login extends CI_Controller
                 if (!empty($REFERER)) {
                     $JSON['redirect'] = $REFERER;
                 }
-                $JSON['redirect'] = site_url($this->redirect_module);
+                $JSON['redirect'] = site_url("member/account/home/{$result->id}");
 
             } else {
-                set_notification(__('Incorrect username or password'));
+                set_notification(__('Incorrect username or password. If you register please check your email for username and password.'));
                 //redirectBack();
             }
         }
@@ -230,6 +240,7 @@ class Login extends CI_Controller
     {
         $user_id = _session(FRONT_SESSION_ID);
         $this->m_login->set_login($user_id, 0);
+		activity_log('Logout', 'users', $user_id, $user_id);
 
         $this->session->unset_userdata(array(
             FRONT_SESSION_ID,
@@ -316,6 +327,7 @@ class Login extends CI_Controller
                         $token_num = md5(random_string());
                         save('users', array('token_num' => $token_num), "id='{$user->id}'");
 
+						activity_log('Forgot', 'users', $user->id, $user->id);
                         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                         # Email notification
                         $reset_pass_url = site_url('login/reset?token=' . $token_num);
@@ -414,6 +426,8 @@ class Login extends CI_Controller
 
                             save('users', array('password' => encryptPassword($newpass), 'token_num' => ''), "id='" . $user->id . "'");
                             set_notification('Your password has been reset successfully.', 'success');
+
+							activity_log('Reset', 'users', $user->id, $user->id);
                             redirect('login');
                         } else {
                             set_notification('Password should be 6 to 12 characters long.', 'error');
@@ -455,18 +469,30 @@ class Login extends CI_Controller
     }
 
     function activate_account(){
-        $get_params = $_GET;
-        $sql = "SELECT * FROM users WHERE username='{$get_params['id']}' AND `token_num`='{$get_params['t']}'";
+
+        $username = getVar('id');
+        $token_num = getVar('t');
+        $sql = "SELECT * FROM users WHERE username='{$username}' AND `token_num`='{$token_num}'";
         $rs = $this->db->query($sql);
         $data = array();
-        $data['activation_msg'] = "Your account has not been activated. 
-            Please contact at " . get_option('contact_email');
         if ($rs->num_rows() > 0) {
-            $update_sql = "UPDATE users SET `status` = 'Active' WHERE username = '{$get_params['id']}' ";
+			$user = $rs->row();
+            $update_sql = "UPDATE users SET `status` = 'Active', token_num = '' WHERE username = '{$username}' ";
             $this->db->query($update_sql);
-            $data['activation_msg'] = "Your account has been activated successfully. 
-            Please login with username and password which is sent in the email";
+            set_notification('Your account has been activated successfully. <br>
+            Please login with username and password which is sent in the email', 'success');
+
+			activity_log('Activate', 'users', $user->id, $user->id);
+        } else if(!empty($token_num)){
+			set_notification("Parameter missing.
+            Please contact at " . get_option('contact_email'), 'error');
+		} else {
+            set_notification("Wrong URL. <br>
+            Please contact at " . get_option('contact_email'), 'error');
+            redirect('login');
         }
+
+
 
         $this->template->load('login/account_activation', $data);
     }

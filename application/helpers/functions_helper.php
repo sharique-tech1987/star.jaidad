@@ -965,8 +965,11 @@ function get_option($option, $key = null)
         }
     }
 
-    $ci = & get_instance();
-    $_option_vals = $ci->db->query("SELECT * FROM `options` WHERE 1 ")->result();
+	$ci = & get_instance();
+	if (!$_option_vals = $ci->cache->file->get('options')) {
+		$_option_vals = $ci->db->query("SELECT * FROM `options` WHERE 1 ")->result();
+		$ci->cache->file->save('options', $_option_vals, (60 * 60 * 60 * 60 * 60));
+	}
 
     if(count($_option_vals) > 0){
         foreach($_option_vals as $_val){

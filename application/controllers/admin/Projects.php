@@ -53,6 +53,8 @@ class Projects extends CI_Controller
             $_user_id = user_info('id');
             $this->where = " AND {$this->table}.created_by = '{$_user_id}'";
         }
+
+		$this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -174,6 +176,7 @@ WHERE 1 {$where}";
             } else {
                 set_notification(__('Some error occurred'), 'error');
             }
+			$this->cache->file->clean('hot_projects');
 
             $__redirect = (!empty(getVar('__redirect')) ? getVar('__redirect') : admin_url($this->_route . "/form/{$this->module->_id}"));
             redirect($__redirect);
@@ -198,6 +201,8 @@ WHERE 1 {$where}";
             if ($this->module->update($id)) {
                 set_notification(__('Record has been updated'), 'success');
                 $this->module->update_files_DB($id);
+
+				$this->cache->file->clean('hot_projects');
             } else {
                 set_notification(__('Some error occurred'), 'error');
             }
@@ -231,6 +236,7 @@ WHERE 1 {$where}";
         if (save($this->table, $data, $where)) {
             set_notification(__('Status has been updated'), 'success');
 
+			$this->cache->file->clean('hot_projects');
         } else {
             $db_error = $this->db->error()['message'];
             developer_log($this->table, $db_error);

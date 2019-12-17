@@ -54,6 +54,8 @@ class Properties extends CI_Controller
             $_user_id = user_info('id');
             $this->where = " AND {$this->table}.created_by = '{$_user_id}'";
         }
+
+		$this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -172,6 +174,8 @@ WHERE 1 {$where}";
             if ($id = $this->module->insert()) {
                 set_notification(__('Record has been inserted'), 'success');
                 $this->module->update_files_DB($id);
+
+				$this->cache->file->clean('recent_properties');
             } else {
                 set_notification(__('Some error occurred'), 'error');
             }
@@ -199,6 +203,7 @@ WHERE 1 {$where}";
             if ($this->module->update($id)) {
                 set_notification(__('Record has been updated'), 'success');
                 $this->module->update_files_DB($id);
+				$this->cache->file->clean('recent_properties');
             } else {
                 set_notification(__('Some error occurred'), 'error');
             }
@@ -231,37 +236,40 @@ WHERE 1 {$where}";
         $where = $this->id_field . " IN({$IDs}) " . $this->where;
         if (save($this->table, $data, $where)) {
             set_notification(__('Status has been updated'), 'success');
-//        Send email if id is single
-            if(intval(getUri(4))){
-                $property = $this->module->row($IDs);
-                $member = $this->m_users->row($property->created_by);
-                $email_data_obj = new stdClass();
-                $email_data_obj->first_name = $member->first_name;
-                $email_data_obj->email = $member->email;
-                $email_data_obj->property_name = $property->title;
-                $p_aprroval_msg = get_email_template($email_data_obj, 'Property Approval');
-                $p_reject_msg = get_email_template($email_data_obj, 'Property Rejection');
 
-                if ( in_array($status, array('Active', 'Inactive')) ) {
-                    $emaildata = array(
-                        'to' => $email_data_obj->email
-                    );
-                    if($status == 'Active' && $p_aprroval_msg->status == 'Active'){
-                        $email_status_notification = $p_aprroval_msg->subject . " email has been sent" ;
-                        $emaildata['subject'] = $p_aprroval_msg->subject;
-                        $emaildata['message'] = $p_aprroval_msg->message;
-                    }else if($status == 'Inactive' && $p_reject_msg->status == 'Active'){
-                        $email_status_notification = $p_reject_msg->subject . " email has been sent" ;
-                        $emaildata['subject'] = $p_reject_msg->subject;
-                        $emaildata['message'] = $p_reject_msg->message;
-                    }
-                    if (!send_mail($emaildata)) {
-                        set_notification('Email sending failed.', 'danger');
-                    } else {
-                        set_notification( $email_status_notification, 'success');
-                    }
-                }
-            }
+			$this->cache->file->clean('recent_properties');
+
+			$_IDS = getVar('ids', false, false);
+			$ID = intval(getUri(4));
+			if($ID > 0){ $_IDS[] = $ID; }
+			# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			# registration_email
+			foreach ($_IDS as $id) {
+
+				$property = $this->m_properties->row($id);
+				$property->property_id = $property->id;
+				$member = get_member($property->created_by);
+				$member->property_title = $member->property_name = $property->title;
+
+				$mail_data = array_merge((array)$property, (array)$member);
+				$msg = get_email_template($mail_data, 'Property ' . $status);
+				if ($msg->status == 'Active') {
+					$admin_cc_email = get_option('admin_cc_email');
+					$emaildata = array(
+						'to' => $member->email,
+						'subject' => $msg->subject,
+						'message' => $msg->message
+					);
+					if (!empty($admin_cc_email)) {
+						$emaildata['cc'] = $admin_cc_email;
+					}
+					if (!send_mail($emaildata)) {
+						set_notification('Email sending failed.', 'danger');
+					} else {
+						//set_notification('Please check your email for username & password!','success');
+					}
+				}
+			}
 
         } else {
             $db_error = $this->db->error()['message'];

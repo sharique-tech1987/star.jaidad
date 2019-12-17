@@ -1,5 +1,7 @@
 <?php get_header(get_option('header')); ?>
 <?php
+$ci =& get_instance();
+$ci->load->model(ADMIN_DIR . 'm_activity_log');
 if(empty($_COOKIE['area_unit'])){
     //$_COOKIE['area_unit'] = 'Marla';
     $_COOKIE['area_unit'] = $row->area_unit;
@@ -203,6 +205,11 @@ if(empty($_COOKIE['area_unit'])){
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <?php
+                                            $where = " AND activity_log.activity_name='view' AND activity_log.table='properties' 
+                                                        AND activity_log.rel_id={$row->id}";
+
+                                            $rows = $ci->m_activity_log->rows($where);
+                                            $total_rows = $ci->m_activity_log->total_rows;
                                             include dirname(__FILE__) . "/include/property_blocks.php";
                                             ?>
                                         </div>
