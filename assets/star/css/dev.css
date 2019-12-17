@@ -6364,10 +6364,11 @@ aside#ere_widget_search_form-2 {
     left: 30px;
     bottom: 5px;
 }
-/*.dashboard {*/
-/*    background-image: url('../images/body1.jpg');*/
-/*    background-size: cover;*/
-/*}*/
+.dashboard {
+    background-image: url('../images/agent.jpg');
+    background-size: contain;
+    background-repeat: repeat;
+}
 /*.column {*/
 /*    background-color: #fff;*/
 /*}*/
@@ -6400,13 +6401,25 @@ button#agent_mute {
     .cus_align {
         text-align: center !important;
     }
-    img.custom_width {
-        height: 28px !important;
-    }
+    /*img.custom_width {*/
+    /*    height: 35px !important;*/
+    /*}*/
     div#properties-status-chart {
         margin-top: 15px;
     }
 }
 img.custom_width {
     width: 90%;
+}
+span.dropdown-item {
+    color: #333;
+    font-size: 13px;
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    margin: 5px 0;
+}
+.vc_custom_1521514185224 {
+    border-top: 1px solid #92C800 !important;
+    border-bottom: 1px solid #92C800 !important;
 }
