@@ -53,6 +53,8 @@ class Cities extends CI_Controller
             $_user_id = user_info('id');
             $this->where = " AND {$this->table}.created_by = '{$_user_id}'";
         }
+
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -152,6 +154,7 @@ WHERE 1 {$where}";
         if ($this->module->validate()) {
 
             if ($id = $this->module->insert()) {
+                $this->cache->file->clean('popular_cities');
                 set_notification(__('Record has been inserted'), 'success');
             } else {
                 set_notification(__('Some error occurred'), 'error');
@@ -178,6 +181,7 @@ WHERE 1 {$where}";
         if ($this->module->validate()) {
 
             if ($this->module->update($id)) {
+                $this->cache->file->clean('popular_cities');
                 set_notification(__('Record has been updated'), 'success');
             } else {
                 set_notification(__('Some error occurred'), 'error');
@@ -210,6 +214,7 @@ WHERE 1 {$where}";
 
         $where = $this->id_field . " IN({$IDs}) " . $this->where;
         if (save($this->table, $data, $where)) {
+            $this->cache->file->clean('popular_cities');
             set_notification(__('Status has been updated'), 'success');
 
         } else {

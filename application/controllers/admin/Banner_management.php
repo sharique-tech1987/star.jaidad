@@ -48,6 +48,8 @@ class Banner_management extends CI_Controller
         }
         //TODO:: Module Language
         load_lang($this->module_name, true);
+
+        $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
     }
 
 
@@ -152,6 +154,7 @@ class Banner_management extends CI_Controller
         if ($this->module->validate()) {
 
             if ($id = $this->module->insert()) {
+                $this->cache->file->clean('advertisement');
                 set_notification(__('Record has been inserted'), 'success');
             } else {
                 set_notification(__('Some error occurred'), 'error');
@@ -178,6 +181,7 @@ class Banner_management extends CI_Controller
         if ($this->module->validate()) {
 
             if ($this->module->update($id)) {
+                $this->cache->file->clean('advertisement');
                 set_notification(__('Record has been updated'), 'success');
             } else {
                 set_notification(__('Some error occurred'), 'error');
@@ -210,6 +214,7 @@ class Banner_management extends CI_Controller
 
         $where = $this->id_field . " IN({$IDs}) " . $this->where;
         if (save($this->table, $data, $where)) {
+            $this->cache->file->clean('advertisement');
             set_notification(__('Status has been updated'), 'success');
 
         } else {
