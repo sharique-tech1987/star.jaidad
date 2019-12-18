@@ -350,17 +350,17 @@ class Member extends CI_Controller
                         if (count($ch_rows) > 0) {
                             $found_purpose = array();
                             foreach ($ch_rows as $ch_row) {
-                                $found_status[] = $ch_row->purpose;
+                                $found_purpose[] = $ch_row->purpose;
                                 $chart_data['legend_data'][] = $ch_row->purpose;
                                 $chart_data['series_data_pie'][] = ['value' => $ch_row->purpose_count, 'name' => $ch_row->purpose];
                             }
-                            foreach ($showed_purpose_column_data as $spc) {
-                                if(!in_array($spc, $found_status)){
-                                    $chart_data['legend_data'][] = $spc;
-                                    $chart_data['series_data_pie'][] = ['value' => "0", 'name' => $spc];
-                                }
-
+                        }
+                        foreach ($showed_purpose_column_data as $spc) {
+                            if(!in_array($spc, $found_purpose)){
+                                $chart_data['legend_data'][] = $spc;
+                                $chart_data['series_data_pie'][] = ['value' => "0", 'name' => $spc];
                             }
+
                         }
                         $RS = $chart_data;
                         $RS['text'] = __('Purpose Status Statistics');

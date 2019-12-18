@@ -121,6 +121,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group m-form__group row">
+                        <label class="col-sm-2 control-label">Property Description Limit:</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="setting[property_description_limit]" class="form-control" value="<?php echo get_option('property_description_limit'); ?>">
+                        </div>
+                    </div>
+
                     <!--<div class="form-group m-form__group row">
                         <label class="col-sm-2 control-label">Change Password:</label>
                         <div class="col-lg-2">
