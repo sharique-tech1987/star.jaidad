@@ -122,6 +122,19 @@
                     </div>
 
                     <div class="form-group m-form__group row">
+                        <label class="col-sm-2 control-label">Show Graph Status:</label>
+                        <div class="col-lg-10">
+                            <select id="show_graph_status" name="setting[show_graph_status][]" class="form-control m_select2-tags" multiple>
+                                <?php
+                                $show_graph_status = json_decode(get_option('show_graph_status'));
+                                $OP = get_enum_values('properties', 'status', false);
+                                echo selectBox(array_combine($OP, $OP), $show_graph_status);
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
                         <label class="col-sm-2 control-label">Property Description Limit:</label>
                         <div class="col-lg-10">
                             <input type="text" name="setting[property_description_limit]" class="form-control" value="<?php echo get_option('property_description_limit'); ?>">

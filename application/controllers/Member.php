@@ -303,7 +303,7 @@ class Member extends CI_Controller
                 $_type =  getUri(4);
                 switch ($_type) {
                     case 'properties-status-count':
-                        $showed_status_column_data = ['Inactive','Sold'];
+                        $showed_status_column_data = json_decode(get_option('show_graph_status'));
                         $showed_status_str = "'" . implode("','", $showed_status_column_data) . "'";
                         $where = "";
                         $user_id = _session(FRONT_SESSION_ID);
