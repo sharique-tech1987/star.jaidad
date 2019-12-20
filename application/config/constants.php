@@ -12,6 +12,7 @@ define('ADMIN_URL', 'admin');
 define('ADMIN_DIR', 'admin/');
 define('ADMIN_ASSETS_DIR', 'assets/' . ADMIN_DIR);
 define('AJAX_GRID', true);
+define('PROPERTIES_IMG_DIR', 'assets/front/properties/');
 
 define('ADMIN_SESSION_ID', 'be_user_id');
 define('FRONT_SESSION_ID', '_front_user_id');

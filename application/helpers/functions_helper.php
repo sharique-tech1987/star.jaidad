@@ -1371,6 +1371,21 @@ function checkAltImg($image, $alt_image = 'assets/uploads/na.png')
     return $image;
 }
 
+function getLocationImg($address, $lat, $lng, $apiKey = ''){
+    if(empty($apiKey)){$apiKey = get_option('gmap_static_key');}
+
+    $address = urlencode($address);
+    $url     = "http://maps.googleapis.com/maps/api/staticmap?center={$address}&zoom=13&size=600x400&maptype=roadmap&markers=color:red%7C{$lat},{$lng}&key={$apiKey}";
+    $resp    = file_get_contents($url);
+    $filename = '';
+    if( $resp != null) {
+        $filename = 'map_'. random_string() . '.png';
+        file_put_contents( PROPERTIES_IMG_DIR . $filename, $resp);
+        unset($resp);
+    }
+    return $filename;
+}
+
 function getLatLng($address, $apiKey = '')
 {
     if(empty($apiKey)){$apiKey = get_option('gmap_key');}
@@ -1385,7 +1400,7 @@ function getLatLng($address, $apiKey = '')
         $long              = $resp['results'][0]['geometry']['location']['lng'] ? $resp['results'][0]['geometry']['location']['lng'] : '';
 
         $obj = new stdClass();
-        $obj->address = $formatted_address;
+            $obj->address = $formatted_address;
         $obj->lat = $lat;
         $obj->lng = $long;
         return $obj;

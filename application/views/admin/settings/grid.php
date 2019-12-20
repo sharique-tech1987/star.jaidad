@@ -81,6 +81,13 @@
                     </div>
 
                     <div class="form-group m-form__group row">
+                        <label class="col-sm-2 control-label">Maps Static Key:</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="setting[gmap_static_key]" class="form-control" value="<?php echo get_option('gmap_static_key'); ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
                         <label class="col-sm-2 control-label">Latitude:</label>
                         <div class="col-sm-4">
                             <input type="text" name="setting[latitude]" class="form-control" value="<?php echo get_option('latitude'); ?>">

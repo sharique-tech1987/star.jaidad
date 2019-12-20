@@ -367,6 +367,7 @@ class M_properties extends CI_Model
 
         $files = getVar('files');
         $files_data = getVar('files_data');
+        if(empty($files)){ $files = array();}
 
         if (count($files) > 0) {
             foreach ($files as $i => $f) {
@@ -388,6 +389,32 @@ class M_properties extends CI_Model
                         unset($__file_db['created']);
                     }
                     save($table, $__file_db, $where);
+                }
+            }
+        }
+        else {
+            // Save map image if user does not provide property images
+            $SQL = "SELECT SQL_CALC_FOUND_ROWS `properties`.`id`
+                    ,`properties`.`title`
+                    , CONCAT_WS(',',`area`.area, `cities`.`city`, `countries`.countryName) `FullAddress` 
+                    FROM `properties` 
+                    LEFT JOIN `cities` ON (`cities`.`id` = `properties`.`city_id`) 
+                    LEFT JOIN `area` ON (`properties`.`area_id` = `area`.`id`) 
+                    LEFT JOIN `countries` ON (`countries`.countryCode = `properties`.`country_code`) 
+                    WHERE 1 
+                    AND `properties`.`id` ={$id}";
+            $current_property = $this->db->query($SQL)->result();
+            $latLng = getLatLng($current_property[0]->FullAddress);
+            if($latLng->lat != null && $latLng->lat != 0) {
+                $static_img_filename = getLocationImg($latLng->address, $latLng->lat, $latLng->lng);
+                if(!empty($static_img_filename)){
+                    $__file_db = [
+                        'property_id' => $id,
+                        'filename' => $static_img_filename,
+                        'title' => $static_img_filename,
+                        'ordering' => 0
+                    ];
+                    save($table, $__file_db);
                 }
             }
         }
