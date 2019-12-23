@@ -59,10 +59,9 @@
                                     <aside id="custom_html-5" class="widget_text widget widget_custom_html">
                                         <h4 class="widget-title"><span>About</span></h4>
                                         <div class="textwidget custom-html-widget">
-                                            <p>
+<!--                                            <p>                                           -->
                                                 <?php echo $this->cms->get_block('about-text'); ?>
-
-                                            </p>
+<!--                                            </p>-->
                                         </div>
 
                                     </aside>
@@ -159,8 +158,10 @@
                                     </aside>
                                 </div>
                                 <br>
+
                                 <div class="xs-text-center">
-                                    <?php echo get_option('copyright'); ?>
+<!--                                    --><?php //echo get_option('copyright'); ?>
+                                <?php echo get_option('app_icon_style'); ?>
                                 </div>
                             </div>
                         </div>
@@ -180,20 +181,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="xs-text-center wpb_column vc_column_container vc_col-sm-4">
+                <div class="xs-text-center wpb_column vc_column_container vc_col-sm-3">
                     <div class="vc_column-inner vc_custom_1515120372123">
                         <div class="wpb_wrapper">
                             <div class="wpb_text_column wpb_content_element ">
                                 <div class="wpb_wrapper">
                                     <h4 class="fs-24 fw-bold inline-block"><i
                                                 class="icon-envelope-in-black-paper-with-a-white-letter-sheet-inside accent-color fs-34 inline-block mg-right-10"></i><span
-                                                style="color: #ffffff;">OUR NEWSLETTER</span></h4>
+                                                style="color: #ffffff; margin-top: 10px">OUR NEWSLETTER</span></h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="xs-text-center wpb_column vc_column_container vc_col-sm-8">
+                <div class="xs-text-center wpb_column vc_column_container vc_col-sm-5">
                     <div class="vc_column-inner vc_custom_1515120375453">
                         <div class="wpb_wrapper">
                             <div class="wpb_text_column wpb_content_element  mailchimp-button">
@@ -239,6 +240,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="xs-text-center col-sm-4 ">
+                    <?php echo get_option('copyright'); ?>
                 </div>
                 <div class="wpb_column vc_column_container vc_col-sm-12">
                     <div class="vc_column-inner vc_custom_1515120019814">
@@ -799,6 +803,18 @@ if ($member->user_type_id == $agent_type_id) {
 
 
     $(document).ready(function () {
+
+        $(window).on("navigate", function (event, data) {
+            var direction = data.state.direction;
+            if (direction == 'back') {
+                // do something
+                $('#registration_modal').modal('hide')
+                console.log('back button');
+            }
+            if (direction == 'forward') {
+                // do something else
+            }
+        });
 
         var agent_mute = $.cookie("mute");
         if( (typeof agent_mute === 'undefined' || agent_mute != 1 ) ){

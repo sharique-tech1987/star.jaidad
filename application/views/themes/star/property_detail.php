@@ -85,13 +85,27 @@ if(empty($_COOKIE['area_unit'])){
         </div>
     </section>
 
-    <div id="primary-content" class="pd-top-100 pd-bottom-100 sm-pd-top-50 sm-pd-bottom-0">
+    <div id="primary-content" class="pd-top-30 pd-bottom-30 sm-pd-top-50 sm-pd-bottom-0">
             <div class="container clearfix">
                 <div class="row">
                     <div class="col-md-9 single-property-inner">
                         <div id="container">
                             <div id="content" role="main">
                                 <div id="property-768" class="ere-property-wrap single-property-area content-single-property post-768 property type-property status-publish has-post-thumbnail hentry property-type-apartment property-type-bar property-type-cafe property-status-for-sale property-feature-air-conditioning property-feature-electric-range property-feature-fire-alarm property-feature-tv-cable property-feature-wifi property-state-illinois property-city-chicago property-neighborhood-austin">
+<!--                                    <div class="row">-->
+<!--                                                                                <div class="col-xl-12">-->
+<!--                                    <div class="row min_margin">-->
+<!--                                        <div class="col-xl-12 cus_css_project">-->
+<!--                                        --><?php
+//                                        $where = " AND activity_log.activity_name='view' AND activity_log.table='properties'
+//                                                        AND activity_log.rel_id={$row->id}";
+//
+//                                        $rows = $ci->m_activity_log->rows($where);
+//                                        $total_rows = $ci->m_activity_log->total_rows;
+//                                        include dirname(__FILE__) . "/include/property_blocks.php";
+//                                        ?>
+<!--                                                                                </div>-->
+<!--                                                                            </div>-->
                                     <div class="single-property-element property-info-header property-info-action mg-bottom-50 sm-mg-bottom-30">
                                         <div class="property-main-info">
                                             <div class="property-status">
@@ -202,23 +216,12 @@ if(empty($_COOKIE['area_unit'])){
                                     </div>
                                     <?php } ?>
 
-                                    <div class="row">
-                                        <div class="col-xl-12">
-                                            <?php
-                                            $where = " AND activity_log.activity_name='view' AND activity_log.table='properties' 
-                                                        AND activity_log.rel_id={$row->id}";
-
-                                            $rows = $ci->m_activity_log->rows($where);
-                                            $total_rows = $ci->m_activity_log->total_rows;
-                                            include dirname(__FILE__) . "/include/property_blocks.php";
-                                            ?>
-                                        </div>
-                                    </div>
 
                                     <?php if(!empty(strip_tags($row->description))) { ?>
                                     <div class="single-property-element property-description">
                                         <div class="ere-heading-style2">
-                                            <h2>Description</h2>
+                                            <h2>Description <span class="pull-right"><?php echo number_format($total_rows);?> Views </span></h2>
+
                                         </div>
                                         <div class="ere-property-element">
                                             <p><?php echo $row->description;?></p>
@@ -350,7 +353,9 @@ if(empty($_COOKIE['area_unit'])){
                     <!-- sidebar -->
                     <div class="primary-sidebar sidebar col-md-3 sidebar-mobile-canvas -gf-sticky">
                         <aside id="ere_widget_search_form-2" class="widget ere_widget ere_widget_search_form">
-                            <h4 class="widget-title"><span>Contact Agent</span></h4>
+                            <h4 class="widget-title"><span>Contact Agent</span>
+<!--                                <span class="pull-right">--><?php //echo number_format($total_rows);?><!-- Views </span>-->
+                            </h4>
                             <div class="ere-property-advanced-search clearfix dropdown color-dark ">
                                 <div class="form-search-wrap">
                                     <div class="form-search-inner">
@@ -359,8 +364,6 @@ if(empty($_COOKIE['area_unit'])){
                                             <div class="agent-form">
                                                 <?php include "contact_agent_form.php"; ?>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
