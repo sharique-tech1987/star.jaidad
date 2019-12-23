@@ -231,9 +231,16 @@ class Inbox extends CI_Controller
 
                 if ($this->form_validation->run() !== FALSE) {
 
-
+                    $message = "";
                     $subject = getVar('subject');
-                    $message = getVar('message', TRUE, TRUE);
+                    $posted_msg = getVar('message', TRUE, TRUE);
+                    $full_name = getVar('full_name', TRUE, TRUE);
+                    $email = getVar('email', TRUE, TRUE);
+                    $phone = getVar('phone', TRUE, TRUE);
+                    $message .= "Name: " . $full_name . "<br/><br/>";
+                    $message .= "Email: " . $email . "<br/><br/>";
+                    $message .= "Phone: " . $phone . "<br/><br/>";
+                    $message .= $posted_msg;
 
                     $msg_id = intval(getVar('msg_id'));
 

@@ -6509,6 +6509,12 @@ span.dropdown-item {
     p {
         margin: 0 0 0px 0;
     }
+    .sj-msgs-mob {
+        display: block !important;
+    }
+    .split-view {
+        display: none;
+    }
 }
 @media(max-width: 992px){
     button.btn.btn-xs.btn-primary.btn-outline.btn-shape-round {
@@ -6538,4 +6544,7 @@ span.dropdown-item {
     display: table;
     width: 100%;
     margin-top: 24px !important;
+}
+.sj-msgs-mob {
+    display: none;
 }
