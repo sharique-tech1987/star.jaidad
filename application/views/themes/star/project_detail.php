@@ -2,6 +2,10 @@
 <?php
 $ci =& get_instance();
 $ci->load->model(ADMIN_DIR . 'm_activity_log');
+$where = " AND activity_log.activity_name='view' AND activity_log.table='projects' 
+                                                        AND activity_log.rel_id={$row->id}";
+$rows = $ci->m_activity_log->rows($where);
+$total_rows = $ci->m_activity_log->total_rows;
 ?>
 
 
@@ -27,21 +31,17 @@ $ci->load->model(ADMIN_DIR . 'm_activity_log');
         </div>
     </section>
 
-    <div id="primary-content" class="pd-top-50 pd-bottom-50 sm-pd-top-50 sm-pd-bottom-50">
+    <div id="primary-content" class="pd-top-5 pd-bottom-50 sm-pd-top-50 sm-pd-bottom-50">
             <div class="container clearfix">
 
-                <div class="row">
-                    <div class="col-xl-12">
-                        <?php
-                        $where = " AND activity_log.activity_name='view' AND activity_log.table='projects' 
-                                                        AND activity_log.rel_id={$row->id}";
-
-                        $rows = $ci->m_activity_log->rows($where);
-                        $total_rows = $ci->m_activity_log->total_rows;
-                        include dirname(__FILE__) . "/include/property_blocks.php";
-                        ?>
-                    </div>
-                </div>
+<!--                <div class="row min_margin">-->
+<!--                    <div class="col-xl-12 cus_css_project">-->
+<!--                        --><?php
+//
+//                        include dirname(__FILE__) . "/include/property_blocks.php";
+//                        ?>
+<!--                    </div>-->
+<!--                </div>-->
                 
                 <div class="prostyl">
                 <div class="row">
@@ -199,7 +199,7 @@ $ci->load->model(ADMIN_DIR . 'm_activity_log');
                                     <?php if(!empty(strip_tags($row->description))) { ?>
                                         <div class="single-property-element property-description">
                                             <div class="ere-heading-style2">
-                                                <h2>Description</h2>
+                                                <h2>Description<span class="pull-right"><?php echo number_format($total_rows);?> Views </span></h2>
                                             </div>
                                             <div class="ere-property-element">
                                                 <p><?php echo $row->description;?></p>
@@ -406,8 +406,21 @@ $ci->load->model(ADMIN_DIR . 'm_activity_log');
                             </div>
                         </aside>-->
 
+<!--                        <div class="row min_margin">-->
+<!--                            <div class="col-xl-12 cus_css_project">-->
+<!--                                --><?php
+//
+//                                include dirname(__FILE__) . "/include/property_blocks.php";
+//                                ?>
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <h2><span class="pull-right">--><?php //echo number_format($total_rows);?><!-- Views </span></h2>-->
                         <aside id="ere_widget_search_form-2" class="widget ere_widget ere_widget_search_form">
-                            <h4 class="widget-title"><span>Contact</span></h4>
+                            <h4 class="widget-title"><span>Contact</span>
+<!--                            <span class="pull-right">--><?php //echo number_format($total_rows);?><!-- Views </span>-->
+                                <!--<span><?php /*include dirname(__FILE__) . "/include/property_blocks.php";*/?></span>-->
+                            </h4>
                             <div class="ere-property-advanced-search clearfix dropdown color-dark ">
                                 <div class="form-search-wrap">
                                     <div class="form-search-inner">

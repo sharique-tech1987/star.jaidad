@@ -43,6 +43,12 @@
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
+                        <label class="col-sm-2 control-label">App Icon Style:</label>
+                        <div class="col-lg-10">
+                            <textarea name="setting[app_icon_style]" cols="" rows="5" class="form-control col-sm-12"><?php echo get_option('app_icon_style'); ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
                         <label class="col-sm-2 control-label">Email Address:</label>
                         <div class="col-lg-10">
                             <input type="text" name="setting[contact_email]" class="form-control" value="<?php echo get_option('contact_email'); ?>">
