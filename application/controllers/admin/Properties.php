@@ -266,7 +266,7 @@ WHERE 1 {$where}";
 					if (!send_mail($emaildata)) {
 						set_notification('Email sending failed.', 'danger');
 					} else {
-						//set_notification('Please check your email for username & password!','success');
+						set_notification("Send email to {$member->email}",'success');
 					}
 				}
 			}

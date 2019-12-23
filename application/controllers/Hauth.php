@@ -97,7 +97,7 @@ class Hauth extends CI_Controller
 
                 $userProfile['user_type_id'] = $user->user_type_id;
 
-                $redirect = "member/account/";
+                $redirect = "member/account/home/{$id}";
                 if(empty($user->phone)){
                     $redirect = "member/account/?edit=edit";
                 }

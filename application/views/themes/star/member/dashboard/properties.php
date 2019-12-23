@@ -279,8 +279,9 @@ $total_rows = $ci->m_properties->total_rows;
                                     <div class="inner-box clearfix">
                                         <div class="image-box">
                                             <figure class="image">
-                                                <div class="property-label property-featured" style="left: 15px;top: 35px; display: none">
-                                                    <p class="label-item" style="color: #fff;font-weight: 400;">
+                                                <?php if($row->status == "Sold") { ?>
+                                                    <div class="property-label property-featured" style="left: 15px;top: 35px;">
+                                                        <p class="label-item" style="color: #fff;font-weight: 400;">
                                                         <span class="property-label-bg" style="background-color: #92C800;
                                                        -webkit-border-bottom-right-radius: 10px;
                                                         -moz-border-radius-bottomright: 10px;
@@ -300,8 +301,9 @@ $total_rows = $ci->m_properties->total_rows;
                                                         position: relative;
                                                         top: 25px;
                                                         line-height: 19px;"> Sold <span class="property-arrow"></span></span>
-                                                    </p>
-                                                </div>
+                                                        </p>
+                                                    </div>
+                                                <?php } ?>
                                             <?php
                                             $image = checkAltImg("assets/front/properties/{$row->image}");
                                             $img_url = _Image::open($image)->zoomCrop(370, 320);?>

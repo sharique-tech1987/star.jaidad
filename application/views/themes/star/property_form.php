@@ -152,11 +152,26 @@
                                                 </div>
                                             </div>
 
+
+                                            <div class="form-group m-form__group row">
+                                                <label class="col-lg-2 control-label">
+                                                </label>
+                                                <div class="col-lg-10">
+                                                    <p>
+                                                        <span id="characters_remain">
+                                                            <?php echo get_option('property_description_limit'); ?>
+                                                        </span> characters left.
+                                                    </p>
+
+                                                </div>
+                                            </div>
                                             <div class="form-group m-form__group row">
                                                 <label class="col-lg-2 control-label"><?php echo __('Description'); ?>
                                                     :</label>
                                                 <div class="col-lg-10">
                                                     <textarea name="description" id="description"
+                                                              onKeyDown="limitText(this.id,'characters_remain');"
+                                                              onKeyUp="limitText(this.id,'characters_remain');"
                                                               placeholder="<?php echo __('Description'); ?>"
                                                               class="-simple_editor form-control descarea" cols="57"
                                                               rows="8"><?php echo $row->description; ?></textarea>
@@ -762,6 +777,7 @@
     </div>
     <?php get_footer(); ?>
     <script>
+        var max_description_chars = <?php echo get_option('property_description_limit'); ?>;
         $(document).ready(function () {
             $(document).on('input', '#price', function (e) {
                 e.preventDefault();
@@ -783,4 +799,14 @@
             });
 
         });
+
+        function limitText(limitField, limitCount) {
+            $limit_field_ref = $('#' + limitField);
+            $limit_count_ref = $('#' + limitCount);
+            if ($limit_field_ref.val().length > max_description_chars) {
+                $limit_field_ref.val($limit_field_ref.val().substring(0, max_description_chars));
+            } else {
+                $limit_count_ref.text(max_description_chars - $limit_field_ref.val().length);
+            }
+        }
     </script>
