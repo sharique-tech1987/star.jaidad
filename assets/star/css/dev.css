@@ -6539,3 +6539,13 @@ span.dropdown-item {
     width: 100%;
     margin-top: 24px !important;
 }
+.form-group input {
+    border-radius: 20px;
+}
+.social-profiles.circle.dark.icon-small {
+    /* text-align: center; */
+    margin: 10px 25px;
+    /* text-align: center; */
+    /* display: inline-block; */
+    /* margin: 0 auto; */
+}
