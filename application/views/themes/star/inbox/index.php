@@ -68,11 +68,11 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                     <span class="title"><i class="pg-folder"></i> All mail</span>
                 </a>
             </li>-->
-            <li>
-                <a href="#" data-box="sent">
-                    <span class="title"><i class="pg-sent"></i> Sent</span>
-                </a>
-            </li>
+<!--            <li>-->
+<!--                <a href="#" data-box="sent">-->
+<!--                    <span class="title"><i class="pg-sent"></i> Sent</span>-->
+<!--                </a>-->
+<!--            </li>-->
         </ul>
         <!--
         <p class="menu-title m-t-20 all-caps">Labels</p>
@@ -97,6 +97,68 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
 
 
     <div class="inner-content full-height">
+        <div class="split-view sj-msgs-mob">
+
+            <div class="split-list col-md-5 col-sm-6 col-xs-12 nopadding">
+                <a class="list-refresh" href="#"><i class="fa fa-refresh"></i></a>
+                <div class="list-box-mob">
+
+                </div>
+
+                <div class="padding-15">
+                    <a href="javascript: void(0);" class="load-more btn btn-success btn-block">Load more.</a>
+                </div>
+            </div>
+            <div  class="split-details col-md-6 col-sm-6 col-xs-12">
+
+                <div class="no-result" style="display: block;">
+                    <h1>No email has been selected</h1>
+                </div>
+
+                <div class="email-content-wrapper" style="display: none;">
+                    <div class="actions-wrapper menuclipper bg-master-lightest">
+                        <ul class="actions menuclipper-menu no-margin p-l-20 ">
+                            <li class="d-lg-none d-xl-none sm-no-padding">
+                                <button id="list-box-mob-back">Back</button>
+                                <a href="#" class="split-list-toggle"><i class="fa fa-angle-left"></i> All Inboxes</a>
+                            </li>
+                            <!--                            <li class="no-padding"><a href="#" data-toggle="modal" data-target="#composeModal" class="text-info">Reply</a></li>-->
+                            <!--<li class="no-padding"><a href="#">Reply all</a></li>
+                            <li class="no-padding"><a href="#">Forward</a></li>
+                            <li class="no-padding"><a href="#">Mark as read</a></li>-->
+                            <!--<li class="no-padding"><a href="#" class="text-danger">Delete</a></li>-->
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="email-content">
+                        <div class="email-content-header">
+                            <div class="thumbnail-wrapper d48 circular">
+                                <img width="40" height="40" alt=""
+                                     data-src-retina="<?php echo asset_url("inbox/img/profiles/a2x.jpg ");?>"
+                                     data-src="<?php echo asset_url("inbox/img/profiles/a.jpg ");?>"
+                                     src="<?php echo asset_url("inbox/img/profiles/a2x.jpg ");?>">
+                            </div>
+                            <div class="sender inline m-l-10 cus_mar">
+                                <p class="name no-margin bold"></p>
+                                <p class="datetime no-margin"></p>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="email-content-body m-t-20">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            <div class="compose-wrapper d-md-none">-->
+            <!--                <a class="compose-email text-info pull-right m-r-10 m-t-10" href=""><i class="fa fa-pencil-square-o"></i></a>-->
+            <!--            </div>-->
+
+        </div>
+
         <div class="split-view">
 
             <div class="split-list col-md-5 col-sm-6 col-xs-12 nopadding">
@@ -121,7 +183,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                             <li class="d-lg-none d-xl-none sm-no-padding">
                                 <a href="#" class="split-list-toggle"><i class="fa fa-angle-left"></i> All Inboxes</a>
                             </li>
-                            <li class="no-padding"><a href="#" data-toggle="modal" data-target="#composeModal" class="text-info">Reply</a></li>
+<!--                            <li class="no-padding"><a href="#" data-toggle="modal" data-target="#composeModal" class="text-info">Reply</a></li>-->
                             <!--<li class="no-padding"><a href="#">Reply all</a></li>
                             <li class="no-padding"><a href="#">Forward</a></li>
                             <li class="no-padding"><a href="#">Mark as read</a></li>-->
@@ -174,7 +236,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                     data: {dir: dir, last_msg_id : last_msg_id, start: start},
                 }).done(function(json) {
                     let emails = json[dir];
-                    console.log(emails.start);
+                    console.log(emails);
                     $('.main-menu li.active a[data-box]').data({start: emails.start});
                     if(emails.start == emails.total_rows){
                         $('.load-more').hide(0);
@@ -189,6 +251,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                         if($('[data-email="' + dir + '"]').length == 0){
                         let HTML = '<div data-email="' + dir + '" class="boreded no-top-border list-view"><div class="list-view-wrapper" data-ios="false"></div></div>';
                             $('.list-box').append(HTML);
+                            $('.list-box-mob').append(HTML);
                         }
 
                         $.each(emails.rows, function (date, msg) {
@@ -225,6 +288,7 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                                     '</li>';
 
                                 $('[data-email="' + dir + '"] [data-date="'+ date +'"]').next('.email-list').append(HTML);
+
                             });
                         });
                     }
@@ -248,9 +312,15 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                 get_msg(box.box, box.start);
             });
 
+            $(document).on('click', '#list-box-mob-back', function(e) {
+                $('.sj-msgs-mob .split-details').hide();
+                $('.sj-msgs-mob .list-box-mob').show();
+            });
+
             $(document).on('click', '[data-email-id]', function(e) {
                 e.preventDefault();
                 let _this = $(this);
+                let $list_box_ref = $(_this).parent().parent().parent().parent();
                 let email_id = _this.data('email-id');
                 $.ajax({
                     type: "POST",
@@ -276,6 +346,11 @@ $_labels = $this->db->get_where('inbox_labels', ['user_id' => $user_id])->result
                         $('#reply_form [name=to_id]').val(msg.from_id);
                         $('#reply_form [name=sender_type]').val(msg.sender_type);
                         $('#reply_form [name=subject]').val('RE: ' + msg.subject);
+
+                        if(($($list_box_ref).attr("class")) == "list-box-mob"){
+                            $($list_box_ref).hide();
+                            $('.sj-msgs-mob .split-details').show();
+                        }
                     }
                 }).fail(function() {
                     alert('Try again!');

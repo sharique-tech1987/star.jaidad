@@ -311,7 +311,7 @@ $total_rows = $ci->m_properties->total_rows;
                                             </figure>
                                         </div>
                                         <div class="content-box">
-                                            <a href="<?php echo site_url('property/' . friendly_url($path_url, '-', true, $row->id));?>"><h3><?php echo $row->title;?></h3></a>
+                                            <a href="<?php echo site_url('property/' . friendly_url($path_url, '-', true, $row->id));?>"><h3><?php echo $row->title . " (" . $row->id . ")" ;?></h3></a>
                                             <div class="location"><i class="la la-map-marker"></i> <?php echo $row->full_address;?></div>
                                             <ul class="property-info clearfix">
                                                 <li><i class="flaticon-dimension"></i> <?php echo number_format($row->area);?> <?php echo $row->area_unit;?></li>

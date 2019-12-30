@@ -260,7 +260,7 @@ class M_properties extends CI_Model
              * | property_tags_rel
              *‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒*/
             $rel_table = 'property_tags_rel';
-            if($this->db->table_exists($rel_table)) {
+            if($this->db->table_exists($rel_table) && intval($this->_id) != 0) {
                 delete_rows($rel_table, "property_id='{$this->_id}'");
                 $tag_ids = getVar('tag_ids', false, false);
                 if (count($tag_ids) > 0) {

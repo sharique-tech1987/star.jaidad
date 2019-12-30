@@ -26,6 +26,8 @@ if($member_id > 0){
     <div class="form-group">
         <textarea name="message" id="message" class="form-control" rows="5" placeholder=" Type Massage Here"></textarea>
 <!--        <textarea name="message" id="message" class="form-control" rows="5" placeholder="Massage">I would like to inquire about your property and project(--><?php //echo $row->id;?><!--). Please contact me at your earliest convenience.</textarea>-->
+<!--        <textarea name="message" id="message" class="form-control" rows="5" placeholder="Massage">I would like to inquire about your property ID - (--><?php //echo $row->id;?><!--). Please contact me at your earliest convenience.</textarea>-->
+
     </div>
     <div class="form-group">
         <button class="theme-btn btn-style-one" type="submit" name="submit-form">Submit now</button>

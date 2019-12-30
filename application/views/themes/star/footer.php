@@ -125,7 +125,6 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <br>
                                         <div class="social-profiles circle dark icon-small">
                                             <?php
                                             $socials = json_decode(get_option('social'), true);
