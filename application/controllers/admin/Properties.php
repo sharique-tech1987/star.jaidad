@@ -73,6 +73,7 @@ class Properties extends CI_Controller
         $where = $this->where;
         $query = "SELECT properties.id
 , properties.title
+, TRIM(CONCAT(IFNULL(users.first_name, ''), ' ', IFNULL(users.last_name, ''))) as full_name
 , properties.purpose
 -- , properties.type_id
 , property_types.type
@@ -87,6 +88,7 @@ FROM properties
 LEFT JOIN property_types ON(property_types.id = properties.type_id)
 -- LEFT JOIN countries ON(countries.id = properties.country_code)
 LEFT JOIN cities ON(cities.id = properties.city_id)
+LEFT JOIN users ON(users.id = properties.created_by)
 -- LEFT JOIN area ON(area.id = properties.area_id)
 -- LEFT JOIN users ON(users.id = properties.created_by) 
 WHERE 1 {$where}";
