@@ -280,6 +280,12 @@
                         </div>
                     </div>
                     <div class="form-group m-form__group row">
+                        <label class="col-sm-2 control-label">Google tag manager (JS):</label>
+                        <div class="col-lg-10">
+                            <textarea name="setting[google_tag_manager_js]" id="google_tag_manager_js" class="form-control" cols="30" rows="5"><?php echo get_option('google_tag_manager_js'); ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
                         <label class="col-sm-2 control-label">Default Robots:</label>
                         <div class="col-lg-4">
                             <select id="robots" name="setting[robots]" class="form-control m-bootstrap-select m_selectpicker">

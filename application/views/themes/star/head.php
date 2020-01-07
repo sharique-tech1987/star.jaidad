@@ -1,5 +1,6 @@
 <html lang="en" >
 <head>
+    <?php echo get_option('google_tag_manager_js'); ?>
     <meta charset="utf-8" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
