@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="<?php echo get_option('google_console_verification'); ?>" />
+
+
     <!-- Meta SEO -->
     <title><?php echo $this->template->site_title;?></title>
     <meta name="description" content="<?php echo $this->template->meta('description');?>">
