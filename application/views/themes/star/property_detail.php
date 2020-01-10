@@ -6,6 +6,12 @@ if(empty($_COOKIE['area_unit'])){
     //$_COOKIE['area_unit'] = 'Marla';
     $_COOKIE['area_unit'] = $row->area_unit;
 }
+
+$where = " AND activity_log.activity_name='view' AND activity_log.table='properties'
+                                                        AND activity_log.rel_id={$row->id}";
+
+$rows = $ci->m_activity_log->rows($where);
+$total_rows = $ci->m_activity_log->total_rows;
 ?>
 
 <div id="wrapper-content" class="clearfix ">
@@ -92,20 +98,6 @@ if(empty($_COOKIE['area_unit'])){
                         <div id="container">
                             <div id="content" role="main">
                                 <div id="property-768" class="ere-property-wrap single-property-area content-single-property post-768 property type-property status-publish has-post-thumbnail hentry property-type-apartment property-type-bar property-type-cafe property-status-for-sale property-feature-air-conditioning property-feature-electric-range property-feature-fire-alarm property-feature-tv-cable property-feature-wifi property-state-illinois property-city-chicago property-neighborhood-austin">
-<!--                                    <div class="row">-->
-<!--                                                                                <div class="col-xl-12">-->
-<!--                                    <div class="row min_margin">-->
-<!--                                        <div class="col-xl-12 cus_css_project">-->
-<!--                                        --><?php
-//                                        $where = " AND activity_log.activity_name='view' AND activity_log.table='properties'
-//                                                        AND activity_log.rel_id={$row->id}";
-//
-//                                        $rows = $ci->m_activity_log->rows($where);
-//                                        $total_rows = $ci->m_activity_log->total_rows;
-//                                        include dirname(__FILE__) . "/include/property_blocks.php";
-//                                        ?>
-<!--                                                                                </div>-->
-<!--                                                                            </div>-->
                                     <div class="single-property-element property-info-header property-info-action mg-bottom-50 sm-mg-bottom-30">
                                         <div class="property-main-info">
                                             <div class="property-status">
